@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+***************************************************************************************************
+ Copyright (C) 2023 The Qt Company Ltd.
+ SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
+***************************************************************************************************
+-->
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8824E294-C01B-43F7-959F-420B60ABB9E9}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.5.1_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.5.1_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(LIBRARIES_DIR)\boost\include;$(LIBRARIES_DIR)\eigen\include;$(LIBRARIES_DIR)\pcl\include\pcl-1.13;$(LIBRARIES_DIR)\vtk\include\vtk-9.2;$(LIBRARIES_DIR)\opencascade\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(LIBRARIES_DIR)\boost\lib;$(LIBRARIES_DIR)\vtk\lib;$(LIBRARIES_DIR)\pcl\lib;$(LIBRARIES_DIR)\flann\lib;$(LIBRARIES_DIR)\opencascade\win64\vc14\libd;$(LIBRARIES_DIR)\botan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vtkCommonCore-9.2d.lib;vtkRenderingCore-9.2d.lib;vtkCommonMath-9.2d.lib;vtkGUISupportQt-9.2d.lib;vtkCommonDataModel-9.2d.lib;vtkInteractionStyle-9.2d.lib;vtkRenderingOpenGL2-9.2d.lib;vtkRenderingQt-9.2d.lib;vtkCommonExecutionModel-9.2d.lib;vtkFiltersSources-9.2d.lib;vtkFiltersExtraction-9.2d.lib;vtkFiltersCore-9.2d.lib;vtkFiltersGeneral-9.2d.lib;vtkFiltersGeometry-9.2d.lib;vtkFiltersHybrid-9.2d.lib;vtkRenderingLOD-9.2d.lib;vtkInteractionWidgets-9.2d.lib;vtkRenderingAnnotation-9.2d.lib;vtkRenderingFreeType-9.2d.lib;vtkCommonTransforms-9.2d.lib;vtkIOImage-9.2d.lib;vtkIOXML-9.2d.lib;vtkCommonColor-9.2d.lib;vtksys-9.2d.lib;pcl_commond.lib;pcl_filtersd.lib;pcl_searchd.lib;pcl_featuresd.lib;pcl_surfaced.lib;pcl_iod.lib;pcl_sample_consensusd.lib;pcl_segmentationd.lib;pcl_octreed.lib;pcl_kdtree.lib;flann_cpp_s-gd.lib;TKernel.lib;TKIGES.lib;TKMath.lib;TKXSBase.lib;TKV3d.lib;TKIVtk.lib;TKBRep.lib;TKSTEP.lib;TKTopAlgo.lib;TKPrim.lib;TKG3d.lib;TKGeomBase.lib;TKGeomAlgo.lib;TKBO.lib;TKBool.lib;TKOffset.lib;TKService.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(LIBRARIES_DIR)\boost\include;$(LIBRARIES_DIR)\eigen\include;$(LIBRARIES_DIR)\pcl\include\pcl-1.13;$(LIBRARIES_DIR)\vtk\include\vtk-9.2;$(LIBRARIES_DIR)\opencascade\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>vtkCommonCore-9.2.lib;vtkRenderingCore-9.2.lib;vtkCommonMath-9.2.lib;vtkGUISupportQt-9.2.lib;vtkCommonDataModel-9.2.lib;vtkInteractionStyle-9.2.lib;vtkRenderingOpenGL2-9.2.lib;vtkRenderingQt-9.2.lib;vtkCommonExecutionModel-9.2.lib;vtkFiltersSources-9.2.lib;vtkFiltersExtraction-9.2.lib;vtkFiltersCore-9.2.lib;vtkFiltersGeneral-9.2.lib;vtkFiltersGeometry-9.2.lib;vtkFiltersHybrid-9.2.lib;vtkRenderingLOD-9.2.lib;vtkInteractionWidgets-9.2.lib;vtkRenderingAnnotation-9.2.lib;vtkRenderingFreeType-9.2.lib;vtkCommonTransforms-9.2.lib;vtkIOImage-9.2.lib;vtkIOXML-9.2.lib;vtkCommonColor-9.2.lib;vtksys-9.2.lib;pcl_common.lib;pcl_filters.lib;pcl_search.lib;pcl_features.lib;pcl_surface.lib;pcl_io.lib;pcl_sample_consensus.lib;pcl_segmentation.lib;pcl_octree.lib;pcl_kdtree.lib;flann_cpp_s.lib;TKernel.lib;TKIGES.lib;TKMath.lib;TKXSBase.lib;TKV3d.lib;TKIVtk.lib;TKBRep.lib;TKSTEP.lib;TKTopAlgo.lib;TKPrim.lib;TKG3d.lib;TKGeomBase.lib;TKGeomAlgo.lib;TKBO.lib;TKBool.lib;TKOffset.lib;TKService.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LIBRARIES_DIR)\boost\lib;$(LIBRARIES_DIR)\vtk\lib;$(LIBRARIES_DIR)\pcl\lib;$(LIBRARIES_DIR)\flann\lib;$(LIBRARIES_DIR)\opencascade\win64\vc14\libi;$(LIBRARIES_DIR)\botan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>pch.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>pch.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CreateLineDialog.cpp" />
+    <ClCompile Include="CreateSphereDialog.cpp" />
+    <ClCompile Include="scenewidget.cpp" />
+    <QtMoc Include="CreateSphereDialog.h" />
+    <QtMoc Include="CreateLineDialog.h" />
+    <ClInclude Include="Point3D.h" />
+    <ClInclude Include="Property.hpp" />
+    <ClInclude Include="LineData.hpp" />
+    <ClInclude Include="MarkerManager.hpp" />
+    <ClInclude Include="RgbaF.hpp" />
+    <ClInclude Include="EigenUtils.hpp" />
+    <ClInclude Include="PolyLine.hpp" />
+    <ClInclude Include="result.hpp" />
+    <ClInclude Include="Size.hpp" />
+    <ClInclude Include="SphereData.hpp" />
+    <ClInclude Include="vtkUtils.hpp" />
+    <QtMoc Include="scenewidget.h" />
+    <QtRcc Include="measurementwindow.qrc" />
+    <QtUic Include="CreateLineDialog.ui" />
+    <QtUic Include="CreateSphere.ui" />
+    <QtUic Include="measurementwindow.ui" />
+    <QtMoc Include="measurementwindow.h" />
+    <ClCompile Include="measurementwindow.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClInclude Include="generators.hpp" />
+    <ClInclude Include="pch.h" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="AntiNormal.png" />
+    <Image Include="node.png" />
+    <Image Include="Normal.png" />
+    <Image Include="pathNode.png" />
+    <Image Include="Star.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
