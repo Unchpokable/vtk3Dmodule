@@ -19,9 +19,9 @@ void AddActorsToRenderer(const vtkRendererPointer& renderer, Actors... actors)
         return;
     (renderer->AddActor(actors), ...);
 }
-
-template<typename ActorPtr, std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true>
-Status AddActorsToRenderer(const vtkRendererPointer& renderer, const std::vector<ActorPtr>& actors)
+//std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true
+template<typename ActorPtr, template<class, class = std::allocator<ActorPtr>> class X, std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true>
+Status AddActorsToRenderer(const vtkRendererPointer& renderer, const X<ActorPtr>& actors)
 {
     if(!renderer.GetPointer())
         return Status::NullArgument;
