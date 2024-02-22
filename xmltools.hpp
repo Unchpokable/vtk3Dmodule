@@ -252,15 +252,16 @@ private:
 
         ProbePartCollection result;
 
-        for(int i = 0; i < xmlElements.count(); ++i) 
+        for(int i = 0; i < xmlElements.count(); ++i)
         {
             const auto elem = xmlElements.item(i);
-            if(elem.isElement()) 
+            if(elem.isElement())
             {
                 const auto domElem = elem.toElement();
-                if(filter && filter(domElem))
+                if(filter)
                 {
-                    result.push_back(new ProbePart(domElem));
+                    if (filter(domElem))
+                        result.push_back(new ProbePart(domElem));
                 }
                 else
                     result.push_back(new ProbePart(domElem));
