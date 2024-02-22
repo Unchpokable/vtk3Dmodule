@@ -119,6 +119,12 @@
     <ClInclude Include="Point3D.h">
       <Filter>classes</Filter>
     </ClInclude>
+    <ClInclude Include="ProbeAssembly.hpp">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="xmltools.hpp">
+      <Filter>hpps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="node.png">

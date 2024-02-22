@@ -6,6 +6,7 @@
 #include "CreateSphereDialog.h"
 #include "vtkUtils.hpp"
 #include "generators.hpp"
+#include "xmltools.hpp"
 
 MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MeasurementWindow) {
     _ui->setupUi(this);
@@ -26,6 +27,12 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
         _ui->sceneWidget->_renderer->ResetCamera();
         _ui->sceneWidget->renderScene();
     });
+
+    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+
+    const auto extensions = catalog.Extensions();
+
+    const auto machine = ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.mtd");
 }
 
 MeasurementWindow::~MeasurementWindow() {

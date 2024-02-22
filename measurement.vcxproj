@@ -38,12 +38,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.5.1_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;xml</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.5.1_msvc2022_64</QtInstall>
-    <QtModules>core;gui;widgets;opengl;openglwidgets</QtModules>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;xml</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -122,9 +122,11 @@
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
+    <ClInclude Include="xmltools.hpp" />
     <QtMoc Include="CreateSphereDialog.h" />
     <QtMoc Include="CreateLineDialog.h" />
     <ClInclude Include="Point3D.h" />
+    <ClInclude Include="ProbeAssembly.hpp" />
     <ClInclude Include="Property.hpp" />
     <ClInclude Include="LineData.hpp" />
     <ClInclude Include="MarkerManager.hpp" />

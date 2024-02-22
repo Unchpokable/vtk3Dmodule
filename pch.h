@@ -2,14 +2,19 @@
 #include <QMainWindow>
 #include <QOpenGLWidget>
 #include <QTimer>
-
+#include <QDomDocument>
 #include <QVTKOpenGLNativeWidget.h>
 #include <QColorDialog>
+#include <QFile>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
+#include <vtkConeSource.h>
+#include <vtkTransform.h>
+#include <vtkTransformPolyDataFilter.h>
+#include <vtkCylinderSource.h>
 #include <vtkNamedColors.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
@@ -24,8 +29,11 @@
 #include <vtkLine.h>
 #include <vtkXMLPolyDataWriter.h>
 #include <vtkPolyLine.h>
+#include <vtkAssembly.h>
+#include <vtkPolygon.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
 
 #include <algorithm>
+#include <filesystem>
