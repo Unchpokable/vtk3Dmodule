@@ -321,7 +321,7 @@ private:
             return;
         }
 
-        const double aspectRatio = static_cast<double>(windowSize[0]) / static_cast<double>(windowSize[1]);
+        const double aspectRatio = static_cast<double>(windowSize[0]) / windowSize[1];
         const double sizeInWorldCoords = (_markerPixelSize / windowSize[0]) * _camera->GetParallelScale() * aspectRatio;
         const double markerScale = sizeInWorldCoords * _magicSizingFactor;
 
@@ -341,12 +341,12 @@ private:
         }
     }
 
-    Result<FollowerPointer> CreateMarker(const TexturePointer& texture, const Eigen::Vector3d& position)
+    Result<FollowerPointer> CreateMarker(const TexturePointer& texture, const Eigen::Vector3d& position) const
     {
         return CreateMarker(texture, EigenVector3dToCArray(position));
     }
 
-    Result<FollowerPointer> CreateMarker(const TexturePointer& texture, const double* position)
+    Result<FollowerPointer> CreateMarker(const TexturePointer& texture, const double* position) const
     {
         texture->InterpolateOn();
 
