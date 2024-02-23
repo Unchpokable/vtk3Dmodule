@@ -31,6 +31,7 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
     const auto extensions = catalog.Extensions();
+    const auto modules = catalog.Modules();
 
     const auto machine = ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.mtd");
 }
