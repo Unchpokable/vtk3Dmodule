@@ -64,11 +64,13 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     //    
     //);
 
-    const auto cone = CreateTruncatedCone(10, 25, 50, { 0, 0, 0 }, { .5, .5, .5 }, DetailsLevel::High);
+    const auto cone = CreateTruncatedCone(10, 25, 14, { 0, 0, 0 }, { .5, .5, .5 }, DetailsLevel::High);
 
     const auto realCone = CreateCone(24, 50, { 50, 50, 50 }, { .5, .5, .5 });
 
-    AddActorsToRenderer(_renderer, cone, realCone);
+    const auto cylinder = CreateCylinder(50, 25, { -45, -63, -54 }, { .5, .5, .5 });
+
+    AddActorsToRenderer(_renderer, cone, realCone, cylinder);
 
     _polyLine = new PolyLine();
 
