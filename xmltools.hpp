@@ -11,7 +11,7 @@ enum class GeometryType
     Sphere
 };
 
-inline GeometryType GeometryTypeFromString(const std::string& string)
+inline GeometryType GeometryTypeFromString(const std::string& string) noexcept
 {
     if(string == "Cylinder")
         return GeometryType::Cylinder;
@@ -29,10 +29,12 @@ enum class ProbePartType
 {
     Connector,
     Extension,
+    Module,
     Stylus
 };
 
-inline ProbePartType ProbePartTypeFromString(const std::string& string) {
+inline ProbePartType ProbePartTypeFromString(const std::string& string) noexcept
+{
     if(string == "Connector")
         return ProbePartType::Connector;
 
@@ -42,6 +44,9 @@ inline ProbePartType ProbePartTypeFromString(const std::string& string) {
     if(string == "Stylus")
         return ProbePartType::Stylus;
 
+    if(string == "Module")
+        return ProbePartType::Module;
+
     return ProbePartType::Connector;
 }
 
@@ -49,7 +54,7 @@ inline ProbePartType ProbePartTypeFromString(const std::string& string) {
 class ProbeHeadExtensionGeometryPrimitive
 {
 public:
-    static ProbeHeadExtensionGeometryPrimitive FromXML(const QDomElement& xmlDom)
+    static ProbeHeadExtensionGeometryPrimitive FromXML(const QDomElement& xmlDom) noexcept
     {
         ProbeHeadExtensionGeometryPrimitive out = GeometryTypeFromString(xmlDom.tagName().toStdString());
 
@@ -130,7 +135,7 @@ using GeometryPrimitiveContainer = std::vector<ProbeHeadExtensionGeometryPrimiti
 class SimpleProbePart
 {
 public:
-    explicit SimpleProbePart(const QDomElement& xmlDom)
+    explicit SimpleProbePart(const QDomElement& xmlDom) noexcept
     {
         _type = ProbePartTypeFromString(xmlDom.tagName().toStdString());
         _length = xmlDom.attribute("length").toDouble();
@@ -150,17 +155,32 @@ public:
         }
     }
 
-    ProbePartType Type()
+    QString Name() const noexcept
+    {
+        return _name;
+    }
+
+    QString Price() const noexcept
+    {
+        return _price;
+    }
+
+    double Length() const noexcept
+    {
+        return _length;
+    }
+
+    ProbePartType Type() const noexcept
     {
         return _type;
     }
 
-    QString Manufacturer()
+    QString Manufacturer() const noexcept
     {
         return _manufacturer;
     }
 
-    GeometryPrimitiveContainer Geometry()
+    GeometryPrimitiveContainer Geometry() const noexcept
     {
         return _geometry;
     }
@@ -178,10 +198,20 @@ protected:
 class Extension : public SimpleProbePart
 {
 public:
-    explicit Extension(const QDomElement& xmlElement) : SimpleProbePart(xmlElement)
+    explicit Extension(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
     {
         _from_mounting = xmlElement.attribute("from_mounting");
         _to_mounting = xmlElement.attribute("to_mounting");
+    }
+
+    QString FromMounting() const noexcept
+    {
+        return _from_mounting;
+    }
+
+    QString ToMounting() const noexcept
+    {
+        return _to_mounting;
     }
 
 private:
@@ -192,12 +222,42 @@ private:
 class Stylus : public SimpleProbePart
 {
 public:
-    explicit Stylus(const QDomElement& xmlElement) : SimpleProbePart(xmlElement)
+    explicit Stylus(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
     {
         _from_mounting = xmlElement.attribute("from_mounting");
     }
+
+    QString FromMounting()
+    {
+        return _from_mounting;
+    }
+
 private:
     QString _from_mounting;
+};
+
+class Module : public SimpleProbePart
+{
+public:
+    explicit Module(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
+    {
+        _dock_type = xmlElement.attribute("dock_type");
+        _docking_height = xmlElement.attribute("docking_height");
+    }
+
+    QString DockType()
+    {
+        return _dock_type;
+    }
+
+    QString DockingHeight()
+    {
+        return _docking_height;
+    }
+
+private:
+    QString _dock_type;
+    QString _docking_height;
 };
 
 class Connector : SimpleProbePart
@@ -208,6 +268,7 @@ class ProbePartCatalog {
 public:
 
     using ProbePartCollection = std::vector<SimpleProbePart*>;
+
     using CatalogFilter = std::function<bool(const QDomElement&)>;
 
     explicit ProbePartCatalog(const QString& path)
@@ -235,6 +296,11 @@ public:
     ProbePartCollection Styluses(const CatalogFilter& filter = nullptr) const
     {
         return BuildCollection<Stylus>("Stylus", filter);
+    }
+
+    ProbePartCollection Modules(const CatalogFilter& filter = nullptr) const
+    {
+        return BuildCollection<Module>("Module", filter);
     }
 
     ProbePartCollection Connectors(const CatalogFilter& filter = nullptr)
