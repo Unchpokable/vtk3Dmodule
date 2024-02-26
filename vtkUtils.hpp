@@ -103,6 +103,7 @@ inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, b
     finalMapper->SetInputConnection(appendData->GetOutputPort());
     finalMapper->SetInputData(combinedPolyData);
 
+
     auto result = vtkActorPointer::New();
     result->SetMapper(finalMapper);
     return result;

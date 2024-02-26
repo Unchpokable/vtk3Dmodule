@@ -173,9 +173,18 @@ inline vtkActorPointer CreateTruncatedCone(double topRadius, double bottomRadius
     polyData->SetPoints(points);
     polyData->SetPolys(polygons);
 
-    auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputData(polyData);
+    vtkNew<vtkPolyDataNormals> normalsFilter;
 
+    normalsFilter->SetInputData(polyData);
+    normalsFilter->ComputeCellNormalsOn();
+    normalsFilter->ComputePointNormalsOn();
+    normalsFilter->ConsistencyOn();
+    normalsFilter->AutoOrientNormalsOn();
+
+    normalsFilter->Update();
+    
+    auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    mapper->SetInputData(normalsFilter->GetOutput());
     auto actor = vtkSmartPointer<vtkActor>::New();
     actor->SetMapper(mapper);
     actor->GetProperty()->SetColor(color[0], color[1], color[2]);

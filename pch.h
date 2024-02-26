@@ -44,6 +44,7 @@
 #include <vtkCleanPolyData.h>
 #include <vtkAxesActor.h>
 #include <vtkOrientationMarkerWidget.h>
+#include <vtkPolyDataNormals.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
