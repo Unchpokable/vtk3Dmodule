@@ -262,8 +262,11 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
     return { Status::GenericFailure, "Uncovered geometry type enum value" };
 }
 
+
+// Generate a single poly-data actor from list of an geometry container
 inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
 {
+    //TODO: Too complex code. Split into separate functions
     double runningHeight = 0;
 
     vtkNew<vtkPolyDataMapper> gigaMapper;
@@ -284,25 +287,24 @@ inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
             vtkNew<vtkTransform> transform;
             transform->SetMatrix(actor->GetMatrix());
 
-            vtkNew<vtkTransformPolyDataFilter> filter;
+            const vtkNew<vtkTransformPolyDataFilter> filter;
             filter->SetTransform(transform);
             filter->SetInputData(mapperData);
             filter->Update();
 
+            append->AddInputData(filter->GetOutput());
+
             double* color = actor->GetProperty()->GetColor();
-            double colorUC[3] = {
+            const double colorUC[3] = {
                 color[0] * 255,
                 color[1] * 255,
                 color[2] * 255
             };
 
-            auto numPoints = filter->GetOutput()->GetNumberOfPoints();
+            const auto numPoints = filter->GetOutput()->GetNumberOfPoints();
             for(vtkIdType i = 0; i < numPoints; ++i) {
                 colors->InsertNextTuple(colorUC);
             }
-
-            append->AddInputData(filter->GetOutput());
-            //_renderer->AddActor(actor);
         }
     }
 
@@ -311,11 +313,11 @@ inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
     const auto combinedPolyData = append->GetOutput();
     combinedPolyData->GetPointData()->SetScalars(colors);
 
-    gigaMapper->SetInputData(combinedPolyData);
-
     gigaMapper->SetInputConnection(append->GetOutputPort());
 
-    const auto result = vtkSmartPointer<vtkActor>::New();
+    gigaMapper->SetInputData(combinedPolyData);
+
+    auto result = vtkSmartPointer<vtkActor>::New();
     result->SetMapper(gigaMapper);
 
     return result;

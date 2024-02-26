@@ -10,7 +10,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _renderer->GetActiveCamera()->ParallelProjectionOn();
     _renderer->GradientBackgroundOn();
     _renderer->SetBackground(0.3, 0.6, 0.6);
-    _renderer->SetBackground2(0, 0, 0);
+    _renderer->SetBackground2(.7, .7, .7);
 
     _renderer->AddObserver(vtkCommand::StartEvent, this, &SceneWidget::prepareToRender);
 
@@ -83,7 +83,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Styluses();
+    const auto extensions = catalog.Modules();
 
     const auto part = extensions.at(4)->Geometry();
 

@@ -35,6 +35,13 @@
 #include <vtkOBJReader.h>
 #include <vtkAppendPolyData.h>
 #include <vtkPointData.h>
+#include <vtkSmoothPolyDataFilter.h>
+#include <vtkSubdivisionFilter.h>
+#include <vtkLoopSubdivisionFilter.h>
+#include <vtkTriangleFilter.h>
+#include <vtkQuadricClustering.h>
+#include <vtkButterflySubdivisionFilter.h>
+#include <vtkCleanPolyData.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
