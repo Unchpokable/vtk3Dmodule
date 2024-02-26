@@ -83,10 +83,14 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Styluses();
+    const auto extensions = catalog.Modules();
 
     double runningHeight = 0;
-    const auto part = extensions.at(28)->Geometry();
+    const auto part = extensions.at(4)->Geometry();
+
+    // TODO: Extract as function
+    vtkNew<vtkAssembly> module;
+
     for(const auto& g : part)
     {
         const auto geometry = BuildGeometryFromGeometryPrimitive(g);
@@ -95,11 +99,11 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
             const auto actor = geometry.value();
             actor->SetPosition(0, runningHeight + g.Height() / 2, 0);
             runningHeight += g.Height();
-
-            _renderer->AddActor(actor);
+            module->AddPart(actor);
         }
     }
 
+    _renderer->AddActor(module);
     _renderer->ResetCamera();
 }
 
