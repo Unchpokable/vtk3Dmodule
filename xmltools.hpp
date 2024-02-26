@@ -53,12 +53,12 @@ inline ProbePartType ProbePartTypeFromString(const std::string& string) noexcept
 }
 
 
-class ProbeHeadExtensionGeometryPrimitive
+class ProbeHeadExtensionGeometryData
 {
 public:
-    static ProbeHeadExtensionGeometryPrimitive FromXML(const QDomElement& xmlDom) noexcept
+    static ProbeHeadExtensionGeometryData FromXML(const QDomElement& xmlDom) noexcept
     {
-        ProbeHeadExtensionGeometryPrimitive out = GeometryTypeFromString(xmlDom.tagName().toStdString());
+        ProbeHeadExtensionGeometryData out = GeometryTypeFromString(xmlDom.tagName().toStdString());
 
         out._height = xmlDom.attribute("height").toDouble();
         out._diameter = xmlDom.attribute("diameter").toDouble();
@@ -118,7 +118,7 @@ public:
     }
 
 private:
-    ProbeHeadExtensionGeometryPrimitive(GeometryType type) : _type(type) {}
+    ProbeHeadExtensionGeometryData(GeometryType type) : _type(type) {}
 
     GeometryType _type;
 
@@ -132,7 +132,7 @@ private:
     QString _hexColor = "";
 };
 
-using GeometryPrimitiveContainer = std::vector<ProbeHeadExtensionGeometryPrimitive>;
+using GeometryPrimitiveContainer = std::vector<ProbeHeadExtensionGeometryData>;
 
 class SimpleProbePart
 {
@@ -152,7 +152,7 @@ public:
             if(node.isElement())
             {
                 QDomElement element = node.toElement();
-                _geometry.push_back(ProbeHeadExtensionGeometryPrimitive::FromXML(element));
+                _geometry.push_back(ProbeHeadExtensionGeometryData::FromXML(element));
             }
         }
     }
