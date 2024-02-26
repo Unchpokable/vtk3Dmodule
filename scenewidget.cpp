@@ -85,17 +85,14 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     const auto extensions = catalog.Modules();
 
-    const auto part = extensions.at(4)->Geometry();
-
-    // TODO: Extract as function
-    //vtkNew<vtkAssembly> machine;
+    const auto part = extensions.at(16)->Geometry();
 
     const auto result = GeneratePolyPart(part);
 
     _renderer->AddActor(result);
 
-    //_renderer->AddActor(machine);
     _renderer->ResetCamera();
+    showGizmo();
 }
 
 vtkCamera* SceneWidget::camera() const {
@@ -135,3 +132,23 @@ void SceneWidget::updateRendererCamera(vtkObject*, ulong, void*)
     _renderer->GetActiveCamera()->Modified();
 }
 
+void SceneWidget::showGizmo()
+{
+    vtkNew<vtkAxesActor> axes;
+    axes->SetShaftTypeToCylinder();
+    axes->SetXAxisLabelText("X");
+    axes->SetYAxisLabelText("Y");
+    axes->SetZAxisLabelText("Z");
+    axes->SetTotalLength(1.0, 1.0, 1.0);
+    axes->SetCylinderRadius(0.5 * axes->GetCylinderRadius());
+    axes->SetConeRadius(1.025 * axes->GetConeRadius());
+    axes->SetSphereRadius(1.5 * axes->GetSphereRadius());
+
+    vtkNew<vtkOrientationMarkerWidget> orientationMarker;
+    orientationMarker->SetOutlineColor(0.9300, 0.5700, 0.1300);
+    orientationMarker->SetOrientationMarker(axes);
+    orientationMarker->SetInteractor(renderWindow()->GetInteractor());
+    orientationMarker->SetViewport(0, 0, 0.2, 0.2);
+    orientationMarker->EnabledOn();
+    orientationMarker->InteractiveOff();
+}

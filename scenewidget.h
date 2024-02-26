@@ -33,6 +33,8 @@ private:
 
     void updateRendererCamera(vtkObject*, ulong, void*);
 
+    void showGizmo();
+
     QTimer *_renderTimer;
 
     vtkSmartPointer<vtkRenderer> _renderer;

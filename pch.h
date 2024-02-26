@@ -42,6 +42,8 @@
 #include <vtkQuadricClustering.h>
 #include <vtkButterflySubdivisionFilter.h>
 #include <vtkCleanPolyData.h>
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
