@@ -83,9 +83,19 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Modules();
+    const auto extensions = catalog.Styluses();
 
-    const auto part = extensions.at(16)->Geometry();
+    const auto part = extensions.at(8)->Geometry();
+
+    /*double yPos = 0;
+
+    for (const auto& p: extensions)
+    {
+        const auto actor = GeneratePolyPart(p->Geometry());
+        actor->SetPosition(yPos, 0, 0);
+        yPos += 90;
+        _renderer->AddActor(actor);
+    }*/
 
     const auto result = GeneratePolyPart(part);
 
@@ -144,11 +154,10 @@ void SceneWidget::showGizmo()
     axes->SetConeRadius(1.025 * axes->GetConeRadius());
     axes->SetSphereRadius(1.5 * axes->GetSphereRadius());
 
-    vtkNew<vtkOrientationMarkerWidget> orientationMarker;
-    orientationMarker->SetOutlineColor(0.9300, 0.5700, 0.1300);
-    orientationMarker->SetOrientationMarker(axes);
-    orientationMarker->SetInteractor(renderWindow()->GetInteractor());
-    orientationMarker->SetViewport(0, 0, 0.2, 0.2);
-    orientationMarker->EnabledOn();
-    orientationMarker->InteractiveOff();
+    _gizmo = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+    _gizmo->SetOrientationMarker(axes);
+    _gizmo->SetInteractor(renderWindow()->GetInteractor());
+    _gizmo->SetViewport(0, 0, 0.2, 0.2);
+    _gizmo->EnabledOn();
+    _gizmo->InteractiveOn();
 }

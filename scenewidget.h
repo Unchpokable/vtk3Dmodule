@@ -42,6 +42,7 @@ private:
     //task
     PolyLine* _polyLine;
     MarkerManager* _markerManager;
+    vtkSmartPointer<vtkOrientationMarkerWidget> _gizmo;
 
     std::vector<vtkSmartPointer<vtkActor>> _demoSpheres;
 };
