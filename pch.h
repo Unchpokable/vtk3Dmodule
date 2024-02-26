@@ -33,6 +33,8 @@
 #include <vtkPolygon.h>
 #include <vtkOBJImporter.h>
 #include <vtkOBJReader.h>
+#include <vtkAppendPolyData.h>
+#include <vtkPointData.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>

@@ -35,7 +35,7 @@ inline vtkActorPointer CreateRandomSphere(DetailsLevel resolution = DetailsLevel
 
     sphereSource->SetPhiResolution(res);
     sphereSource->SetThetaResolution(res);
-
+    sphereSource->Update();
     auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(sphereSource->GetOutputPort());
     auto actor = vtkSmartPointer<vtkActor>::New();
@@ -50,6 +50,7 @@ inline vtkActorPointer CreateRandomLine()
     lineSource->SetPoint1(std::rand() % 20 - 10, std::rand() % 20 - 10, std::rand() % 20 - 10);
     lineSource->SetPoint2(std::rand() % 20 - 10, std::rand() % 20 - 10, std::rand() % 20 - 10);
 
+    lineSource->Update();
     auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(lineSource->GetOutputPort());
 
@@ -69,7 +70,7 @@ inline vtkActorPointer CreateSphere(double radius, const Eigen::Vector3d& center
 
     sphereSource->SetPhiResolution(res);
     sphereSource->SetThetaResolution(res);
-
+    sphereSource->Update();
     const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(sphereSource->GetOutputPort());
     auto actor = vtkSmartPointer<vtkActor>::New();
@@ -92,7 +93,7 @@ inline vtkActorPointer CreateCone(double radius, double height, const Eigen::Vec
 
     const auto res = std::pow(2, static_cast<int>(resolution));
     coneSource->SetResolution(res);
-
+    coneSource->Update();
     const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(coneSource->GetOutputPort());
     auto actor = vtkSmartPointer<vtkActor>::New();
@@ -111,7 +112,7 @@ inline vtkActorPointer CreateCylinder(double radius, double height, const Eigen:
 
     const auto res = std::pow(2, static_cast<int>(resolution));
     cylinderSource->SetResolution(res);
-
+    cylinderSource->Update();
     const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(cylinderSource->GetOutputPort());
     auto actor = vtkSmartPointer<vtkActor>::New();
@@ -189,7 +190,7 @@ inline vtkActorPointer CreateLine(const Eigen::Vector3d& begin, const Eigen::Vec
 
     lineSource->SetPoint1(begin[0], begin[1], begin[2]);
     lineSource->SetPoint2(end[0], end[1], end[2]);
-
+    lineSource->Update();
     const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     mapper->SetInputConnection(lineSource->GetOutputPort());
 
@@ -238,11 +239,11 @@ inline Eigen::Vector3d ConvertHexToEigenVectorColor(const QString& hex)
 
     bool ok;
 
-    const int r = hex.mid(1, 2).toInt(&ok, 16);
-    const int g = hex.mid(3, 2).toInt(&ok, 16);
-    const int b = hex.mid(5, 2).toInt(&ok, 16);
+    const double r = hex.mid(1, 2).toInt(&ok, 16);
+    const double g = hex.mid(3, 2).toInt(&ok, 16);
+    const double b = hex.mid(5, 2).toInt(&ok, 16);
 
-    return Eigen::Vector3d(r, g, b);
+    return Eigen::Vector3d(r / 255, g / 255, b / 255);
 }
 
 using ProbeHeadGeometry = ProbeHeadExtensionGeometryData;
@@ -259,4 +260,63 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
             return CreateSphere(geometry.Diameter() / 2, { 0, 0, 0 }, color);
     }
     return { Status::GenericFailure, "Uncovered geometry type enum value" };
+}
+
+inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
+{
+    double runningHeight = 0;
+
+    vtkNew<vtkPolyDataMapper> gigaMapper;
+    vtkNew<vtkAppendPolyData> append;
+    vtkNew<vtkUnsignedCharArray> colors;
+    colors->SetName("Colors");
+    colors->SetNumberOfComponents(3);
+
+    for(const auto& g : part) {
+        const auto geometry = BuildGeometryFromGeometryPrimitive(g);
+        if(geometry.isSuccess()) {
+            const auto actor = geometry.value();
+            actor->SetPosition(0, runningHeight + g.Height() / 2, 0);
+            runningHeight += g.Height();
+
+            const auto mapperData = vtkPolyDataMapper::SafeDownCast(actor->GetMapper())->GetInput();
+
+            vtkNew<vtkTransform> transform;
+            transform->SetMatrix(actor->GetMatrix());
+
+            vtkNew<vtkTransformPolyDataFilter> filter;
+            filter->SetTransform(transform);
+            filter->SetInputData(mapperData);
+            filter->Update();
+
+            double* color = actor->GetProperty()->GetColor();
+            double colorUC[3] = {
+                color[0] * 255,
+                color[1] * 255,
+                color[2] * 255
+            };
+
+            auto numPoints = filter->GetOutput()->GetNumberOfPoints();
+            for(vtkIdType i = 0; i < numPoints; ++i) {
+                colors->InsertNextTuple(colorUC);
+            }
+
+            append->AddInputData(filter->GetOutput());
+            //_renderer->AddActor(actor);
+        }
+    }
+
+    append->Update();
+
+    const auto combinedPolyData = append->GetOutput();
+    combinedPolyData->GetCellData()->SetScalars(colors);
+
+    gigaMapper->SetInputData(combinedPolyData);
+
+    gigaMapper->SetInputConnection(append->GetOutputPort());
+
+    const auto result = vtkSmartPointer<vtkActor>::New();
+    result->SetMapper(gigaMapper);
+
+    return result;
 }

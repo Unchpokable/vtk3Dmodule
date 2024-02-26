@@ -64,7 +64,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     //    
     //);
 
-    /*const auto cone = CreateTruncatedCone(10, 25, 14, { 0, 0, 0 }, { .5, .5, .5 }, DetailsLevel::High);
+    /*const auto cone = CreateTruncatedCone(10, 25, 14, { 60, 60, 60 }, { .5, .5, .5 }, DetailsLevel::High);
 
     const auto realCone = CreateCone(24, 50, { 50, 50, 50 }, { .5, .5, .5 });
 
@@ -83,27 +83,18 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Modules();
+    const auto extensions = catalog.Styluses();
 
-    double runningHeight = 0;
     const auto part = extensions.at(4)->Geometry();
 
     // TODO: Extract as function
-    vtkNew<vtkAssembly> module;
+    //vtkNew<vtkAssembly> machine;
 
-    for(const auto& g : part)
-    {
-        const auto geometry = BuildGeometryFromGeometryPrimitive(g);
-        if (geometry.isSuccess())
-        {
-            const auto actor = geometry.value();
-            actor->SetPosition(0, runningHeight + g.Height() / 2, 0);
-            runningHeight += g.Height();
-            module->AddPart(actor);
-        }
-    }
+    const auto result = GeneratePolyPart(part);
 
-    _renderer->AddActor(module);
+    _renderer->AddActor(result);
+
+    //_renderer->AddActor(machine);
     _renderer->ResetCamera();
 }
 

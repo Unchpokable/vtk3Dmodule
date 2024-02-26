@@ -273,7 +273,7 @@ public:
 
     using CatalogFilter = std::function<bool(const QDomElement&)>;
 
-    explicit ProbePartCatalog(const QString& path)
+    explicit ProbePartCatalog(const QString& path) noexcept
     {
         QDomDocument document;
         QFile file(path);
@@ -305,7 +305,7 @@ public:
         return BuildCollection<Module>("Module", filter);
     }
 
-    ProbePartCollection Connectors(const CatalogFilter& filter = nullptr)
+    ProbePartCollection Connectors(const CatalogFilter& filter = nullptr) const
     {
         return {};
     }
