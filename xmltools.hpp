@@ -2,6 +2,8 @@
 
 #include "pch.h"
 
+//TODO: Need refactoring
+
 using byte = unsigned char;
 
 enum class GeometryType
@@ -419,12 +421,13 @@ public:
         _color.G = static_cast<byte>(color.attribute("G").toInt());
         _color.B = static_cast<byte>(color.attribute("B").toInt());
     }
-    QString MeshFile()
+
+    QString MeshFile() const noexcept
     {
         return _actualMeshFile;
     }
 
-    Rgb Color()
+    Rgb Color() const noexcept
     {
         return _color;
     }
@@ -509,6 +512,21 @@ public:
         }
     }
 
+    MachineModelList Models()
+    {
+        return _models;
+    }
+
+    MachinePartRotaryAxis Axis()
+    {
+        return _axes;
+    }
+
+    std::vector<MachinePart*> ChildMachines()
+    {
+        return _nestedMachinePart;
+    }
+
 private:
     bool _has_rotation_axis = false;
 
@@ -517,11 +535,12 @@ private:
     std::vector<MachinePart*> _nestedMachinePart{};
 };
 
+using MachinePartCollection = std::vector<MachinePart>;
+
 class ProbeHeadLoader
 {
 public:
 
-    using MachinePartCollection = std::vector<MachinePart>;
     
     static MachinePartCollection FromMtd(const QString& path) {
         QDomDocument document;

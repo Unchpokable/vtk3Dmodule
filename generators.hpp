@@ -132,9 +132,9 @@ inline vtkActorPointer CreateTruncatedCone(double topRadius, double bottomRadius
     for(vtkIdType i = 0; i < numSides; ++i) {
         double angle = 2.0 * vtkMath::Pi() * i / numSides;
         // Bottom 
-        points->InsertNextPoint(bottomRadius * cos(angle), bottomRadius * sin(angle), 0.0);
+        points->InsertNextPoint(bottomRadius * cos(angle), 0, bottomRadius * sin(angle));
         // top
-        points->InsertNextPoint(topRadius * cos(angle), topRadius * sin(angle), height);
+        points->InsertNextPoint(topRadius * cos(angle), height, topRadius * sin(angle));
     }
 
     // Top circle polygons
@@ -250,10 +250,12 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
     const auto color = ConvertHexToEigenVectorColor(geometry.HexColor());
     switch(geometry.Type()) {
         case GeometryType::Cylinder:
-            return CreateTruncatedCone(geometry.Diameter1(), geometry.Diameter2(), geometry.Height(), { 0, 0, 0 }, color);
+            return CreateCylinder(geometry.Diameter(), geometry.Height(), {0, 0, 0}, color);
+            
         case GeometryType::Cone:
-            return CreateCone(geometry.Diameter() / 2, geometry.Height(), { 0, 0, 0 }, color);
+            return CreateTruncatedCone(geometry.Diameter1(), geometry.Diameter2(), geometry.Height(), { 0, 0, 0 }, color);
         case GeometryType::Sphere:
             return CreateSphere(geometry.Diameter() / 2, { 0, 0, 0 }, color);
     }
+    return { Status::GenericFailure, "Uncovered geometry type enum value" };
 }

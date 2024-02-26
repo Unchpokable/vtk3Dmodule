@@ -64,13 +64,13 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     //    
     //);
 
-    const auto cone = CreateTruncatedCone(10, 25, 14, { 0, 0, 0 }, { .5, .5, .5 }, DetailsLevel::High);
+    /*const auto cone = CreateTruncatedCone(10, 25, 14, { 0, 0, 0 }, { .5, .5, .5 }, DetailsLevel::High);
 
     const auto realCone = CreateCone(24, 50, { 50, 50, 50 }, { .5, .5, .5 });
 
     const auto cylinder = CreateCylinder(50, 25, { -45, -63, -54 }, { .5, .5, .5 });
 
-    AddActorsToRenderer(_renderer, cone, realCone, cylinder);
+    AddActorsToRenderer(_renderer, cone, realCone, cylinder);*/
 
     _polyLine = new PolyLine();
 
@@ -80,6 +80,25 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     });
 
     _renderer->AddActor(_polyLine->GetActor());
+
+    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+
+    const auto extensions = catalog.Styluses();
+
+    double runningHeight = 0;
+    const auto part = extensions.at(28)->Geometry();
+    for(const auto& g : part)
+    {
+        const auto geometry = BuildGeometryFromGeometryPrimitive(g);
+        if (geometry.isSuccess())
+        {
+            const auto actor = geometry.value();
+            actor->SetPosition(0, runningHeight + g.Height() / 2, 0);
+            runningHeight += g.Height();
+
+            _renderer->AddActor(actor);
+        }
+    }
 
     _renderer->ResetCamera();
 }

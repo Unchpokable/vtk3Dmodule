@@ -28,12 +28,12 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
         _ui->sceneWidget->renderScene();
     });
 
-    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+    //ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Extensions();
-    const auto modules = catalog.Modules();
+    //const auto extensions = catalog.Extensions();
+    //const auto modules = catalog.Modules();
 
-    const auto machine = ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.mtd");
+    //const auto machine = ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.mtd");
 }
 
 MeasurementWindow::~MeasurementWindow() {

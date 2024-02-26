@@ -31,6 +31,8 @@
 #include <vtkPolyLine.h>
 #include <vtkAssembly.h>
 #include <vtkPolygon.h>
+#include <vtkOBJImporter.h>
+#include <vtkOBJReader.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
