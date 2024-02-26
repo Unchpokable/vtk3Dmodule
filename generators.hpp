@@ -257,6 +257,7 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
         case GeometryType::Cone:
             return CreateTruncatedCone(geometry.Diameter1(), geometry.Diameter2(), geometry.Height(), { 0, 0, 0 }, color);
         case GeometryType::Sphere:
+            //Looks like a `Diameter` from part catalog is a radius actually POG LOL KEK
             return CreateSphere(geometry.Diameter(), { 0, 0, 0 }, color);
     }
     return { Status::GenericFailure, "Uncovered geometry type enum value" };
