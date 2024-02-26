@@ -60,13 +60,13 @@ inline vtkActorPointer CreateRandomLine()
     return actor;
 }
 
-inline vtkActorPointer CreateSphere(double radius, const Eigen::Vector3d& center, const Eigen::Vector3d& color, DetailsLevel resoulution = DetailsLevel::Medium)
+inline vtkActorPointer CreateSphere(double radius, const Eigen::Vector3d& center, const Eigen::Vector3d& color, DetailsLevel resolution = DetailsLevel::Medium)
 {
     const auto sphereSource = vtkSmartPointer<vtkSphereSource>::New();
     sphereSource->SetRadius(radius);
     sphereSource->SetCenter(center[0], center[1], center[2]);
 
-    const auto res = std::pow(2, static_cast<int>(resoulution));
+    const auto res = std::pow(2, static_cast<int>(resolution));
 
     sphereSource->SetPhiResolution(res);
     sphereSource->SetThetaResolution(res);
@@ -257,7 +257,7 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
         case GeometryType::Cone:
             return CreateTruncatedCone(geometry.Diameter1(), geometry.Diameter2(), geometry.Height(), { 0, 0, 0 }, color);
         case GeometryType::Sphere:
-            return CreateSphere(geometry.Diameter() / 2, { 0, 0, 0 }, color);
+            return CreateSphere(geometry.Diameter(), { 0, 0, 0 }, color);
     }
     return { Status::GenericFailure, "Uncovered geometry type enum value" };
 }
@@ -269,11 +269,7 @@ inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
     //TODO: Too complex code. Split into separate functions
     double runningHeight = 0;
 
-    vtkNew<vtkPolyDataMapper> gigaMapper;
-    vtkNew<vtkAppendPolyData> append;
-    vtkNew<vtkUnsignedCharArray> colors;
-    colors->SetName("Colors");
-    colors->SetNumberOfComponents(3);
+    std::vector<vtkActorPointer> actors;
 
     for(const auto& g : part) {
         const auto geometry = BuildGeometryFromGeometryPrimitive(g);
@@ -281,44 +277,9 @@ inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
             const auto actor = geometry.value();
             actor->SetPosition(0, runningHeight + g.Height() / 2, 0);
             runningHeight += g.Height();
-
-            const auto mapperData = vtkPolyDataMapper::SafeDownCast(actor->GetMapper())->GetInput();
-
-            vtkNew<vtkTransform> transform;
-            transform->SetMatrix(actor->GetMatrix());
-
-            const vtkNew<vtkTransformPolyDataFilter> filter;
-            filter->SetTransform(transform);
-            filter->SetInputData(mapperData);
-            filter->Update();
-
-            append->AddInputData(filter->GetOutput());
-
-            double* color = actor->GetProperty()->GetColor();
-            const double colorUC[3] = {
-                color[0] * 255,
-                color[1] * 255,
-                color[2] * 255
-            };
-
-            const auto numPoints = filter->GetOutput()->GetNumberOfPoints();
-            for(vtkIdType i = 0; i < numPoints; ++i) {
-                colors->InsertNextTuple(colorUC);
-            }
+            actors.push_back(actor);
         }
     }
 
-    append->Update();
-
-    const auto combinedPolyData = append->GetOutput();
-    combinedPolyData->GetPointData()->SetScalars(colors);
-
-    gigaMapper->SetInputConnection(append->GetOutputPort());
-
-    gigaMapper->SetInputData(combinedPolyData);
-
-    auto result = vtkSmartPointer<vtkActor>::New();
-    result->SetMapper(gigaMapper);
-
-    return result;
+    return MergeActors(actors);
 }

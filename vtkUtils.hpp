@@ -51,3 +51,59 @@ inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path) {
 
     return texture; //Implicit conversion - Real return type is Result<vtkSmartPointer<vtkTexture>>
 }
+
+/**
+ * \brief Merges all given actors to single one \c vtkActor, saving colors and mesh.
+ * \param actors \c std::vector with actors to be merged
+ * \param triangleMesh flag that defines is needed to transform rectangle mesh to triangle
+ * \return result \c vtkActor
+ */
+inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, bool triangleMesh = false)
+{
+    const vtkNew<vtkPolyDataMapper> finalMapper;
+    const vtkNew<vtkAppendPolyData> appendData;
+    const vtkNew<vtkUnsignedCharArray> colors;
+
+    colors->SetName("Colors");
+    colors->SetNumberOfComponents(3);
+
+    for (const auto& actor: actors)
+    {
+        const auto mapperData = vtkPolyDataMapper::SafeDownCast(actor->GetMapper())->GetInput();
+
+        vtkNew<vtkTransform> transform;
+
+        transform->SetMatrix(actor->GetMatrix());
+
+        const vtkNew<vtkTransformPolyDataFilter> filter;
+        filter->SetTransform(transform);
+        filter->SetInputData(mapperData);
+        filter->Update();
+
+        appendData->AddInputData(filter->GetOutput());
+
+        const auto color = actor->GetProperty()->GetColor();
+        const double colorUC[3] = {
+            color[0] * 255,
+            color[1] * 255,
+            color[2] * 255
+        };
+
+        const auto numPoints = filter->GetOutput()->GetNumberOfPoints();
+        for(vtkIdType i = 0; i < numPoints; ++i) {
+            colors->InsertNextTuple(colorUC);
+        }
+    }
+
+    appendData->Update();
+
+    const auto combinedPolyData = appendData->GetOutput();
+    combinedPolyData->GetPointData()->SetScalars(colors);
+
+    finalMapper->SetInputConnection(appendData->GetOutputPort());
+    finalMapper->SetInputData(combinedPolyData);
+
+    auto result = vtkActorPointer::New();
+    result->SetMapper(finalMapper);
+    return result;
+}
