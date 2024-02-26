@@ -131,10 +131,11 @@ inline vtkActorPointer CreateTruncatedCone(double topRadius, double bottomRadius
     // Generate a circles for top and bottom of our cone
     for(vtkIdType i = 0; i < numSides; ++i) {
         double angle = 2.0 * vtkMath::Pi() * i / numSides;
+        // Align our cone along the Y axis as any other VTK generators
         // Bottom 
-        points->InsertNextPoint(bottomRadius * cos(angle), 0, bottomRadius * sin(angle));
+        points->InsertNextPoint(bottomRadius * cos(angle), -height/2, bottomRadius * sin(angle));
         // top
-        points->InsertNextPoint(topRadius * cos(angle), height, topRadius * sin(angle));
+        points->InsertNextPoint(topRadius * cos(angle), height/2, topRadius * sin(angle));
     }
 
     // Top circle polygons
@@ -244,7 +245,7 @@ inline Eigen::Vector3d ConvertHexToEigenVectorColor(const QString& hex)
     return Eigen::Vector3d(r, g, b);
 }
 
-using ProbeHeadGeometry = ProbeHeadExtensionGeometryPrimitive;
+using ProbeHeadGeometry = ProbeHeadExtensionGeometryData;
 
 inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHeadGeometry& geometry) {
     const auto color = ConvertHexToEigenVectorColor(geometry.HexColor());
