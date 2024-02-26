@@ -309,7 +309,7 @@ inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
     append->Update();
 
     const auto combinedPolyData = append->GetOutput();
-    combinedPolyData->GetCellData()->SetScalars(colors);
+    combinedPolyData->GetPointData()->SetScalars(colors);
 
     gigaMapper->SetInputData(combinedPolyData);
 
