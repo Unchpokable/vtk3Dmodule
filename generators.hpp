@@ -274,7 +274,7 @@ inline Result<vtkActorPointer> BuildGeometryFromGeometryPrimitive(const ProbeHea
 
 
 // Generate a single poly-data actor from list of an geometry container
-inline vtkActorPointer GeneratePolyPart(const GeometryPrimitiveContainer& part)
+inline vtkActorPointer GeneratePolyPart(const GeometryDataContainer& part)
 {
     //TODO: Too complex code. Split into separate functions
     double runningHeight = 0;

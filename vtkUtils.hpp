@@ -56,10 +56,10 @@ inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path) {
 /**
  * \brief Merges all given actors to single one \c vtkActor, saving colors and mesh.
  * \param actors \c std::vector with actors to be merged
- * \param triangleMesh flag that defines is needed to transform rectangle mesh to triangle
+ * \param useActorPropertyToExtractColor \c bool flag defines that function should use PolyData or property to copy color of source actors
  * \return result \c vtkActor
  */
-inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, bool triangleMesh = false)
+inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, bool useActorPropertyToExtractColor = true)
 {
     const vtkNew<vtkPolyDataMapper> finalMapper;
     const vtkNew<vtkAppendPolyData> appendData;
@@ -83,16 +83,32 @@ inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, b
 
         appendData->AddInputData(filter->GetOutput());
 
-        const auto color = actor->GetProperty()->GetColor();
-        const double colorUC[3] = {
-            color[0] * 255,
-            color[1] * 255,
-            color[2] * 255
-        };
+        if (useActorPropertyToExtractColor)
+        {
+            const auto color = actor->GetProperty()->GetColor();
+            const double colorUC[3] = {
+                color[0] * 255,
+                color[1] * 255,
+                color[2] * 255
+            };
 
-        const auto numPoints = filter->GetOutput()->GetNumberOfPoints();
-        for(vtkIdType i = 0; i < numPoints; ++i) {
-            colors->InsertNextTuple(colorUC);
+            const auto numPoints = filter->GetOutput()->GetNumberOfPoints();
+            for(vtkIdType i = 0; i < numPoints; ++i) {
+                colors->InsertNextTuple(colorUC);
+            }
+        }
+        else
+        {
+            const auto scalars = mapperData->GetPointData()->GetScalars();
+            if (scalars)
+            {
+                for (vtkIdType i = 0; i < scalars->GetNumberOfTuples(); i++)
+                {
+                    double color[3];
+                    scalars->GetTuple(i, color);
+                    colors->InsertNextTuple(color);
+                }
+            }
         }
     }
 

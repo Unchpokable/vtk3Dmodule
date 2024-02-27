@@ -132,7 +132,7 @@ private:
     QString _hexColor = "";
 };
 
-using GeometryPrimitiveContainer = std::vector<ProbeHeadExtensionGeometryData>;
+using GeometryDataContainer = std::vector<ProbeHeadExtensionGeometryData>;
 
 class SimpleProbePart
 {
@@ -182,7 +182,7 @@ public:
         return _manufacturer;
     }
 
-    GeometryPrimitiveContainer Geometry() const noexcept
+    GeometryDataContainer Geometry() const noexcept
     {
         return _geometry;
     }
@@ -190,7 +190,7 @@ public:
 protected:
     ProbePartType _type;
     QString _manufacturer;
-    GeometryPrimitiveContainer _geometry;
+    GeometryDataContainer _geometry;
 
     QString _name;
     QString _price;
@@ -262,8 +262,51 @@ private:
     QString _docking_height;
 };
 
+class ProbeBody final : public SimpleProbePart
+{
+public:
+    explicit ProbeBody(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
+    {
+        _docking_height = xmlElement.attribute("docking_height");
+    }
+
+    QString DockingHeight() {
+        return _docking_height;
+    }
+
+private:
+    QString _docking_height;
+};
+
 class Connector : SimpleProbePart
 {
+};
+
+class CatalogAssembly
+{
+public:
+    using ElementsNamesCollection = std::vector<std::string>;
+
+    CatalogAssembly(const QDomElement& xml) noexcept
+    {
+        const auto nodes = xml.childNodes();
+
+        for (auto i = 0; i < nodes.count(); i++)
+        {
+            const auto elem = nodes.item(i).toElement();
+
+            if(elem.tagName() == "Element")
+                _elements.push_back(elem.attribute("ref").toStdString());
+        }
+    }
+
+    ElementsNamesCollection Elements() const noexcept
+    {
+        return _elements;
+    }
+
+private:
+    std::vector<std::string> _elements{};
 };
 
 class ProbePartCatalog {
@@ -271,7 +314,7 @@ public:
     template<typename T>
     using PartCollection = std::vector<T*>;
 
-    using ProbePartCollection = std::vector<SimpleProbePart*>;
+    using AssembliesCollection = PartCollection<CatalogAssembly>;
 
     using CatalogFilter = std::function<bool(const QDomElement&)>;
 
@@ -289,7 +332,10 @@ public:
         }
         file.close();
 
-        _root = document.firstChildElement("Catalogue").firstChildElement("ProbeParts");
+        const auto catalog = document.firstChildElement("Catalogue");
+
+        _root = catalog.firstChildElement("ProbeParts");
+        _assemblies = catalog.firstChildElement("Assemblies");
     }
 
     template<typename Part = SimpleProbePart,
@@ -298,44 +344,81 @@ public:
     {
         const auto xmlElements = _root.childNodes();
 
-        for(int i = 0; i < xmlElements.count(); ++i) {
+        for(int i = 0; i < xmlElements.count(); ++i) 
+        {
             const auto elem = xmlElements.item(i).toElement();
 
             if(elem.hasAttribute("name"))
+            {
                 if(elem.attribute("name") == name)
                     return new Part(elem);
+            }
         }
 
-        return {};
+        return nullptr;
+    }
+
+    template<typename Part = SimpleProbePart,
+        std::enable_if_t<std::is_base_of_v<SimpleProbePart, Part> || std::is_convertible_v<Part*, SimpleProbePart*>, bool> = true>
+    Part* FindByName(const std::string& name) const
+    {
+        return FindByName<Part>(QString::fromStdString(name));
+    }
+
+    CatalogAssembly* FindAssembly(const QString& name) const
+    {
+        const auto xmlElements = _assemblies.childNodes();
+
+        for(int i = 0; i < xmlElements.count(); ++i) {
+            const auto elem = xmlElements.item(i).toElement();
+
+            if(elem.hasAttribute("name")) {
+                if(elem.attribute("name") == name)
+                    return new CatalogAssembly(elem);
+            }
+        }
+
+        return nullptr;
+    }
+
+    CatalogAssembly* FindAssembly(const std::string& name) const
+    {
+        return FindAssembly(QString::fromStdString(name));
+    }
+
+    AssembliesCollection Assemblies(const CatalogFilter& filter = nullptr) const
+    {
+        return BuildCollection<CatalogAssembly>(_assemblies, "Assembly", filter);
     }
 
     PartCollection<Extension> Extensions(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Extension>("Extension", filter);
+        return BuildCollection<Extension>(_root, "Extension", filter);
     }
 
     PartCollection<Stylus> Styluses(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Stylus>("Stylus", filter);
+        return BuildCollection<Stylus>(_root, "Stylus", filter);
+    }
+
+    PartCollection<ProbeBody> Probes(const CatalogFilter& filter = nullptr) const
+    {
+        return BuildCollection<ProbeBody>(_root, "ProbeBody", filter);
     }
 
     PartCollection<Module> Modules(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Module>("Module", filter);
-    }
-
-    ProbePartCollection Connectors(const CatalogFilter& filter = nullptr) const
-    {
-        return {};
+        return BuildCollection<Module>(_root, "Module", filter);
     }
 
 private:
     QDomElement _root;
+    QDomElement _assemblies;
 
     template<typename ProbePart>
-    PartCollection<ProbePart> BuildCollection(const QString& tagName, const CatalogFilter& filter = nullptr) const
+    PartCollection<ProbePart> BuildCollection(const QDomElement& source, const QString& tagName, const CatalogFilter& filter = nullptr) const
     {
-        const auto xmlElements = _root.elementsByTagName(tagName);
+        const auto xmlElements = source.elementsByTagName(tagName);
 
         PartCollection<ProbePart> result;
 

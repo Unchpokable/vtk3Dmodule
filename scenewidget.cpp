@@ -4,6 +4,7 @@
 #include "vtkUtils.hpp"
 #include "generators.hpp"
 #include "MarkerManager.hpp"
+#include "ProbeToolAssembly.h"
 
 SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNativeWidget(parent) {
     _renderer = vtkSmartPointer<vtkRenderer>::New();
@@ -72,34 +73,41 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     AddActorsToRenderer(_renderer, cone, realCone, cylinder);*/
 
-    _polyLine = new PolyLine();
+    /*_polyLine = new PolyLine();
 
-    _polyLine->SetCallback([this](PolyLine*)
-    {
+    _polyLine->SetCallback([this](PolyLine*) {
         renderWindow()->Render();
     });
 
-    _renderer->AddActor(_polyLine->GetActor());
+    _renderer->AddActor(_polyLine->GetActor());*/
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Styluses();
+    const auto extensions = catalog.Extensions();
+    const auto modules = catalog.Modules();
+    const auto probes = catalog.Probes();
+    const auto styluses = catalog.Styluses();
 
-    const auto part = extensions.at(8)->Geometry();
+    /*const auto part = catalog.FindByName("TP20_STD");
+    const auto foundPartActor = GeneratePolyPart(part->Geometry());
+    SetActorLightingPlastic(foundPartActor);
+    foundPartActor->SetPosition(140, 0, 0);*/
+    //_renderer->AddActor(foundPartActor);
 
-    /*double yPos = 0;
+    ProbeToolAssembly toolFromAssembly;
+    const auto assembly = catalog.FindAssembly(std::string("SP25xModulex20x2"));
+    toolFromAssembly.Build(catalog, assembly);
 
-    for (const auto& p: extensions)
-    {
-        const auto actor = GeneratePolyPart(p->Geometry());
-        actor->SetPosition(yPos, 0, 0);
-        yPos += 90;
-        _renderer->AddActor(actor);
-    }*/
+    const auto toolModel = toolFromAssembly.Weld();
 
-    const auto result = GeneratePolyPart(part);
+    toolModel->SetPosition(0, 0, 60);
+    _renderer->AddActor(toolModel);
 
-    _renderer->AddActor(result);
+    ProbeToolAssembly manualTool;
+    manualTool.Build(catalog, {"PAA2 x 140", "M2x90_CF", "TP20_EM2", "Eagle_p_touch_LF", "M2_20x1_TC"});
+
+    const auto manualToolModel = manualTool.Weld();
+    _renderer->AddActor(manualToolModel);
 
     _renderer->ResetCamera();
     showGizmo();
@@ -157,7 +165,7 @@ void SceneWidget::showGizmo()
     _gizmo = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
     _gizmo->SetOrientationMarker(axes);
     _gizmo->SetInteractor(renderWindow()->GetInteractor());
-    _gizmo->SetViewport(0, 0, 0.2, 0.2);
+    _gizmo->SetViewport(.8, .8, 1, 1);
     _gizmo->EnabledOn();
     _gizmo->InteractiveOn();
 }

@@ -5,10 +5,10 @@
 #include "vtkUtils.hpp"
 #include "xmltools.hpp"
 
-class MachinePartAssembly
+class MachineHeadAssembly
 {
 public:
-    MachinePartAssembly(const MachinePart& part) : _part(part)
+    MachineHeadAssembly(const MachinePart& part) : _part(part)
     {
         _assembly = vtkSmartPointer<vtkActor>::New();
     }
@@ -27,7 +27,7 @@ private:
     MachinePart _part;
     vtkSmartPointer<vtkActor> _assembly;
 
-    std::vector<MachinePartAssembly*> _childElements;
+    std::vector<MachineHeadAssembly*> _childElements;
 
     void LoadObj()
     {

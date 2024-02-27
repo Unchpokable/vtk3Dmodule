@@ -1,6 +1,7 @@
 #pragma once
 #include "MarkerManager.hpp"
 #include "PolyLine.hpp"
+#include "pch.h"
 
 class SceneWidget : public QVTKOpenGLNativeWidget {
     Q_OBJECT
@@ -13,7 +14,7 @@ public:
     {
         renderWindow()->RemoveAllObservers();
         delete _renderTimer;
-        delete _polyLine;
+        //delete _polyLine;
     }
 
     vtkCamera* camera() const;
