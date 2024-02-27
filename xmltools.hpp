@@ -197,7 +197,7 @@ protected:
     double _length;
 };
 
-class Extension : public SimpleProbePart
+class Extension final : public SimpleProbePart
 {
 public:
     explicit Extension(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
@@ -221,7 +221,7 @@ private:
     QString _to_mounting;
 };
 
-class Stylus : public SimpleProbePart
+class Stylus final : public SimpleProbePart
 {
 public:
     explicit Stylus(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
@@ -238,7 +238,7 @@ private:
     QString _from_mounting;
 };
 
-class Module : public SimpleProbePart
+class Module final : public SimpleProbePart
 {
 public:
     explicit Module(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
@@ -268,6 +268,8 @@ class Connector : SimpleProbePart
 
 class ProbePartCatalog {
 public:
+    template<typename T>
+    using PartCollection = std::vector<T*>;
 
     using ProbePartCollection = std::vector<SimpleProbePart*>;
 
@@ -290,17 +292,34 @@ public:
         _root = document.firstChildElement("Catalogue").firstChildElement("ProbeParts");
     }
 
-    ProbePartCollection Extensions(const CatalogFilter& filter = nullptr) const
+    template<typename Part = SimpleProbePart,
+        std::enable_if_t<std::is_base_of_v<SimpleProbePart, Part> || std::is_convertible_v<Part*, SimpleProbePart*>, bool> = true>
+    Part* FindByName(const QString& name) const
+    {
+        const auto xmlElements = _root.childNodes();
+
+        for(int i = 0; i < xmlElements.count(); ++i) {
+            const auto elem = xmlElements.item(i).toElement();
+
+            if(elem.hasAttribute("name"))
+                if(elem.attribute("name") == name)
+                    return new Part(elem);
+        }
+
+        return {};
+    }
+
+    PartCollection<Extension> Extensions(const CatalogFilter& filter = nullptr) const
     {
         return BuildCollection<Extension>("Extension", filter);
     }
 
-    ProbePartCollection Styluses(const CatalogFilter& filter = nullptr) const
+    PartCollection<Stylus> Styluses(const CatalogFilter& filter = nullptr) const
     {
         return BuildCollection<Stylus>("Stylus", filter);
     }
 
-    ProbePartCollection Modules(const CatalogFilter& filter = nullptr) const
+    PartCollection<Module> Modules(const CatalogFilter& filter = nullptr) const
     {
         return BuildCollection<Module>("Module", filter);
     }
@@ -314,11 +333,11 @@ private:
     QDomElement _root;
 
     template<typename ProbePart>
-    ProbePartCollection BuildCollection(const QString& tagName, const CatalogFilter& filter = nullptr) const
+    PartCollection<ProbePart> BuildCollection(const QString& tagName, const CatalogFilter& filter = nullptr) const
     {
         const auto xmlElements = _root.elementsByTagName(tagName);
 
-        ProbePartCollection result;
+        PartCollection<ProbePart> result;
 
         for(int i = 0; i < xmlElements.count(); ++i)
         {
@@ -380,12 +399,12 @@ public:
         _axis.K = rotaryInfoTag.attribute("K").toDouble();
     }
 
-    RotaryControlInfo ControlInfo()
+    RotaryControlInfo ControlInfo() const noexcept
     {
         return _controlInfo;
     }
 
-    RotaryAxis Axis()
+    RotaryAxis Axis() const noexcept
     {
         return _axis;
     }
@@ -512,17 +531,27 @@ public:
         }
     }
 
-    MachineModelList Models()
+    bool CanRotate() const noexcept
+    {
+        return _has_rotation_axis;
+    }
+
+    std::string RotationAxisAddress() const noexcept
+    {
+        return _axes.ControlInfo().Address;
+    }
+
+    MachineModelList Models() const noexcept
     {
         return _models;
     }
 
-    MachinePartRotaryAxis Axis()
+    MachinePartRotaryAxis Axis() const noexcept
     {
         return _axes;
     }
 
-    std::vector<MachinePart*> ChildMachines()
+    std::vector<MachinePart*> ChildMachines() const noexcept
     {
         return _nestedMachinePart;
     }
