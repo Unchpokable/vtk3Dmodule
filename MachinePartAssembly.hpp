@@ -2,30 +2,38 @@
 
 #include "pch.h"
 
+#include "vtkUtils.hpp"
 #include "xmltools.hpp"
 
-class ProbeAssembly
+class MachinePartAssembly
 {
 public:
-    ProbeAssembly(const MachinePart& part) : _part(part)
+    MachinePartAssembly(const MachinePart& part) : _part(part)
     {
-        _assembly = vtkSmartPointer<vtkAssembly>::New();
+        _assembly = vtkSmartPointer<vtkActor>::New();
     }
 
-    void Rotate(const Eigen::Affine3d& rotation)
+    void RotateA(const Eigen::Affine3d& rotation)
+    {
+        
+    }
+
+    void RotateB(const Eigen::Affine3d& rotation)
     {
         
     }
 
 private:
     MachinePart _part;
-    vtkSmartPointer<vtkAssembly> _assembly;
+    vtkSmartPointer<vtkActor> _assembly;
 
-    std::vector<ProbeAssembly*> _childElements;
+    std::vector<MachinePartAssembly*> _childElements;
 
     void LoadObj()
     {
         const auto reader = vtkSmartPointer<vtkOBJReader>::New();
+
+        std::vector<vtkSmartPointer<vtkActor>> result;
 
         for (const auto& obj: _part.Models().Parts())
         {
@@ -38,7 +46,9 @@ private:
             const auto part = vtkSmartPointer<vtkActor>::New();
             part->SetMapper(mapper);
 
-            _assembly->AddPart(part);
+            result.push_back(part);
         }
+
+        _assembly = MergeActors(result);
     }
 };
