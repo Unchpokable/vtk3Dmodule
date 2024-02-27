@@ -3,6 +3,7 @@
 #include <type_traits>
 
 #include "result.hpp"
+#include "pch.h"
 
 using vtkRendererPointer = vtkSmartPointer<vtkRenderer>;
 using vtkActorPointer = vtkSmartPointer<vtkActor>;
@@ -107,4 +108,45 @@ inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, b
     auto result = vtkActorPointer::New();
     result->SetMapper(finalMapper);
     return result;
+}
+
+// Kinda shader config
+
+inline void SetActorLightingMetallic(const vtkActorPointer& actor, bool usePBR = true)
+{
+    // Should work cool with PBR
+    const auto property = actor->GetProperty();
+    if (usePBR)
+    {
+        property->SetInterpolationToPBR();
+        property->SetMetallic(1);
+        property->SetRoughness(0.5);
+    }
+    else
+    {
+        property->SetSpecular(.1);
+        property->SetSpecularPower(80);
+        property->SetAmbient(.4);
+        property->SetDiffuse(.3);
+    }
+}
+
+inline void SetActorLightingPlastic(const vtkActorPointer& actor)
+{
+    const auto property = actor->GetProperty();
+
+    property->SetSpecular(.6);
+    property->SetSpecularPower(20);
+    property->SetAmbient(.4);
+    property->SetDiffuse(.6);
+}
+
+inline void SetActorLightingMatte(const vtkActorPointer& actor)
+{
+    const auto property = actor->GetProperty();
+
+    property->SetSpecular(.1);
+    property->SetSpecularPower(5);
+    property->SetAmbient(.4);
+    property->SetDiffuse(.8);
 }
