@@ -43,6 +43,11 @@ public:
         _parts.push_back(actor);
     }
 
+    std::vector<vtkActorPointer> Parts() const noexcept
+    {
+        return _parts;
+    }
+
     double Length() const noexcept
     {
         return _toolLength;

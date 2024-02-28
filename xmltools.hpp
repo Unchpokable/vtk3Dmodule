@@ -334,7 +334,7 @@ public:
 
         const auto catalog = document.firstChildElement("Catalogue");
 
-        _root = catalog.firstChildElement("ProbeParts");
+        _parts = catalog.firstChildElement("ProbeParts");
         _assemblies = catalog.firstChildElement("Assemblies");
     }
 
@@ -342,7 +342,7 @@ public:
         std::enable_if_t<std::is_base_of_v<SimpleProbePart, Part> || std::is_convertible_v<Part*, SimpleProbePart*>, bool> = true>
     Part* FindByName(const QString& name) const
     {
-        const auto xmlElements = _root.childNodes();
+        const auto xmlElements = _parts.childNodes();
 
         for(int i = 0; i < xmlElements.count(); ++i) 
         {
@@ -393,26 +393,26 @@ public:
 
     PartCollection<Extension> Extensions(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Extension>(_root, "Extension", filter);
+        return BuildCollection<Extension>(_parts, "Extension", filter);
     }
 
     PartCollection<Stylus> Styluses(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Stylus>(_root, "Stylus", filter);
+        return BuildCollection<Stylus>(_parts, "Stylus", filter);
     }
 
     PartCollection<ProbeBody> Probes(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<ProbeBody>(_root, "ProbeBody", filter);
+        return BuildCollection<ProbeBody>(_parts, "ProbeBody", filter);
     }
 
     PartCollection<Module> Modules(const CatalogFilter& filter = nullptr) const
     {
-        return BuildCollection<Module>(_root, "Module", filter);
+        return BuildCollection<Module>(_parts, "Module", filter);
     }
 
 private:
-    QDomElement _root;
+    QDomElement _parts;
     QDomElement _assemblies;
 
     template<typename ProbePart>
