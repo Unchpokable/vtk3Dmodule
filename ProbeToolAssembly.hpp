@@ -7,19 +7,11 @@
 class ProbeToolAssembly
 {
 public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
     vtkActorPointer Weld() const
     {
         return MergeActors(_parts, false);
-    }
-
-    void Build(const ProbePartCatalog& catalog, const CatalogAssembly* const assembly)
-    {
-        if (!assembly)
-        {
-            qDebug() << "Assembly pointer was nullptr";
-            return;
-        }
-        Build(catalog, *assembly);
     }
 
     void Build(const ProbePartCatalog& catalog, const CatalogAssembly& assembly)
@@ -31,15 +23,23 @@ public:
     {
         for (const auto& name: names)
         {
-            AddPartFromCatalog(catalog, name);
+            AddPart(catalog, name);
         }
     }
 
-    void AddPart(const SimpleProbePart* const part)
+    void AddPart(const ProbePartCatalog& catalog, const std::string& partName)
     {
-        const auto actor = GeneratePolyPart(part->Geometry());
+        const auto part = catalog.FindByName(partName);
+        if (part)
+            AddPart(*part);
+    }
+
+    void AddPart(const SimpleProbePart& part)
+    {
+        const auto actor = GeneratePolyPart(part.Geometry());
         actor->SetPosition(0, _toolLength, 0);
-        _toolLength += part->Length();
+        _toolLength += part.Length();
+
         _parts.push_back(actor);
     }
 
@@ -55,14 +55,8 @@ public:
 
 private:
 
-    void AddPartFromCatalog(const ProbePartCatalog& catalog, const std::string& name)
-    {
-        const auto part = catalog.FindByName(name);
-
-        if(part)
-            AddPart(part);
-    }
-
     double _toolLength = 0;
     std::vector<vtkActorPointer> _parts;
+
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> _stylusesPoints;
 };

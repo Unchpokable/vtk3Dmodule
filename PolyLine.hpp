@@ -3,7 +3,6 @@
 #include "pch.h"
 #include "EigenUtils.hpp"
 #include "LineData.hpp"
-#include "Point3D.h"
 
 class PolyLine;
 

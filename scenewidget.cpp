@@ -2,9 +2,8 @@
 
 #include "scenewidget.h"
 #include "vtkUtils.hpp"
-#include "generators.hpp"
 #include "MarkerManager.hpp"
-#include "ProbeToolAssembly.h"
+#include "ProbeToolAssembly.hpp"
 
 SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNativeWidget(parent) {
     _renderer = vtkSmartPointer<vtkRenderer>::New();

@@ -410,6 +410,7 @@ private:
                 return LoadVtkTexture("Normal.png");
             case MarkerType::AntiNormal:
                 return LoadVtkTexture("AntiNormal.png");
+            case MarkerType::Point:
             default:
                 return { Status::BadArgument, "Unsupported node type" };
         }

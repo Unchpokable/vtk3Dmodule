@@ -224,9 +224,12 @@ private:
 class Stylus final : public SimpleProbePart
 {
 public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
     explicit Stylus(const QDomElement& xmlElement) noexcept : SimpleProbePart(xmlElement)
     {
         _from_mounting = xmlElement.attribute("from_mounting");
+        CalculateStylusEndPoint();
     }
 
     QString FromMounting()
@@ -234,8 +237,25 @@ public:
         return _from_mounting;
     }
 
+    Eigen::Vector3d& StylusEnd()
+    {
+        return _stylusEnd;
+    }
+
 private:
     QString _from_mounting;
+    Eigen::Vector3d _stylusEnd;
+
+    void CalculateStylusEndPoint()
+    {
+        if(_geometry.empty())
+            return;
+        const auto sphere = *std::prev(_geometry.end());
+
+        // "Diameter" from ProbePartCatalogue.xml looks like it is a radius
+        const auto stylusEndY = Length() - sphere.Diameter();
+        _stylusEnd = { 0, stylusEndY, 0 }; // VTK aligns any component along the Y axis by default so we needs only Y coordinate at this step
+    }
 };
 
 class Module final : public SimpleProbePart
@@ -280,6 +300,7 @@ private:
 
 class Connector : SimpleProbePart
 {
+    //TODO
 };
 
 class CatalogAssembly
@@ -312,7 +333,7 @@ private:
 class ProbePartCatalog {
 public:
     template<typename T>
-    using PartCollection = std::vector<T*>;
+    using PartCollection = std::vector<T>;
 
     using AssembliesCollection = PartCollection<CatalogAssembly>;
 
@@ -431,10 +452,10 @@ private:
                 if(filter)
                 {
                     if (filter(domElem))
-                        result.push_back(new ProbePart(domElem));
+                        result.push_back(ProbePart(domElem));
                 }
                 else
-                    result.push_back(new ProbePart(domElem));
+                    result.push_back(ProbePart(domElem));
             }
         }
 

@@ -54,10 +54,10 @@ inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path) {
 }
 
 /**
- * \brief Merges all given actors to single one \c vtkActor, saving colors and mesh.
+ * \brief Merges all given actors to single one \c vtkActor, saving colors and mesh geometry and positions.
  * \param actors \c std::vector with actors to be merged
  * \param useActorPropertyToExtractColor \c bool flag defines that function should use PolyData or property to copy color of source actors
- * \return result \c vtkActor
+ * \return result \c vtkSmartPointer to \c vtkActor
  */
 inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, bool useActorPropertyToExtractColor = true)
 {
