@@ -116,7 +116,7 @@
     <ClInclude Include="MarkerManager.hpp">
       <Filter>classes</Filter>
     </ClInclude>
-    <ClInclude Include="Point3D.h">
+    <ClInclude Include="Point3D.hpp">
       <Filter>classes</Filter>
     </ClInclude>
     <ClInclude Include="MachineHeadAssembly.hpp">
@@ -125,7 +125,7 @@
     <ClInclude Include="xmltools.hpp">
       <Filter>hpps</Filter>
     </ClInclude>
-    <ClInclude Include="ProbeToolAssembly.h">
+    <ClInclude Include="ProbeToolAssembly.hpp">
       <Filter>classes</Filter>
     </ClInclude>
   </ItemGroup>

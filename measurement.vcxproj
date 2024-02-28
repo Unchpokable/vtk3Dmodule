@@ -122,11 +122,11 @@
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
-    <ClInclude Include="ProbeToolAssembly.h" />
+    <ClInclude Include="ProbeToolAssembly.hpp" />
     <ClInclude Include="xmltools.hpp" />
     <QtMoc Include="CreateSphereDialog.h" />
     <QtMoc Include="CreateLineDialog.h" />
-    <ClInclude Include="Point3D.h" />
+    <ClInclude Include="Point3D.hpp" />
     <ClInclude Include="MachineHeadAssembly.hpp" />
     <ClInclude Include="Property.hpp" />
     <ClInclude Include="LineData.hpp" />
