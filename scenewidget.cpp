@@ -91,22 +91,25 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     /*const auto part = catalog.FindByName("TP20_STD");
     const auto foundPartActor = GeneratePolyPart(part->Geometry());
     SetActorLightingPlastic(foundPartActor);
-    foundPartActor->SetPosition(140, 0, 0);*/
-    //_renderer->AddActor(foundPartActor);
+    foundPartActor->SetPosition(140, 0, 0);
+    _renderer->AddActor(foundPartActor);*/
 
-    ProbeToolAssembly toolFromAssembly;
+    /*ProbeToolAssembly toolFromAssembly;
     const auto assembly = catalog.FindAssembly(std::string("SP25xModulex20x2"));
     toolFromAssembly.Build(catalog, assembly);
 
     const auto toolModel = toolFromAssembly.Weld();
 
     toolModel->SetPosition(0, 0, 60);
-    _renderer->AddActor(toolModel);
+    _renderer->AddActor(toolModel);*/
 
     ProbeToolAssembly manualTool;
     manualTool.Build(catalog, {"PAA2 x 140", "M2x90_CF", "TP20_EM2", "Eagle_p_touch_LF", "M2_20x1_TC"});
 
     const auto manualToolModel = manualTool.Weld();
+
+    SetActorLightingPlastic(manualToolModel);
+
     _renderer->AddActor(manualToolModel);
 
     _renderer->ResetCamera();
