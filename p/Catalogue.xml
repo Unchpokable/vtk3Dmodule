@@ -1,0 +1,2399 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--===========================================================================
+//D Catalogue of available hardware elements used to build up a probe system
+//D configuration.
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2017 Autodesk, Inc.  All rights reserved.
+//
+// This computer source code and related instructions and comments are the
+// unpublished confidential and proprietary information of Autodesk, Inc. and
+// are protected under applicable copyright and trade secret law.  They may not
+// be disclosed to, copied or used by any third party without the prior
+// written consent of Autodesk, Inc.
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//        ER  01/05/01 Written.
+//        BGB 08/05/01 Renamed files, changed scheme slighly and made minor
+//                     corrections.
+//        ER  15/01/02 added MH20i and MH20 probe heads
+//        ER  07/05/03 added Kinematic Info on PH9 for prototyping
+//        ER  12/12/03 Remove probes , added pictures
+//        ER  16/12/03 Added MP700 probe head for Machine tools
+//        ER  06/06/03 Fixed Probe mounting to 0,0,-24.5 on PH10T
+//        ER  24/03/04 Added MH20 and MH20i kinematic files
+//        GJM 19/05/04 Added OMP40 probe head for machine tools
+//        GJM 21/05/04 Added PH6 & PH1 probe head models
+//        GJM 06/06/04 Added PH6M probe head model
+//        GJM 22/06/04 Added TP1s probe head model
+//        GJM 28/06/04 MH8 MIP PH50 PH10MQ and MIH Probe Heads Added
+//        ER  17/09/04 Fixed PH1 Mounting Points (shift by Z=26 to put hinge at
+//                     Z=0)
+//        ER  05/05/05 Fixed PH1 type - pinspect#3356
+//        GJM 05/05/05 MP1s, MP10, MP12, MP16, MP18, MP7, MP8, MP9, OMP60,
+//                     RMP60 added
+//        ER  25/05/05 Added technology tag ( OMV/CMM )
+//        GJM 20/07/05 Added OMP400 Probe
+//        ER  10/01/06 Added Envelope node for collision protection
+//                     (pinspect#4197)
+//        GJM 20/01/06 Completed the head envelopes and modified existing ones
+//        GJM 03/07/06 Added new head REVO
+//        PRH 08/11/06 Added RENISHAW REVO Adaptor plate to attach RSP2/3 to
+//                     Revo
+//        PRH 02/04/07 pinspect#5524. Revised REVO as probe head
+//        PRH 03/04/07 pinspect#5524. Revised REVO A angle to "115" &
+//                     increment="0.1"
+//        DLM 19/03/08 Removed RevoAdapter and correct Revo envelope
+//                     (pinspect#6518)
+//        DDG 27/03/08 pinspect#6689. Changed type of REVO to CONTINIOUS_5AXIS
+//                     Removed height property from Sphere geometry definition
+//        GJM 16/10/10 Added new Machine Tool probe M&H 32.00-Mini
+//        GJM 08/03/11 Added RTP20 CMM Probe Head
+//        GJM 12/05/11 Added Blum TC60 and M&H 40.01-TX/RX Machine Tool Probes
+//        GJM 25/10/11 Added Renishaw RMP60M-HSK63 with holder
+//        GJM 25/10/11 Added Heidenhain TS640 machine tool probe
+//        GJM 24/11/11 Added TesaStar-i and TesaStar-iM8 manual Probe Heads
+//        GJM 09/12/11 Added Heidenhain TS440 and TS740 Machint Tool Probes
+//        GJM 13/03/12 Added ZEISS VASTXT probe head
+//        GJM 03/04/12 Added Renishaw OMP400-DMC125u Probe and Holder
+//        GJM 03/04/12 Added Renishaw OMP400-FIDIAK165 Probe and Holder
+//        GJM 22/05/12 Added Renishaw OPM400-Hauser40HS Probe, Spindle and
+//                     Adaptor
+//        GJM 22/05/12 Added Renishaw OPM400-Hauser70HS Probe, Spindle and
+//                     Adaptor
+//        SED 12/11/12 Added Marposs T25-G and T25-S
+//        SED 26/11/12 Added Marposs T25-G - OMAP Tools 5360
+//                     and T25-S - OMAP Tools 5360
+//  72208 SNB 30/05/08 pinspect#7121. Made REVO initial values to be trusted
+//  72219 SNB 05/06/08 pinspect#7117. Fixed lower limit of A angle range for
+//                     REVO. Fixed upper limit of A angle range for REVO
+//  72395 GJM 03/07/08 Added RMP600
+//  74717 GJM 08/09/08 Added Blum TC50 Machine Tool Probe
+//        GJM 07/11/08 Added Marposs T36 Machine Tool Probe
+//  75018 GJM 07/11/08 CMS Laser Machine Tool Probe Added. Note no envelope
+//                     added because of its rectangular shape
+//  77546 BGB 27/04/09 Comment out the non-Renishaw machine tools.
+//  79313 AEK 07/08/09 Added back non-Renishaw machine tools, added filtration
+//                     to database ctrl
+//  81051 AEK 05/11/09 Added special models for custom probe heads.
+//  87783 PML 18/11/10 Fixed PH20 envelope.
+//  87832 MGA 18/11/10 Added M&H probe heads.
+//  91091 MGA 27/05/11 Added Blum TC60 and the M&H 40.01 machine probes.
+//  93796 MGA 25/10/11 Added Renishaw RMP60M-HSK63 with holder
+//  93796 MGA 25/10/11 Added Heidenhain TS640 machine tool probe
+//  93895 cm  03/11/11 Added Equator Head info
+//  94321 MGA 24/11/11 Added TesaStar-i and TesaStar-iM8 manual Probe Heads
+//  94603 MGA 12/12/11 Added Heidenhain TS440 and TS740 Machine Tool Probes
+//  96053 MGA 15/03/12 Added ZEISS VASTXT probe head
+//  96370 MGA 03/04/12 Added Renishaw OMP400-DMC125u and OMP400-FIDIAK165
+//                     Probes and Holders
+//  96417 AEK 05/04/12 Added CNC version of RTP20
+//  98702 MGA 18/06/12 Added Renishaw OPM400-Hauser40HS Probe,Spindle+Adaptor
+//  98702 MGA 18/06/12 Added Renishaw OPM400-Hauser70HS Probe,Spindle+Adaptor
+// 101351 MGA 13/11/12 Added Marposs T25-G and T25-S
+// 101605 MGA 26/11/12 Added Marposs T25-G - OMAP Tools 5360
+//                     and T25-S - OMAP Tools 5360
+//        SED 15/02/13 Added Blum TC52 Probe head
+//                     Added Marposs T25G Probe head
+//                     Added Marposs T25S Probe head
+//                     Added Marposs T25G-OMAP_Tool5360 Probe and Holder
+//                     Added Marposs T25S-OMAP_Tool5360 Probe and Holder
+// 103005 MGA 22/02/13 Submitted changes from SED 15/02/13
+// 104157 MGA 15/04/13 Added M&H 38.10 MINI probe head
+// 105243 MGA 05/06/13 Added Blum TC51 probe head
+// 106826 MGA 26/08/13 Added M&H IRP 25.41 Probe and Holder
+// 107244 MGA 13/09/13 Fix incorrect quill mounting point value
+//                     for Blum TC60 probe (fix provided by gjm)
+// 106984 AEK 03/09/13 Fixed tool offset for PH20 probe head.
+// 107679 MGA 03/10/13 Fixed mounting point for Blum TC60 probe head.
+// 111765 MGA 15/04/14 Added MDM CMM Fixed Head (provided by GJM)
+// 112154 JND 07/05/14 Added spaces to MDM fixed head names.
+// 113106 MGA 19/06/14 Added Eagle_m_7.5_M8 Head (provided by GJM)
+//                     Added Eagle_sm_7.5_M8 Head (provided by GJM)
+//                     Added Eagle_sm_7.5_PKJ (provided by GJM)
+//                     Added Eagle_m_7.5_PKJ (provided by GJM)
+// 114996 MGA 19/09/14 Added OMP400-HERMLE (provided by SED)
+// 117989 JND 27/01/15 Updated the mounting point of the Eagle_m_7.5_PKJ head
+// 118691 MGA 19/09/14 Removed OMP400-HERMLE (changes provided by SED)
+// 118821 JND 06/03/15 Updated Eagle heads A axis limits
+// 122804 MGA 07/09/15 Added OMP400 MarkII (changes provided by SED)
+// 123797 MGA 20/10/15 Added HH-A-T5_TKJ (provided by Stefan Schneider)
+// 126483 MGA 24/02/16 Added Renishaw Primo (provided by SED)
+// 131979 ANM 17/02/17 Fix mounting point offset for Eagle_sm_7.5_PKJ head
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CatalogueSchema.xsd">
+  <probeheads>
+    <probehead id="CustomFixed" type="FIXED" to_mounting="*" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Fixed custom probe head, based on RENISHAW TP1s          !-->
+      <!-- ============================================================ !-->
+
+      <name>CustomFixed</name>
+      <description>Fixed probe head for manual CMM</description>
+      <manufacturer>Custom</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-46"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="CustomFixed.mtd"/>
+      <picture>tp1.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-1" diameter="12" reference_length="2" height="2" material=""
+             color=""/>
+          <Cone height="2" diameter1="37" diameter2="30.5" offset="0" reference_length="2"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="47.8" reference_length="39" height="39" material=""
+             color=""/>
+          <Cone height="1.2" diameter1="46" diameter2="47.8" offset="0" reference_length="1.2"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="46" reference_length="1.05" height="1.05" material=""
+             color=""/>
+          <Cone height="1" diameter1="43.9" diameter2="46" offset="0" reference_length="1"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TP1s" type="FIXED" to_mounting="m3" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW TP1s                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>TP1s</name>
+      <description>Fixed probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-46"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="TP1s.mtd"/>
+      <picture>tp1.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-1" diameter="12" reference_length="2" height="2" material=""
+             color=""/>
+          <Cone height="2" diameter1="37" diameter2="30.5" offset="0" reference_length="2"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="47.8" reference_length="39" height="39" material=""
+             color=""/>
+          <Cone height="1.2" diameter1="46" diameter2="47.8" offset="0" reference_length="1.2"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="46" reference_length="1.05" height="1.05" material=""
+             color=""/>
+          <Cone height="1" diameter1="43.9" diameter2="46" offset="0" reference_length="1"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH6" type="FIXED" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH6                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>PH6</name>
+      <description>Fixed probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-28"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="PH6.mtd"/>
+      <picture>ph6.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="1.5" diameter1="20" diameter2="18" offset="-1" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="20" reference_length="1.5" height="1.5" material=""
+             color=""/>
+          <Cone height="0.9" diameter1="21" diameter2="20" offset="0" reference_length="0.9"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="21" reference_length="24.3" height="24.3" material=""
+             color=""/>
+          <Cone height="0.8" diameter1="19" diameter2="21" offset="0" reference_length="0.8"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH6M" type="FIXED" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH6M                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>PH6M</name>
+      <description>Fixed probe head for manual CMM witho AUTOJoint Connector</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-40"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="PH6M.mtd"/>
+      <picture>ph6m.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-1" diameter="27" reference_length="14.5" height="14.5" material=""
+             color=""/>
+          <Cone height="10" diameter1="62" diameter2="27" offset="0" reference_length="10"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="62" reference_length="14.5" height="14.5" material=""
+             color=""/>
+          <Cone height="2" diameter1="58" diameter2="62" offset="0" reference_length="2"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Fixed_5-Way_Head" type="FIXED" to_mounting="MDM_Head" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     MDM HEAD                                                 !-->
+      <!-- ============================================================ !-->
+      <name>Fixed 5-Way Head</name>
+      <description>Fixed probe head for manual CMM</description>
+      <manufacturer>MDM</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="-0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-116.5"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="MDMHead.mtd"/>
+      <picture>MDM_Head.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="1.5" diameter1="20" diameter2="18" offset="-1" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="20" reference_length="1.5" height="1.5" material=""
+             color=""/>
+          <Cone height="0.9" diameter1="21" diameter2="20" offset="0" reference_length="0.9"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="21" reference_length="24.3" height="24.3" material=""
+             color=""/>
+          <Cone height="0.8" diameter1="19" diameter2="21" offset="0" reference_length="0.8"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Offset_Fixed_5-Way_Head" type="FIXED" to_mounting="MDM_Offset_Head" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Offset MDM HEAD                                          !-->
+      <!-- ============================================================ !-->
+      <name>Offset Fixed 5-Way Head</name>
+      <description>Fixed probe head for manual CMM</description>
+      <manufacturer>MDM</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="-0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-64.5"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="Offset_MDMHead.mtd"/>
+      <picture>MDM_Head.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="1.5" diameter1="20" diameter2="18" offset="-1" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="20" reference_length="1.5" height="1.5" material=""
+             color=""/>
+          <Cone height="0.9" diameter1="21" diameter2="20" offset="0" reference_length="0.9"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="21" reference_length="24.3" height="24.3" material=""
+             color=""/>
+          <Cone height="0.8" diameter1="19" diameter2="21" offset="0" reference_length="0.8"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="CustomAdjustable" type="ADJUSTABLE" to_mounting="*" technology="CMM">
+      <!-- INDEXABLE_MANUAL!-->
+      <!-- ============================================================ !-->
+      <!--     CustomAdjustable                                         !-->
+      <!-- ============================================================ !-->
+
+      <name>CustomAdjustable</name>
+      <description>Adjustable manual probe head for manual CMM</description>
+      <manufacturer>Custom</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="26"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="17" Y="0" Z="-15"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <!-- This axis is not indexable !-->
+
+        <param minvalue="-115" maxvalue="115" increment="0.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <!-- There is some sort of 15* indexation on the B axis !-->
+
+        <param minvalue="-360" maxvalue="360" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="CustomAdjustable.mtd"/>
+      <picture>ph1.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="0.5" diameter1="14.8" diameter2="13.8" offset="-1" reference_length="0.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="14.8" reference_length="7.5" height="7.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH1" type="ADJUSTABLE" to_mounting="m8" technology="CMM">
+      <!-- INDEXABLE_MANUAL!-->
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH1                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>PH1</name>
+      <description>Adjustable manual probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="26"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="17" Y="0" Z="-15"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <!-- This axis is not indexable !-->
+
+        <param minvalue="-115" maxvalue="115" increment="0.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <!-- There is some sort of 15* indexation on the B axis !-->
+
+        <param minvalue="-360" maxvalue="360" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph1.mtd"/>
+      <picture>ph1.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="0.5" diameter1="14.8" diameter2="13.8" offset="-1" reference_length="0.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="14.8" reference_length="7.5" height="7.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <!--   
+    <probehead id="PH1SIM" type="INDEXABLE_MANUAL" to_mounting="m8" technology="CMM"> 
+      <name>PH1SIM</name>
+      <description>Adjustable manual probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="26"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="17" Y="0" Z="-15"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-115" maxvalue="115" increment="0.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-360" maxvalue="360" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph1.mtd"/>
+      <picture>ph1.gif</picture>
+    </probehead>
+!-->
+    <probehead id="CustomIndexableManual" type="INDEXABLE_MANUAL" to_mounting="*" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Custom indexable manual probe head                       !-->
+      <!-- ============================================================ !-->
+
+      <name>CustomIndexableManual</name>
+      <description>Adjustable manual probe head for manual CMM</description>
+      <manufacturer>Custom</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="47"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-26"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-93" maxvalue="93" increment="1.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="1.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="CustomIndexableManual.mtd"/>
+      <picture>mh20.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-1" diameter="15" reference_length="4.5" height="4.5" material=""
+             color=""/>
+          <Cone height="0.5" diameter1="16.5" diameter2="15.0" offset="0" reference_length="0.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="16.5" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Sphere offset="16.5" diameter="33" reference_length="16.5" material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH20" type="INDEXABLE_MANUAL" to_mounting="AutoMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MH20                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>MH20</name>
+      <description>Adjustable manual probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="47"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-26"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-93" maxvalue="93" increment="1.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="1.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="mh20.mtd"/>
+      <picture>mh20.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-1" diameter="15" reference_length="4.5" height="4.5" material=""
+             color=""/>
+          <Cone height="0.5" diameter1="16.5" diameter2="15.0" offset="0" reference_length="0.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="16.5" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Sphere offset="16.5" diameter="33" reference_length="16.5" material="" color=""/>
+          <!--
+            <Cone height="3.5" diameter1="33.4" diameter2="31.4" offset="-8" reference_length="3.5" material="" color=""/>
+               <Cylinder offset="0" diameter="33.4" reference_length="30" height="30" material="" color=""/>
+            <Cone height="2.5" diameter1="32.0" diameter2="33.4" offset="0" reference_length="2.5" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH8" type="INDEXABLE_MANUAL" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MH8                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>MH8</name>
+      <description>Manually indexable probe head</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="43"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="-5.7" Z="-26"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="mh8.mtd"/>
+      <picture>mh8.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="1.5" diameter1="16" diameter2="13.0" offset="-1" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="16" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Cone height="3.5" diameter1="21.8" diameter2="18.2" offset="0" reference_length="3.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="24" reference_length="9.6" height="9.6" material=""
+             color=""/>
+          <!--
+               <Sphere   offset="6.6" diameter="52" reference_length="26" material="" color=""/>
+               <Cylinder offset="-26" diameter="52" reference_length="11" height="11" material="" color=""/>
+               <Cylinder offset="0" diameter="58" reference_length="32" height="32" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MIP" type="INDEXABLE_MANUAL" to_mounting="m3" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MIP                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>MIP</name>
+      <description>Manually indexable probe head for manual CMM</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="43"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="-5.7" Z="-33"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="mip.mtd"/>
+      <picture>mip.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="3" diameter1="27" diameter2="23" offset="5.3" reference_length="3.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="27" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Cone height="3" diameter1="24" diameter2="27" offset="0" reference_length="3.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="24" reference_length="9.6" height="9.6" material=""
+             color=""/>
+          <!--
+               <Sphere   offset="6.6" diameter="52" reference_length="26" material="" color=""/>
+               <Cylinder offset="-26" diameter="52" reference_length="11" height="11" material="" color=""/>
+               <Cylinder offset="0" diameter="58" reference_length="32" height="32" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MIH" type="INDEXABLE_MANUAL" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MIH                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>MIH</name>
+      <description>Manually indexable probe head with readout</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="76"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="7.5"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="mih.mtd"/>
+      <picture>mih.gif</picture>
+      <envelope>
+        <Geometry>
+          <Sphere offset="-7.5" diameter="58" reference_length="29" material="" color=""/>
+          <!--
+               <Cylinder offset="-29" diameter="58" reference_length="16" height="16" material="" color=""/>
+            <Cone height="5.5" diameter1="64" diameter2="58" offset="0" reference_length="5.5" material="" color=""/>
+               <Cylinder offset="0" diameter="64" reference_length="52.5" height="52.5" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH20i" type="INDEXABLE_MANUAL" to_mounting="AutoMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MH20i                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>MH20i</name>
+      <description>Manually indexable probe head for TP20 probe module</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="37"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="-5.7" Z="-24"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="mh20i.mtd"/>
+      <picture>mh20i.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-0.7" diameter="14.7" reference_length="4.8" height="4.8" material=""
+             color=""/>
+          <Cone height="3.4" diameter1="21.0" diameter2="17.7" offset="0" reference_length="3.4"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="23.5" reference_length="7.8" height="7.8" material=""
+             color=""/>
+          <!--
+               <Sphere   offset="8" diameter="40" reference_length="20" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="CustomIndexableCNC" type="INDEXABLE_CNC" to_mounting="*" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Custom Indexable CNC probe head                          !-->
+      <!-- ============================================================ !-->
+
+      <name>CustomIndexableCNC</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Custom</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="77"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-25"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="CustomIndexableCNC.mtd"/>
+      <picture>ph9.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Sphere offset="25" diameter="62" reference_length="30" material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH9" type="INDEXABLE_CNC" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH9                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>PH9</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="77"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-25"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph9.mtd"/>
+      <picture>ph9.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Sphere offset="25" diameter="62" reference_length="30" material="" color=""/>
+          <!--
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH9A" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH9A                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>PH9A</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="79"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-38"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph9a.mtd"/>
+      <picture>ph9A.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="26" reference_length="14" height="14" material=""
+             color=""/>
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+          <!--
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH10M" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH10M                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>PH10M</name>
+      <description>Motorised probe head with Autochange capability, high torque and multiwire capability</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="79"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-38"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph10M.mtd"/>
+      <picture>ph10M.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="26" reference_length="17" height="17" material=""
+             color=""/>
+          <Sphere offset="21" diameter="62" reference_length="30" material="" color=""/>
+          <!--
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH10T" type="INDEXABLE_CNC" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH10T                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>PH10T</name>
+      <description>Motorised probe head with M8 Thread, high torque and multiwire capability</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="79"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-24.5"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph10t.mtd"/>
+      <picture>ph10T.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Sphere offset="25" diameter="62" reference_length="31" material="" color=""/>
+          <!--
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH10MQ" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH10MQ                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>PH10MQ</name>
+      <description>In-quill mounting motorised probe head with high torque and multiwire capability</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="35"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-38"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph10MQ.mtd"/>
+      <picture>ph10MQ.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="26" reference_length="17" height="17" material=""
+             color=""/>
+          <Sphere offset="21" diameter="62" reference_length="31" material="" color=""/>
+          <!--
+               <Cylinder offset="-17" diameter="55" reference_length="10" height="10" material="" color=""/>
+               <Cylinder offset="0" diameter="114" reference_length="15" height="15" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH20" type="INDEXABLE_CONTINIOUS_5AXIS_CNC" to_mounting="AutoMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH20                                                                                   !-->
+      <!-- ============================================================ !-->
+
+      <name>PH20</name>
+      <description>5 axis motorised probe head with TP20 probe body</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="71.28"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-47.3"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-115" maxvalue="115" increment="0.1" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-360" maxvalue="360" increment="0.1" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph20.mtd"/>
+      <picture>ph20.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="19" reference_length="17.6" height="17.6" material=""
+             color=""/>
+          <Sphere offset="27.2" diameter="88.0" reference_length="30" material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="PH50" type="INDEXABLE_CNC" to_mounting="m3" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW PH50                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>PH50</name>
+      <description>A compact, cost-effective manual head system designed specifically for users of small CMMs</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="54"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-33"/>
+      </probe_tool_mounting_point>
+      <a_hinge_offset>
+        <point X="0" Y="7.0" Z="0.0"/>
+      </a_hinge_offset>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="ph50.mtd"/>
+      <picture>PH50.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Sphere offset="40" diameter="80" reference_length="40" material="" color=""/>
+          <!--
+               <Cylinder offset="-28" diameter="80" reference_length="40" height="40" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="RTP20" type="INDEXABLE_MANUAL" to_mounting="AutoMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW RTP20                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>RTP20</name>
+      <description>Manually indexable probe head with TP20 probe</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="39.5"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="-5.7" Z="-43.2"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="RTP20.mtd"/>
+      <picture>RTP20.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-0.7" diameter="17.25" reference_length="4.8" height="4.8" material=""
+             color=""/>
+          <Cylinder offset="-0.7" diameter="19.5" reference_length="20.0" height="20.0" material=""
+             color=""/>
+          <Cone height="1.7" diameter1="34.5" diameter2="19.5" offset="0" reference_length="1.7"
+             material="" color=""/>
+          <Cone height="5.1" diameter1="43.0" diameter2="34.5" offset="0" reference_length="5.1"
+             material="" color=""/>
+          <Cone height="6.5" diameter1="49.0" diameter2="43.0" offset="0" reference_length="6.5"
+             material="" color=""/>
+          <Cone height="6.0" diameter1="52.0" diameter2="49.0" offset="0" reference_length="6.0"
+             material="" color=""/>
+          <Cylinder offset="-0.0" diameter="52.0" reference_length="15.0" height="15.0" material=""
+             color=""/>
+          <!--
+               <Sphere   offset="8" diameter="40" reference_length="20" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="RTP20CNC" type="INDEXABLE_CNC" to_mounting="AutoMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW RTP20 CNC                                          !-->
+      <!-- ============================================================ !-->
+
+      <name>RTP20CNC</name>
+      <description>CNC indexable probe head with TP20 probe</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="39.5"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="-5.7" Z="-43.2"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="RTP20.mtd"/>
+      <picture>RTP20.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-0.7" diameter="17.25" reference_length="4.8" height="4.8" material=""
+             color=""/>
+          <Cylinder offset="-0.7" diameter="19.5" reference_length="20.0" height="20.0" material=""
+             color=""/>
+          <Cone height="1.7" diameter1="34.5" diameter2="19.5" offset="0" reference_length="1.7"
+             material="" color=""/>
+          <Cone height="5.1" diameter1="43.0" diameter2="34.5" offset="0" reference_length="5.1"
+             material="" color=""/>
+          <Cone height="6.5" diameter1="49.0" diameter2="43.0" offset="0" reference_length="6.5"
+             material="" color=""/>
+          <Cone height="6.0" diameter1="52.0" diameter2="49.0" offset="0" reference_length="6.0"
+             material="" color=""/>
+          <Cylinder offset="-0.0" diameter="52.0" reference_length="15.0" height="15.0" material=""
+             color=""/>
+          <!--
+               <Sphere   offset="8" diameter="40" reference_length="20" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Eagle_m_7.5_M8" type="INDEXABLE_CNC" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Eagle_m_7.5_M8                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>Eagle m 7.5 M8</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Pantec</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="67"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-49"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="Eagle_m_7_5_M8.mtd"/>
+      <picture>PantecM8.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="74" reference_length="116" height="116" material=""
+             color=""/>
+          <!--
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Eagle_sm_7.5_M8" type="INDEXABLE_CNC" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Eagle_sm_7.5_M8                                          !-->
+      <!-- ============================================================ !-->
+
+      <name>Eagle sm 7.5 M8</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Pantec</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="76.815"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-49.00"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="Eagle_sm_7_5_M8.mtd"/>
+      <picture>PantecM8.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="74" reference_length="116" height="116" material=""
+             color=""/>
+          <!--
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Eagle_sm_7.5_PKJ" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Eagle_sm_7.5_PKJ                                         !-->
+      <!-- ============================================================ !-->
+
+      <name>Eagle sm 7.5 PKJ</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Pantec</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="76.815"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-46"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="Eagle_sm_7_5_PKJ.mtd"/>
+      <picture>PantecAuto.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="74" reference_length="116" height="116" material=""
+             color=""/>
+          <!--
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Eagle_m_7.5_PKJ" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Eagle_m_7.5_PKJ                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>Eagle m 7.5 PKJ</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Pantec</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="67"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-46"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="105" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="7.5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="Eagle_m_7_5_PKJ.mtd"/>
+      <picture>Pantec_m_7_5_PKJ.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="74" reference_length="116" height="116" material=""
+             color=""/>
+          <!--
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="HH-A-T5_TKJ" type="INDEXABLE_CNC" to_mounting="AutoJoint" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     Hexagon_HH-A-T5_TKJ                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>HH-A-T5 TKJ</name>
+      <description>General motorised probe head</description>
+      <manufacturer>Hexagon</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="67"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="12" Z="-46.15"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-115" maxvalue="90" increment="5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="5" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="HH-A-T5_TKJ.mtd"/>
+      <picture>HH-A-T5_TKJ.gif</picture>
+      <options trust_initial_values="0"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="74" reference_length="116" height="116" material=""
+             color=""/>
+          <!--
+          <Sphere offset="24" diameter="62" reference_length="30" material="" color=""/>
+               <Cylinder offset="-15" diameter="80" reference_length="70" height="70" material="" color=""/>
+-->
+        </Geometry>
+      </envelope>
+    </probehead>  
+    <probehead id="Tesastar-i" type="INDEXABLE_MANUAL" to_mounting="m3" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     TESA TESASTAR-i                                          !-->
+      <!-- ============================================================ !-->
+
+      <name>Tesastar-i</name>
+      <description>manual probe head</description>
+      <manufacturer>Tesa</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="51.965"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-40"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="tesastar-i.mtd"/>
+      <picture>tesastar-i.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="26.6" reference_length="20" height="20" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="68" reference_length="34.5" height="34.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="58" reference_length="37.5" height="37.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Tesastar-iM8" type="INDEXABLE_MANUAL" to_mounting="m8" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     TESA TESASTAR-iM8                                        !-->
+      <!-- ============================================================ !-->
+
+      <name>Tesastar-iM8</name>
+      <description>manual probe head</description>
+      <manufacturer>Tesa</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="51.965"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-18"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="0" maxvalue="90" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-180" maxvalue="180" increment="15.0" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="tesastar-iM8.mtd"/>
+      <picture>tesastar-iM8.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-2" diameter="68" reference_length="34.5" height="34.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="58" reference_length="37.5" height="37.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="VastXT" type="FIXED" to_mounting="m3" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     ZEISS VastXT                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>VastXT</name>
+      <description>Zeiss Fixed probe head</description>
+      <manufacturer>ZEISS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-161.5"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="VastXT.mtd"/>
+      <picture>tp1.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="26" reference_length="21" height="21" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="72" reference_length="14.5" height="14.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="130" reference_length="126" height="126" material=""
+             color=""/>
+          <Cone height="1" diameter1="43.9" diameter2="46" offset="0" reference_length="1"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <!-- ============================================================ !-->
+    <!--     Machine Tool Probe Heads                                 !-->
+    <!-- ============================================================ !-->
+    <probehead id="MP10" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP10                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>MP10</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-107.15"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp10.mtd"/>
+      <picture>mp10.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="50" reference_length="3.2" height="3.2" material=""
+             color=""/>
+          <Cone height="18.3" diameter1="64" diameter2="50" offset="0" reference_length="18.3"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="64" reference_length="85.65" height="85.65" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP12" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP12                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>MP12</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-62.8"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp12.mtd"/>
+      <picture>mp12.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-0.1" diameter="65" reference_length="62.9" height="62.9" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP16" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP16                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>MP16</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-166.1"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp16.mtd"/>
+      <picture>mp16.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone offset="-1" diameter2="54" diameter1="84" reference_length="27" height="27"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="84" reference_length="35" height="35" material=""
+             color=""/>
+          <Cone offset="0" diameter2="84" diameter1="100" reference_length="10" height="10"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="100" reference_length="95.1" height="95.1" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP18" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP18                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>MP18</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-124.24"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp18.mtd"/>
+      <picture>mp18.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="50" reference_length="2.7" height="2.7" material=""
+             color=""/>
+          <Cone offset="0" diameter2="50" diameter1="66" reference_length="21" height="21"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="66" reference_length="101" height="101" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP1s" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP1s                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>MP1s</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-56.0"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp1s.mtd"/>
+      <picture>mp1s.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone offset="0" diameter2="50" diameter1="51" reference_length="23.5" height="23.5"
+             material="" color=""/>
+          <Cone offset="0" diameter2="51" diameter1="62" reference_length="9.5" height="9.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="62" reference_length="23" height="23" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP7" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP7 70 degree                                   !-->
+      <!-- ============================================================ !-->
+
+      <name>MP7</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-105.44"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp7.mtd"/>
+      <picture>mp7.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="50" reference_length="3.2" height="3.2" material=""
+             color=""/>
+          <Cone height="18.3" diameter1="64" diameter2="50" offset="0" reference_length="18.3"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="64" reference_length="83.95" height="83.95" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP8" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP8 70 degree                                   !-->
+      <!-- ============================================================ !-->
+
+      <name>MP8</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-105.44"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp8.mtd"/>
+      <picture>mp8.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="50" reference_length="3.2" height="3.2" material=""
+             color=""/>
+          <Cone height="18.3" diameter1="64" diameter2="50" offset="0" reference_length="18.3"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="64" reference_length="83.95" height="83.95" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP700" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP700                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>MP700</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-115"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp700.mtd"/>
+      <picture>mp700.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="5" diameter1="62" diameter2="50" offset="0" reference_length="5"
+             material="" color=""/>
+          <Cone height="14.3" diameter1="64" diameter2="62" offset="0" reference_length="14.3"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="64" reference_length="95.8" height="95.8" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MP9" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW MP9 70 degree                                   !-->
+      <!-- ============================================================ !-->
+
+      <name>MP9</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-105.44"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="mp9.mtd"/>
+      <picture>mp9.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="50" reference_length="3.2" height="3.2" material=""
+             color=""/>
+          <Cone height="18.3" diameter1="64" diameter2="50" offset="0" reference_length="18.3"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="64" reference_length="83.95" height="83.95" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP40" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP40                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP40</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-50"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP40.mtd"/>
+      <picture>omp40.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="2.5" diameter1="42" diameter2="38" offset="0" reference_length="2.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="42" reference_length="47.5" height="47.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP60" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP60                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP60</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-76"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP60.mtd"/>
+      <picture>omp60.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="3.5" diameter1="65" diameter2="59" offset="0" reference_length="3.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="72.5" height="72.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400                                          !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-50"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400.mtd"/>
+      <picture>omp400.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="2.5" diameter1="42" diameter2="38" offset="0" reference_length="2.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="42" reference_length="47.5" height="47.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400_MarkII" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400 MarkII                                   !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400 MarkII</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-50"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400_MarkII.mtd"/>
+      <picture>omp400.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="2.5" diameter1="42" diameter2="38" offset="0" reference_length="2.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="42" reference_length="47.5" height="47.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400-DMC125u" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400-DMC125u                                    !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400-DMC125u</name>
+      <description>Probe Module for Machine tool with tool holder</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-127.0"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400-DMC125u.mtd"/>
+      <picture>OMP400-DMC125u.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="44" reference_length="70" height="70" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="68" reference_length="19.01" height="19.01" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="82" reference_length="3.0" height="3.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="113.0" reference_length="10" height="10" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="132.0" reference_length="9" height="9" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="142.0" reference_length="16" height="16" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400-FIDIAK165" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400-FIDIAK165                                !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400-FIDIAK165</name>
+      <description>Probe Module for Machine tool with tool holder</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-163.0"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400-FIDIAK165.mtd"/>
+      <picture>OMP400-FIDIAK165.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="44" reference_length="60" height="60" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="46" reference_length="25" height="25" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="54" reference_length="26.5" height="26.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="99.5" reference_length="9.5" height="9.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="134.0" reference_length="20" height="20" material=""
+             color=""/>
+          <Cone height="14" diameter1="184" diameter2="134" offset="0" reference_length="14"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="184.0" reference_length="7.5" height="7.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400-Hauser40HS" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400-Hauser40HS                               !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400-Hauser40HS</name>
+      <description>Probe Module for Machine tool with tool holder and spindle</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-315.317"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400-Hauser40HS.mtd"/>
+      <picture>OMP400-Hauser40HS.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="44" reference_length="78" height="78" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="47.5" reference_length="2" height="2" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="67" reference_length="2.5" height="2.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="109.0" reference_length="19" height="19" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="134.0" reference_length="117.5" height="117.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="148.0" reference_length="38.4" height="38.4" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="244.0" reference_length="57.6" height="57.6" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="OMP400-Hauser70HS" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW OMP400-Hauser70HS                               !-->
+      <!-- ============================================================ !-->
+
+      <name>OMP400-Hauser70HS</name>
+      <description>Probe Module for Machine tool with tool holder and spindle</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-275.50"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="OMP400-Hauser70HS.mtd"/>
+      <picture>OMP400-Hauser70HS.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="44" reference_length="78" height="78" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="47.5" reference_length="2" height="2" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="67" reference_length="13.0" height="13.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="96.0" reference_length="23" height="23" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="121.0" reference_length="29.5" height="29.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="129.0" reference_length="36.5" height="36.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="243.4" reference_length="93.5" height="93.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+  <probehead id="Primo" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW Primo                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>Primo</name>
+      <description>Probe Module for Machine tool with tool holder and spindle</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-61.25"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="Primo.mtd"/>
+      <picture>Primo.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="16" diameter1="54" diameter2="46" offset="0" reference_length="16"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="54" reference_length="5.18" height="5.18" material=""
+             color=""/>
+          <Cone height="10.5" diameter1="56" diameter2="54" offset="0" reference_length="10.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="56" reference_length="29.4" height="29.4" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="RMP60" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW RMP60                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>RMP60</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-76"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="RMP60.mtd"/>
+      <picture>rmp60.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="3.5" diameter1="65" diameter2="59" offset="0" reference_length="3.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="72.5" height="72.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="RMP60M-HSK63" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW RMP60M-HSK63                                    !-->
+      <!-- ============================================================ !-->
+
+      <name>RMP60M-HSK63</name>
+      <description>Probe Module for Machine tool with tool holder</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="-2"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-172.85"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="RMP60M-HSK63.mtd"/>
+      <picture>RMP60M-HSK63.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="10.8" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="29.2" reference_length="33.3" height="33.3" material=""
+             color=""/>
+          <Cone height="5.0" diameter1="66.8" diameter2="29.2" offset="0" reference_length="5.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="66.8" reference_length="18.0" height="18.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="66.0" reference_length="109.1" height="109.1" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="RMP600" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW RMP600                                          !-->
+      <!-- ============================================================ !-->
+
+      <name>RMP600</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-76"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="RMP600.mtd"/>
+      <picture>rmp600.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="3.5" diameter1="65" diameter2="59" offset="0" reference_length="3.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="72.5" height="72.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="REVO" type="INDEXABLE_CONTINIOUS_5AXIS_CNC" to_mounting="REVOMagnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW REVO                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>REVO</name>
+      <description>Dynamic measuring head</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="126"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-50.8"/>
+      </probe_tool_mounting_point>
+      <axis name="A">
+        <param minvalue="-5" maxvalue="120" increment="0.1" unit="degree" defaultvalue="0"/>
+      </axis>
+      <axis name="B">
+        <param minvalue="-360" maxvalue="360" increment="0.1" unit="degree" defaultvalue="0"/>
+      </axis>
+      <kinematic filename="REVO.mtd"/>
+      <picture>REVO.gif</picture>
+      <options trust_initial_values="1"/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="-2" diameter="62" reference_length="8" height="8" material=""
+             color=""/>
+          <Sphere offset="44" diameter="130" reference_length="91" material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TC50" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     BLUM TC50                                                !-->
+      <!-- ============================================================ !-->
+
+      <name>TC50</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Blum</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-150"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="TC50.mtd"/>
+      <picture>TC50.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="9.5" reference_length="9.0" height="9.0" material=""
+             color=""/>
+          <Cone height="17.9" diameter1="65" diameter2="48.25" offset="0" reference_length="17.9"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="74.0" height="74.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="52.0" reference_length="21.0" height="21.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="8.1" height="8.1" material=""
+             color=""/>
+          <Cone height="1.5" diameter1="58.8" diameter2="65.0" offset="0" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="58.5" reference_length="8.0" height="8.0" material=""
+             color=""/>
+          <Cone height="1.5" diameter1="65.0" diameter2="58.8" offset="0" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="8.0" height="8.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="47.0" reference_length="1.0" height="1.0" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TC52" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     BLUM TC52                                                !-->
+      <!-- ============================================================ !-->
+
+      <name>TC52</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Blum</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-125.5"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="TC52.mtd"/>
+      <picture>BLUM.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="12" diameter1="10" diameter2="9" offset="0" reference_length="12"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="10" reference_length="5.5" height="5.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="14.0" reference_length="2.5" height="2.5" material=""
+             color=""/>
+          <Cone height="1.5" diameter1="40" diameter2="36" offset="0" reference_length="1.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="54" reference_length="5.5" height="104" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TC51" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     BLUM TC51                                                !-->
+      <!-- ============================================================ !-->
+
+      <name>TC51</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Blum</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-110"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="TC51.mtd"/>
+      <picture>TC51.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cone height="19.1" diameter1="67.2" diameter2="51" offset="-2" reference_length="19.1"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="67.2" reference_length="92.9" height="92.9" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TC60" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     BLUM TC60                                                !-->
+      <!-- ============================================================ !-->
+
+      <name>TC60</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Blum</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-100"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="TC60.mtd"/>
+      <picture>TC60.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="9.5" reference_length="9.0" height="9.0" material=""
+             color=""/>
+          <Cone height="17.9" diameter1="65" diameter2="48.25" offset="0" reference_length="17.9"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="74.0" height="74.0" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Laser-GRP10289" type="FIXED" to_mounting="c1" technology="OMV">
+      <!--    ============================================================ !-->
+      <!--        CMS LASER                                                !-->
+      <!--    ============================================================ !-->
+
+      <name>Laser-GRP10289</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>CMS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-165"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="Laser_GRP10289.mtd"/>
+      <picture>mp700.gif</picture>
+    </probehead>
+    <probehead id="T25G" type="FIXED" to_mounting="m3" technology="OMV">
+      <!--   ============================================================ !-->
+      <!--                 MARPOSS   T25G                                 !-->
+      <!--   ============================================================ !-->
+
+      <name>T25G</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MARPOSS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-43"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="T25G.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="10.0" reference_length="2" height="2.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="29.0" reference_length="49.0" height="47.0" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="T25S" type="FIXED" to_mounting="m3" technology="OMV">
+      <!--   ============================================================ !-->
+      <!--                 MARPOSS   T25S                                 !-->
+      <!--   ============================================================ !-->
+
+      <name>T25S</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MARPOSS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-43"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="T25S.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0.0" diameter="10.0" reference_length="3.5" height="3.5" material=""
+             color=""/>
+          <Cone height="5.6634" diameter1="29.0" diameter2="20.0" offset="0.0" reference_length="5.6634"
+             material="" color=""/>
+          <Cylinder offset="0.0" diameter="29" reference_length="31.5" height="40.5" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="T25G-OMAP_Tools5360" type="FIXED" to_mounting="m3" technology="OMV">
+      <!--   ============================================================ !-->
+      <!--                 MARPOSS T25G - OMAP Tools 5360                 !-->
+      <!--   ============================================================ !-->
+
+      <name>T25G-OMAP_Tools5360</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MARPOSS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0.0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-136.6634"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="T25G-OMAP_Tools5360.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0.0" diameter="10.0" reference_length="1.1" height="1.10" material=""
+             color=""/>
+          <Cylinder offset="0.0" diameter="14.0" reference_length="0.563" height="0.563" material=""
+             color=""/>
+          <Cylinder offset="0.0" diameter="29" reference_length="39.5" height="39.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="50.0" reference_length="51.50" height="51.50" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="67.0" reference_length="51.50" height="44" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="T25S-OMAP_Tools5360" type="FIXED" to_mounting="m3" technology="OMV">
+      <!--   ============================================================ !-->
+      <!--                 MARPOSS T25S-OMAP Tools 5360                   !-->
+      <!--   ============================================================ !-->
+
+      <name>T25S-OMAP_Tools5360</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MARPOSS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0.0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-136.6634"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="T25S-OMAP_Tools5360.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0.0" diameter="10.0" reference_length="3.5" height="3.5" material=""
+             color=""/>
+          <Cone height="5.6634" diameter1="29.0" diameter2="20.0" offset="0.0" reference_length="5.6634"
+             material="" color=""/>
+          <Cylinder offset="0.0" diameter="29" reference_length="31.5" height="31.5" material=""
+             color=""/>
+          <Cylinder offset="0.0" diameter="50" reference_length="52" height="52" material=""
+             color=""/>
+          <Cylinder offset="0.0" diameter="67" reference_length="0.0" height="44" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="T36" type="FIXED" to_mounting="m4" technology="OMV">
+      <!--   ============================================================ !-->
+      <!--                 MARPOSS   T36                                  !-->
+      <!--   ============================================================ !-->
+
+      <name>T36</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MARPOSS</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-140"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="T36.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cone height="1.0" diameter1="38.0" diameter2="36.0" offset="0" reference_length="1.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="38.0" reference_length="49.0" height="49.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="52.0" reference_length="4.5" height="4.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="62.5" reference_length="31.0" height="31.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="61.0" reference_length="20.5" height="20.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="62.0" reference_length="8.0" height="8.0" material=""
+             color=""/>
+          <Cone height="1.0" diameter1="65.0" diameter2="62.0" offset="0" reference_length="1.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="3.0" height="3.0" material=""
+             color=""/>
+          <Cone height="3.0" diameter1="59.0" diameter2="65.0" offset="0" reference_length="3.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="57.0" reference_length="2.0" height="2.0" material=""
+             color=""/>
+          <Cone height="3.0" diameter1="65.0" diameter2="59.0" offset="0" reference_length="3.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="14.0" height="14.0" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH32.00-Mini" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--    M&H 32 Mini                                               !-->
+      <!-- ============================================================ !-->
+
+      <name>MH32.00-Mini</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MandH</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-61.6"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="MH32Mini.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cone height="3.5" diameter1="52" diameter2="44" offset="0" reference_length="3.5"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="52" reference_length="58.1" height="58.1" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH38.10-Mini" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--    M&H 38.10 Mini                                            !-->
+      <!-- ============================================================ !-->
+
+      <name>MH38.10-Mini</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MandH</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-74"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="MH38.10Mini.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="9" reference_length="3" height="3" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="34" reference_length="5.725" height="5.725" material=""
+             color=""/>
+          <Cone height="5.354" diameter1="54" diameter2="47" offset="0" reference_length="5.354"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="54" reference_length="60" height="60" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH40.01" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--    M&H 40.01-TX/RX                                           !-->
+      <!-- ============================================================ !-->
+
+      <name>MH40.01</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MandH</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-50.0"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="MH40.01-TX_RX.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="42" reference_length="2.0" height="2.0" material=""
+             color=""/>
+          <Cone height="3.0" diameter1="44" diameter2="42" offset="0" reference_length="3.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="44" reference_length="45.0" height="45.0" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="MH-IRP25.41" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--    M&H IRP 25.41                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>MH-IRP25.41</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>MandH</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-110"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="MH-IRP2541.mtd"/>
+      <picture/>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0.0" diameter="9.0" reference_length="3.0" height="3.0" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="34" reference_length="6" height="6" material=""
+             color=""/>
+          <Cone height="14" diameter1="69" diameter2="54" offset="0" reference_length="14"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="69" reference_length="87" height="87" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TS440" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     Heidenhain TS440                                         !-->
+      <!-- ============================================================ !-->
+
+      <name>TS440</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Heidenhain</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-70.36"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="ts440.mtd"/>
+      <picture>ts440.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="11" reference_length="5" height="5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="40" reference_length="5.2" height="5.2" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="60.0" reference_length="60.00" height="60.00" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TS640" type="FIXED" to_mounting="m4" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     Heidenhain TS640                                         !-->
+      <!-- ============================================================ !-->
+
+      <name>TS640</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Heidenhain</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="-107.20"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="ts640.mtd"/>
+      <picture>ts640.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="25.2" reference_length="11" height="11" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="26.0" reference_length="5.2" height="5.2" material=""
+             color=""/>
+          <Cone height="4" diameter1="34.0" diameter2="26.0" offset="0" reference_length="4.0"
+             material="" color=""/>
+          <Cone height="12" diameter1="44.94" diameter2="34.0" offset="0" reference_length="12"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="65.0" reference_length="13.29" height="13.29" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="72.0" reference_length="53.21" height="53.21" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="TS740" type="FIXED" to_mounting="m3" technology="OMV">
+      <!-- ============================================================ !-->
+      <!--     Heidenhain TS740                                         !-->
+      <!-- ============================================================ !-->
+
+      <name>TS740</name>
+      <description>Probe Module for Machine tool</description>
+      <manufacturer>Heidenhain</manufacturer>
+      <quill_mounting_point>
+        <point X="0.120" Y="0" Z="0.0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0.121" Y="0" Z="-112.7"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="ts740.mtd"/>
+      <picture>ts740.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="11" reference_length="5" height="5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="40" reference_length="5.2" height="5.2" material=""
+             color=""/>
+          <Cone height="22" diameter1="60.0" diameter2="40.0" offset="0" reference_length="22.0"
+             material="" color=""/>
+          <Cylinder offset="0" diameter="80.0" reference_length="80.00" height="80.00" material=""
+             color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+    <probehead id="Equator" type="FIXED" to_mounting="SP25Magnetic" technology="CMM">
+      <!-- ============================================================ !-->
+      <!--     RENISHAW EQUATOR                                             !-->
+      <!-- ============================================================ !-->
+
+      <name>Equator</name>
+      <description>Fixed probe head for Equator</description>
+      <manufacturer>Renishaw</manufacturer>
+      <quill_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </quill_mounting_point>
+      <probe_tool_mounting_point>
+        <point X="0" Y="0" Z="0"/>
+      </probe_tool_mounting_point>
+      <kinematic filename="Equator.mtd"/>
+      <picture>Equator.gif</picture>
+      <envelope>
+        <Geometry>
+          <Cylinder offset="0" diameter="27" reference_length="21.5" height="21.5" material=""
+             color=""/>
+          <Cylinder offset="0" diameter="109.5" reference_length="16.5" height="16.5" material=""
+             color=""/>
+          <Cone height="5" diameter1="60" diameter2="100" offset="0" reference_length="5"
+             material="" color=""/>
+          <Cone height="20" diameter1="54" diameter2="60" offset="0" reference_length="20"
+             material="" color=""/>
+          <Cone height="8" diameter1="40" diameter2="54" offset="0" reference_length="8"
+             material="" color=""/>
+        </Geometry>
+      </envelope>
+    </probehead>
+  </probeheads>
+</components>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//=============================================================================
+//D XML schema for the rack catalogue.
+//
+// The catalogue contains definitions of racks, ports and inserts.
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2014 Delcam plc., Birmingham, UK
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 111111 JND 13/05/14 Written.
+// 112659 JND 30/05/14 Added CalibrationImages to Racks
+// 113416 CLH 10/07/14 dock_type is of rct:dock_type for value checking
+// 113556 JND 14/07/14 Added copy of PointType & VectorType from PWI_Schema.xsd
+// 114279 JND 26/08/14 Updated Port to contain a Calibration node
+// 115447 JND 15/10/14 Remove name spaces otherwise invalid xml is not found
+// 115598 CLH 17/10/14 Add <CalibrationOffset> to <Insert>
+// 116854 JND 03/12/14 Replaced the term calibrate with locate
+// 117894 JND 22/01/15 Replaced port location with alignment
+// 118532 JND 18/02/15 Added debug only flag to inserts
+// 119276 JND 28/04/15 Added Locate tag instead of LocationImages
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+<xs:schema
+  attributeFormDefault="unqualified"
+  elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:rct="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+>
+  <xs:import 
+    namespace="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+    schemaLocation="RackCommonTypes.xsd" 
+  />
+
+  <xs:element name="RackCatalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Racks" type="Racks"/>
+        <xs:element name="Sockets" type="Sockets"/>
+        <xs:element name="Inserts" type="Inserts"/>
+      </xs:sequence>
+    <xs:attribute name="version" type="xs:integer" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <!--
+  // Each rack has a type, set of default parameters, location path and a
+  // list of ports. A rack can also have a image and/or a CAD file.
+  // Each port has a type, unique number, offset and docking vector.
+  -->
+
+  <xs:complexType name="Racks">
+    <xs:sequence>
+      <xs:element name="Rack" type="Rack" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Rack">
+    <xs:sequence>
+      <xs:element name="Parameters" type="Parameters"/>
+      <xs:element name="Ports" type ="Ports"/>
+      <xs:element name="ProbePaths" type="RackProbePaths"/>
+      <xs:element name="Locate" type="Locate"/>
+      <xs:element name="Image" type="rct:Filepath" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="CAD" type="rct:Filepath" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Parameters">
+    <xs:sequence>
+      <xs:element name="Approach" type="rct:PointType"/>
+    </xs:sequence>
+    <xs:attribute name="check_in_distance" type="rct:Distance" use="required" />
+    <xs:attribute name="check_out_distance" type="rct:Distance" use="required" />
+    <xs:attribute name="docking_speed" type="rct:Speed" use="required" />
+    <xs:attribute name="coupling_speed" type="rct:Speed" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Ports">
+    <xs:sequence>
+      <xs:element name="Port" type="Port" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="total_ports" type="xs:integer" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Port">
+    <xs:sequence>
+      <xs:element name="Alignment" type="rct:Alignment"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:integer" use="required" />
+    <xs:attribute name="to_mounting" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="RackProbePaths">
+    <xs:sequence>
+      <xs:element name="Location" type="rct:Filepath"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Locate">
+    <xs:sequence>
+      <xs:element name="Stages" type="Stages" />
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name="Stages">
+    <xs:sequence>
+      <xs:element name="Stage" type="Stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Stage">
+    <xs:complexContent>
+      <xs:extension base="rct:Filepath">
+        <xs:attribute name="id" type="xs:integer" use="required" />
+        <xs:attribute name="description" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:complexContent>    
+  </xs:complexType>
+
+  <!--
+  // Each socket has a to mounting and a default insert
+  // There should only be one socket with each to mounting
+  -->
+
+  <xs:complexType name="Sockets">
+    <xs:sequence>
+      <xs:element name="Socket" type="Socket" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Socket">
+    <xs:attribute name="to_mounting" type="xs:string" use="required" />
+    <xs:attribute name="default_insert" type="xs:string" use="required" />
+  </xs:complexType>  
+
+  <!--
+  // Each insert has an type, module connection, offset and associated probe
+  // paths.
+  -->
+
+    <xs:complexType name="Inserts">
+      <xs:sequence>
+        <xs:element name="Insert" type="Insert" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+
+  <xs:complexType name="Insert">
+    <xs:sequence>
+      <xs:element name="NominalOffset" type="rct:PointType"/>
+      <xs:element name="LocationOffset" type="rct:PointType"/>
+      <xs:element name="ProbePaths" type="InsertProbePaths"/>
+      <xs:element name="Locate" type="Locate"/>
+      <xs:element name="Image" type="rct:Filepath" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="CAD" type="rct:Filepath" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="type" type="xs:string" use="required" />
+    <xs:attribute name="from_mounting" type="xs:string" use="required" />
+    <xs:attribute name="dock_type" type="rct:dock_type" use="required" />
+    <xs:attribute name="debug_only" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="InsertProbePaths">
+    <xs:sequence>
+      <xs:element name="Location" type="rct:Filepath"/>
+      <xs:element name="PickUp" type="rct:Filepath"/>
+      <xs:element name="DropOff" type="rct:Filepath"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

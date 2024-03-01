@@ -1,0 +1,73 @@
+<!--
+//=============================================================================
+// Kinematics of the Eagle_sm_7_5_PKJ Head for simulation
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2017 Autodesk, Inc.  All rights reserved.
+//
+// This computer source code and related instructions and comments are the
+// unpublished confidential and proprietary information of Autodesk, Inc. and
+// are protected under applicable copyright and trade secret law.  They may not
+// be disclosed to, copied or used by any third party without the prior
+// written consent of Autodesk, Inc.
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 113106 MGA 19/06/14 Written by GJM.
+// 117989 JND 27/01/15 Inverted A axis from +X to -X
+// 118821 JND 06/03/15 Reverted A axis invert. Updated A axis limits.
+// 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.
+// 131979 ANM 17/02/17 Fix mounting point offset
+//=============================================================================
+-->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-46.0" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/Eagle_sm_7_5_PKJ/Fixed.dmt" />
+    <rgb R="210" G="210" B="210" />
+    </dmt_file>
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B" />
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_PKJ/Rotary.dmt" />
+        <rgb R="210" G="210" B="210" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_PKJ/LogoBlack.dmt" />
+        <rgb R="65" G="65" B="65" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_PKJ/LogoGreen.dmt" />
+        <rgb R="0" G="149" B="74" />
+      </dmt_file>
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="0" MAX="105" />
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/Eagle_sm_7_5_PKJ/Pivot.dmt" />
+          <rgb R="210" G="210" B="210" />
+        </dmt_file>
+      </model_list>        
+      <machine_part NAME="head" />
+    </machine_part>
+  </machine_part>
+</machine>

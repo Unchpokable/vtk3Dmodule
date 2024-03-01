@@ -1,0 +1,50 @@
+<!-- ====================================================================== -->
+<!-- Kinematics of the Blum TC50 Fixed Head for simulation                  -->
+<!--                                                                        -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- COPYRIGHT 2008  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.        -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--                                                                        -->
+<!-- History.                                                               -->
+<!-- DICC   Who When     What                                               -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--  74717 GJM 08/09/08 Written (for PI 4.315), included Head Attach Point -->
+<!--                     for PI 5.                                          -->
+<!-- 129215 VVS 01/09/16 Made compatible with machine collision checking.   -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.    -->
+<!-- ====================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point PART="head" X="0" Y="0" Z="-150" I="0" J="0" K="1"/>
+  <!-- Head -->
+  <machine_part NAME="head">
+    <model_list>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/TC50/Body.dmt"/>
+        <rgb R="70" G="70" B="70"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/TC50/Middle.dmt"/>
+        <rgb R="217" G="70" B="0"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/TC50/Holder.dmt"/>
+        <rgb R="190" G="190" B="190"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/TC50/Lettering.dmt"/>
+        <rgb R="90" G="90" B="90"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/TC50/Bottom.dmt"/>
+        <rgb R="190" G="190" B="190"/>
+      </dmt_file>
+    </model_list>
+  </machine_part>
+  <machine_part NAME="table"/>
+</machine>

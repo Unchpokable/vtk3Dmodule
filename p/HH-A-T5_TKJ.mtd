@@ -1,0 +1,76 @@
+<!--
+//=============================================================================
+// Kinematics of the HH-A-T5_TKJ Head for simulation
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2015 Delcam LTD., Birmingham, UK
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History:
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 123797 MGA 20/10/15 Written by Stefan Schneider.
+// 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.
+//=============================================================================
+-->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="12" Z="-46.15" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/HH-A-T5_TKJ/TopFixed.dmt" />
+    <rgb R="210" G="210" B="210" />
+    </dmt_file>
+    <dmt_file>
+    <path FILE="probeheads/HH-A-T5_TKJ/LED.dmt" />
+    <rgb R="255" G="0" B="0" />
+    </dmt_file>	
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B" />
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+      <dmt_file>
+        <path FILE="probeheads/HH-A-T5_TKJ/Rotary.dmt" />
+        <rgb R="210" G="210" B="210" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/HH-A-T5_TKJ/LogoBlack.dmt" />
+        <rgb R="65" G="65" B="65" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/HH-A-T5_TKJ/LogoGreen.dmt" />
+        <rgb R="0" G="149" B="74" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/HH-A-T5_TKJ/LogoBlue.dmt" />
+        <rgb R="79" G="148" B="205" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/HH-A-T5_TKJ/LogoLightBlue.dmt" />
+        <rgb R="99" G="184" B="255" />
+      </dmt_file>	  
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="-115" MAX="90" />
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/HH-A-T5_TKJ/Pivot.dmt" />
+          <rgb R="210" G="210" B="210" />
+        </dmt_file>
+      </model_list>        
+      <machine_part NAME="head" />
+    </machine_part>
+  </machine_part>
+</machine>

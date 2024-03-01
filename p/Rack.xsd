@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//=============================================================================
+//D XML schema for a rack definition in the probe database.
+//
+// Each rack definition has a name, type, location, set of parameters and a 
+// list of ports. Each port has a number, insert, sub assembly and an offset.
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2014 Delcam plc., Birmingham, UK
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 111111 JND 13/05/14 Written.
+// 114279 JND 26/08/14 Moved Calibration and Alignment to RackCommonTypes.xsd
+//                     Changed Port to contain a Calibration.
+// 115447 JND 15/10/14 Remove name spaces otherwise invalid xml is not found
+// 116854 JND 03/12/14 Replaced the term calibrate with locate
+// 117894 JND 22/01/15 Replaced port location with alignment
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+<xs:schema 
+  attributeFormDefault="unqualified"
+  elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:rct="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+>
+  <xs:import 
+    namespace="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+    schemaLocation="RackCommonTypes.xsd"
+  />
+
+  <xs:element name="Rack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Location" type="rct:Location"/>
+        <xs:element name="Parameters" type="Parameters"/>
+        <xs:element name="Ports" type="Ports"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="type" type="xs:string" use="required" />
+      <xs:attribute name="version" type="xs:integer" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="Parameters">
+    <xs:sequence>
+      <xs:element name="Approach" type="rct:PointType"/>
+    </xs:sequence>
+    <xs:attribute name="check_in_distance" type="rct:Distance" use="required" />
+    <xs:attribute name="check_out_distance" type="rct:Distance" use="required" />
+    <xs:attribute name="docking_speed" type="rct:Speed" use="required" />
+    <xs:attribute name="coupling_speed" type="rct:Speed" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="Ports">
+    <xs:sequence>
+      <xs:element name="Port" type="Port" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="total_ports" type="xs:integer" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="Port">
+    <xs:sequence>
+      <xs:element name="Alignment" type="rct:Alignment"/>
+      <xs:element name="DeltaOffset" type="rct:PointType"/>
+      <xs:element name="Insert" type="Insert"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:integer" use="required"/>
+    <xs:attribute name="to_mounting" type="xs:string" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="Insert">
+      <xs:sequence>
+        <xs:element name="NominalOffset" type="rct:PointType"/>
+        <xs:element name="SubAssembly" type="SubAssembly" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="xs:string" use="required" />
+      <xs:attribute name="dock_type" type="xs:string" use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name="SubAssembly">
+    <xs:attribute name="in_rack" type="xs:boolean" use="required" />
+    <xs:attribute name="guid" type="rct:GUID" use="required" />
+  </xs:complexType>
+</xs:schema>

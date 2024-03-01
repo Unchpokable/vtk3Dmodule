@@ -1,0 +1,37 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the Equator Head for simulation                               -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        PRH 12/11/10 Written.                                                -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="0" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Main Head -->
+    <path FILE="probeheads/Equator/EquatorHead.dmt" />
+    <rgb R="50" G="50" B="50" />
+    </dmt_file>
+    <dmt_file>
+    <!-- SP25 Body -->
+    <path FILE="probeheads/Equator/EquatorSP25Body.dmt" />
+    <rgb R="240" G="240" B="240" />
+    </dmt_file>
+  </model_list>
+  </machine_part>
+  
+  <machine_part NAME="table"/>
+     <!-- The Guts-->
+  <machine_part NAME="head"/>
+
+</machine>

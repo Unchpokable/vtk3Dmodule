@@ -90,7 +90,6 @@ inline vtkActorPointer CreateCone(double radius, double height, const Eigen::Vec
     coneSource->SetRadius(radius);
     coneSource->SetHeight(height);
     coneSource->SetCenter(center[0], center[1], center[2]);
-
     const auto res = std::pow(2, static_cast<int>(resolution));
     coneSource->SetResolution(res);
     coneSource->Update();

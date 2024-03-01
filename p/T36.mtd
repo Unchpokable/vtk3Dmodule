@@ -1,0 +1,49 @@
+<!-- ====================================================================== -->
+<!-- Kinematics of the MARPOSS T36 Fixed Head for simulation                -->
+<!--                                                                        -->
+<!-- History:                                                               -->
+<!-- DICC   Who When     What                                               -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- 129215 VVS 01/09/16 Made compatible with machine collision checking.   -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.    -->
+<!-- ====================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-140" I="0" J="0" K="1" />
+  <!-- Head -->
+  <machine_part NAME="head">
+    <model_list>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/grigio.dmt"/>
+        <rgb R="192" G="192" B="192"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/grigioscuro.dmt"/>
+        <rgb R="100" G="100" B="100"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/nero.dmt"/>
+        <rgb R="5" G="5" B="5"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/rosa.dmt"/>
+        <rgb R="255" G="164" B="164"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/rosso.dmt"/>
+        <rgb R="255" G="0" B="0"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/MARPOSS-T36/verde.dmt"/>
+        <rgb R="0" G="255" B="0"/>
+      </dmt_file>
+    </model_list>
+  </machine_part>
+  <machine_part NAME="table"/>
+</machine>

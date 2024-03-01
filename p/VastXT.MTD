@@ -1,0 +1,46 @@
+<!-- ===========================================================================!-->
+<!-- Kinematics of the Zeiss VastXT Fixed Head                                  !-->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        GJM 22-03-11 New                                                    !-->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- ========================================================================== !-->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-161.5" I="0" J="0" K="1" />
+	<!-- Static bits -->
+	<machine_part>
+		<model_list>
+			<dmt_file>
+				<!-- Comment !-->
+				<path FILE="probeheads/vastxt/top.dmt"/>
+				<rgb R="60" G="60" B="60"/>
+			</dmt_file>
+			<dmt_file>
+				<!-- Comment !-->
+				<path FILE="probeheads/vastxt/bottom.dmt"/>
+				<rgb R="250" G="250" B="250"/>
+			</dmt_file>
+			<dmt_file>
+				<!-- Comment !-->
+				<path FILE="probeheads/vastxt/name.dmt"/>
+				<rgb R="0" G="0" B="80"/>
+			</dmt_file>
+			<dmt_file>
+				<!-- Comment !-->
+				<path FILE="probeheads/vastxt/styluschangebottom.dmt"/>
+				<rgb R="100" G="100" B="100"/>
+			</dmt_file>
+			<dmt_file>
+				<!-- Comment !-->
+				<path FILE="probeheads/vastxt/styluschangetop.dmt"/>
+				<rgb R="250" G="250" B="250"/>
+			</dmt_file>
+		</model_list>
+	</machine_part>
+	<machine_part NAME="table"/>
+	<!-- The Guts-->
+	<machine_part NAME="head"/>
+
+</machine>

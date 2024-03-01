@@ -1,0 +1,39 @@
+<!-- ====================================================================== -->
+<!-- Kinematics of the MP1s Fixed Head for simulation                       -->
+<!-- DICC   Who When     What                                               -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--        GJM 05/05/05 New Model                                          -->
+<!--        DLM 22/01/08 Added head attachment point (pinspect#5902).       -->
+<!-- 129215 VVS 01/09/16 Made compatible with machine collision checking.   -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.    -->
+<!-- ====================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-56" I="0" J="0" K="1" />
+  <!-- Head -->
+  <machine_part NAME="head">
+    <model_list>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/mp1s/body.dmt"/>
+        <rgb R="60" G="60" B="60"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/mp1s/probe_ball.dmt"/>
+        <rgb R="250" G="0" B="0"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/mp1s/stylus_fixing.dmt"/>
+        <rgb R="180" G="180" B="180"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/mp1s/lettering.dmt"/>
+        <rgb R="250" G="250" B="250"/>
+      </dmt_file>
+    </model_list>
+  </machine_part>
+  <machine_part NAME="table"/>
+</machine>

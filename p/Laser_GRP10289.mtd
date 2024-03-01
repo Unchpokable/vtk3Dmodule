@@ -1,0 +1,64 @@
+<!-- ====================================================================== -->
+<!-- Kinematics of the LaserCMS Fixed Head for simulation                   -->
+<!-- History:                                                               -->
+<!-- DICC   Who When     What                                               -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--        GJM 21/06/04 Beatified Model                                    -->
+<!-- 129215 VVS 01/09/16 Made compatible with machine collision checking.   -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.    -->
+<!-- ====================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-165" I="0" J="0" K="1" />
+  <!-- Head -->
+  <machine_part NAME="head">
+    <model_list>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/corpo.dmt"/>
+        <rgb R="60" G="60" B="60"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/Laser.dmt"/>
+        <rgb R="255" G="0" B="0"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/corpolaser.dmt"/>
+        <rgb R="180" G="180" B="180"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/interruttore.dmt"/>
+        <rgb R="128" G="128" B="128"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/ganci.dmt"/>
+        <rgb R="128" G="128" B="128"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/cavo.dmt"/>
+        <rgb R="221" G="225" B="62"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/logoblu.dmt"/>
+        <rgb R="0" G="0" B="255"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/logonero.dmt"/>
+        <rgb R="0" G="0" B="0"/>
+      </dmt_file>
+      <dmt_file>
+        <!-- Comment !-->
+        <path FILE="probeheads/LaserCMS/logobianco.dmt"/>
+        <rgb R="255" G="255" B="255"/>
+      </dmt_file>
+    </model_list>
+  </machine_part>
+  <machine_part NAME="table"/>
+</machine>

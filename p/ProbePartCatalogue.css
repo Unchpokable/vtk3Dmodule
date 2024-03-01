@@ -1,0 +1,84 @@
+BODY
+{
+  background-color:White;
+  font-family:verdana;
+}
+H1 
+{
+  font-size : 1.5em ;
+}
+H3
+{
+  font-size : 1.2em ;
+}
+.toggle 
+{
+  font-size : 0.8 em ;
+  TEXT-DECORATION: underline;
+  CURSOR: hand;
+  COLOR: blue;
+}
+.GeometryTable
+{
+  BORDER-RIGHT: 2px groove; 
+  BORDER-TOP: 2px groove; 
+  BORDER-LEFT: 2px groove; 
+  BORDER-BOTTOM: 2px groove;
+  text-align:center; 
+
+}
+
+.GeomtryEntity
+{
+  background-color: Yellow;
+  font-weight:bold;
+  white-space:nowrap;
+  text-align:center;
+}
+
+.GeomtryAttributes
+{
+  background-color:threedhighlight;
+  white-space:nowrap;
+  text-align:right;
+}
+.GeomtryAttributesText
+{
+  background-color:threedhighlight;
+  white-space:nowrap;
+  text-align:center;
+}
+
+.ExplosionTable
+{
+  BORDER-RIGHT: 2px groove; 
+  BORDER-TOP: 2px groove; 
+  BORDER-LEFT: 2px groove; 
+  BORDER-BOTTOM: 2px groove;  
+}
+
+.ExplosionDirectionAndPoint
+{
+  background-color:threedhighlight;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.Button
+{
+  CURSOR: hand;
+  font-weight:bold;
+}
+.NameStyle
+{
+  color:Black;
+}
+.ValueStyle
+{
+  color:green;
+  font-weight:bold;
+}
+.DisplayAll
+{
+  display:block;
+}

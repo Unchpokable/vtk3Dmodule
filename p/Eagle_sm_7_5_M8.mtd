@@ -1,0 +1,70 @@
+<!--
+//=============================================================================
+// Kinematics of the Eagle_sm_7_5_M8 Head for simulation
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// COPYRIGHT 2014  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History:
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 113106 MGA 19/06/14 Written by GJM.
+// 117989 JND 27/01/15 Inverted A axis from +X to -X
+// 118821 JND 06/03/15 Reverted A axis invert. Updated A axis limits.
+// 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.
+//=============================================================================
+-->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-49.00" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/Eagle_sm_7_5_M8/TopFixed.dmt" />
+    <rgb R="210" G="210" B="210" />
+    </dmt_file>
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B" />
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_M8/Rotary.dmt" />
+        <rgb R="210" G="210" B="210" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_M8/LogoBack.dmt" />
+        <rgb R="210" G="210" B="210" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_M8/LogoBlack.dmt" />
+        <rgb R="65" G="65" B="65" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Eagle_sm_7_5_M8/LogoGreen.dmt" />
+        <rgb R="0" G="149" B="74" />
+      </dmt_file>
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="0" MAX="105" />
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/Eagle_sm_7_5_M8/Pivot.dmt" />
+          <rgb R="210" G="210" B="210" />
+        </dmt_file>
+      </model_list>        
+      <machine_part NAME="head" />
+    </machine_part>
+  </machine_part>
+</machine>

@@ -1,0 +1,70 @@
+<!--
+//=============================================================================
+//
+//This script verify the probe database XML configuration file
+//
+// ----------------------------------------------------------------------------
+// COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.
+// ----------------------------------------------------------------------------
+//
+// History.
+// DICC   Who When     What
+// ------ --- -------- --------------------------------------------------------
+//        ER  01/05/01 Written.
+//        FHA 05/02/03 Ported to JScript and adapted to W3C schema and XML4.0
+//                     validation
+//        ATC 01/07/04 Added ProbePart Catalogue validation
+//  82176 BEC 18/02/10 pinspect#9480. Get rid of .wsc components and using our
+//                     include system
+// 111819 EJK 17/04/14 Standardise file header
+//-----------------------------------------------------------------------------
+-->
+<job>
+<script language="VBScript" src="include_vb.vbs" />
+<script language="JScript" src="include_js.js" />
+<script language="JScript">
+
+
+function CheckDocument(strXMLDocument,strXMLSchema)
+{
+
+    var SchemaCache = new ActiveXObject("Msxml2.XMLSchemaCache.4.0"); 
+    SchemaCache.add("", strXMLSchema);
+  
+    var xml = new ActiveXObject("Msxml2.DOMDocument.4.0");
+    xml.async = false;
+    xml.validateOnParse = true;
+    xml.schemas = SchemaCache;
+    
+    var bSuccess = xml.load(strXMLDocument);
+        
+    if (xml.parseError.errorCode!=0)
+    {
+      var err = xml.parseError;       
+      var msg ;
+      msg = " Error Code " + xml.parseError.errorCode + "\n";
+      msg = msg + " reason " + xml.parseError.reason + "\n";
+      msg = msg + " url " + xml.parseError.url + "\n";
+      msg = msg + " src " + xml.parseError.srcText + "\n";
+      msg = msg + " Line " + xml.parseError.Line + "\n";
+      
+      WScript.Echo(msg);
+      WScript.Echo("not valid");
+      return false;
+    } else { 
+      WScript.Echo("Well formed xml and Valid");
+      return true;
+    }
+}
+
+WScript.Echo("-------------------------------------------------------------");
+WScript.Echo("Verification of the Catalogue.XML syntax");
+
+CheckDocument("Catalogue.xml","CatalogueSchema.xsd")
+CheckDocument("ProbePartCatalogue.xml","ProbePartCatalogue.xsd")
+</script>
+  
+</job>
+
+
+

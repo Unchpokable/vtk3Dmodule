@@ -1,0 +1,50 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the PH6 Head for simulation                                   -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        GJM 20/05/04 Written.                                                -->
+<!--        DLM 22/01/08 Added head attachment point (pinspect#5902).            -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-28" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/PH6/PH6_top.dmt" />
+    <rgb R="200" G="200" B="200" />
+    </dmt_file>
+    <dmt_file>
+        <path FILE="probeheads/PH6/PH6_body_text.dmt" />
+        <rgb R="30" G="30" B="30" />
+      </dmt_file>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/PH6/PH6_bottom.dmt" />
+    <rgb R="200" G="200" B="200" />
+    </dmt_file>
+      <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/PH6/PH6_label.dmt" />
+    <rgb R="250" G="250" B="250" />
+    </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/PH6/PH6_led.dmt" />
+        <rgb R="250" G="0" B="0" />
+      </dmt_file>
+  </model_list>
+	</machine_part>
+	<machine_part NAME="table"/>
+	<!-- The Guts-->
+	<machine_part NAME="head"/>
+
+</machine>

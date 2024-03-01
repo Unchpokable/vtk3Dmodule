@@ -1,0 +1,144 @@
+<html>
+<!--
+//=============================================================================
+// ProbePartCatalogue.htm :
+//-----------------------------------------------------------------------------
+// COPYRIGHT 2009 DELCAM PLC, BIRMINGHAM, ENGLAND.
+//-----------------------------------------------------------------------------
+//
+// History 
+// DICC  Who 
+// ----- --- -------- ---------------------------------------------------------
+// 77194 AEK 01/04/09 pinspect#8258. Added this header. Removed compatibility 
+//                    mode.
+//---------------------------------------------------------------------------->
+  <head>    
+    <link rel="stylesheet" type="text/css" href="ProbePartCatalogue.css" />
+    <title>ProbePartCatalogue</title>    
+  <script language="jscript">
+
+   function transform(){
+    //debugger;
+    
+    
+ 
+    var SchemaCache = new ActiveXObject("Msxml2.XMLSchemaCache.4.0"); 
+    SchemaCache.add("", "ProbePartCatalogue.xsd");
+    
+ 
+   
+    var xml = new ActiveXObject("Msxml2.DOMDocument.4.0");
+    xml.async = false;
+    xml.validateOnParse = true;
+    xml.schemas = SchemaCache;
+
+    var bSuccess = xml.load("ProbePartCatalogue.xml");
+    
+    
+    if (xml.parseError.errorCode!=0)
+    {
+      var err = xml.parseError;       
+      var msg ;
+      msg = " Error Code " + xml.parseError.errorCode + "<br>\n";
+      msg = msg + " reason " + xml.parseError.reason + "<br>\n";
+      msg = msg + " url " + xml.parseError.url + "<br>\n";
+      msg = msg + " src " + xml.parseError.srcText + "<br>\n";
+      msg = msg + " Line " + xml.parseError.Line + "<br>\n";
+      
+      oBody.innerHTML = msg;
+        
+    } else { 
+    
+      var xsl = new ActiveXObject("Msxml2.FreeThreadedDOMDocument.4.0");
+      xsl.async = false;
+      xsl.load("ProbePartCatalogueForHtml.xslt");
+      
+      var result = new ActiveXObject("Msxml2.DOMDocument.4.0");
+      xml.async = false;
+      
+      var cache = new ActiveXObject("Msxml2.XSLTemplate.4.0");
+      cache.stylesheet = xsl;
+      
+      var proc = cache.createProcessor();
+      
+      proc.input = xml;
+      proc.output = result;
+      proc.transform;
+      oBody.innerHTML = result.xml;
+  
+    }
+  }
+
+		
+		function HideAll(){
+			var list = document.getElementsByTagName("font");
+			var node;
+			var n = list.length - 1;
+			
+			var i;
+			for (i = 0; i != n; i++) {
+			
+				var node = list[i];
+				var type = node.getAttribute("type");
+				var text = node.innerText;
+				if(type=="expandable"){
+					if( text == "Hide"){
+					    ToggleDisplay(node);
+					}
+				}					   
+			}
+		}
+		
+		function ShowAll(){
+			var list = document.getElementsByTagName("font");
+			var node;
+			var n = list.length - 1;
+			
+			var i;
+			for (i = 0; i != n; i++) {
+			
+				var node = list[i];
+				var type = node.getAttribute("type");
+				var text = node.innerText;
+				if(type=="expandable"){
+					if( text == "Show"){
+					    ToggleDisplay(node);
+					}
+				}					   
+			}
+		}
+
+		
+		
+		function ToggleDisplay(oCurrent){
+			var innerText = oCurrent.innerText;
+			var td = oCurrent.parentElement;
+			var tr = td.parentElement;
+			var table = tr.parentElement;
+
+			var node = table.lastChild;	
+			if(innerText == "[+]"){
+				oCurrent.innerText = "[-]";
+				if(node != null){
+					node.style.display=  "block";
+					td.style.textAlign = "left";
+					table.style.backgroundColor = "white";
+					
+				}
+
+			} else{
+				oCurrent.innerText = "[+]";					
+				if(node != null){
+					node.style.display= "none";
+					td.style.textAlign = "left";
+					table.style.backgroundColor = "white";
+				}
+			}
+		}
+
+
+    </script>
+  </head>
+  <body id="oBody" onload="transform()">
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the TesaStar-i Head for simulation                            -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2010  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        GJM 14/11/11 Written.                                                -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-40" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/Tesastar-i/Static.dmt" />
+    <rgb R="160" G="160" B="160" />
+    </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/Logo.dmt" />
+        <rgb R="255" G="255" B="255" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/redled.dmt" />
+        <rgb R="255" G="96" B="96" />
+      </dmt_file>
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B" />
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/B-ring.dmt" />
+        <rgb R="60" G="60" B="60" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/B-ringNumbersMid.dmt" />
+        <rgb R="60" G="60" B="60" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/B-ringNumbers1.dmt" />
+        <rgb R="255" G="255" B="255" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/Tesastar-i/RotaryBits.dmt" />
+        <rgb R="160" G="160" B="160" />
+      </dmt_file>
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="-115" MAX="115" />
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/Tesastar-i/PivotBits.dmt" />
+          <rgb R="160" G="160" B="160" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/Tesastar-i/Pivot-Ring.dmt" />
+          <rgb R="60" G="60" B="60" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/Tesastar-i/Pivot-Numbers.dmt" />
+          <rgb R="255" G="255" B="255" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/Tesastar-i/Pivot-Letters.dmt" />
+          <rgb R="255" G="255" B="255" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/Tesastar-i/Pivot-Ring1.dmt" />
+          <rgb R="160" G="160" B="160" />
+        </dmt_file>
+      </model_list>        
+      <machine_part NAME="head" />
+    </machine_part>
+  </machine_part>
+</machine>

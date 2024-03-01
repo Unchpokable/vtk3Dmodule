@@ -1,0 +1,341 @@
+<?xml version="1.0" ?>
+
+<!-- Powermill Machinetool Schema File (Version 3)                    -->
+<!--                                                                  -->
+<!-- History                                                          -->
+<!-- DICC  Who When     What                                          -->
+<!-- ===== === ======== ============================================= -->
+<!--       ASW 19/09/02 Created                                       -->
+<!--       ASW 01/09/03 Extend format for non-standard configurations -->
+<!-- 52744 ASW 10/09/04 Add support for geometric primitives          -->
+<!-- <nnn> DLM 01/03/07 Use PM-Post solver as default (pinspect#5232) -->
+<!-- ================================================================ -->
+
+
+<Schema xmlns="urn:schemas-microsoft-com:xml-data"
+        xmlns:dt="urn:schemas-microsoft-com:datatypes">
+
+  <ElementType name="machine" content="eltOnly" model="closed">
+
+    <AttributeType name="POST">
+      <datatype dt:type="string" />
+    </AttributeType>
+    <attribute type="POST" default="pmpMultiaxis.mxs4PMill" />
+
+    <group order="one" >
+      <group order="seq">
+        <element type="head_attach_point" minOccurs="0" />
+        <element type="table_attach_point" minOccurs="0" />
+      </group>
+      <group order="seq">
+        <element type="table_attach_point" />
+        <element type="head_attach_point" />
+      </group>
+    </group>
+
+    <element type="machine_part" maxOccurs="*" />
+
+  </ElementType>
+
+
+  <ElementType name="head_attach_point" content="empty" model="closed">
+
+    <AttributeType name="PART">
+      <datatype dt:type="idref" />
+    </AttributeType>
+    <attribute type="PART" required="yes" />
+
+    <AttributeType name="X">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X" required="yes" />
+
+    <AttributeType name="Y">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y" required="yes" />
+
+    <AttributeType name="Z">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z" required="yes" />
+
+    <AttributeType name="I">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="I" required="yes" />
+
+    <AttributeType name="J">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="J" required="yes" />
+
+    <AttributeType name="K">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="K" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="table_attach_point" content="empty" model="closed">
+
+    <AttributeType name="PART">
+      <datatype dt:type="idref" />
+    </AttributeType>
+    <attribute type="PART" required="yes" />
+
+    <AttributeType name="X">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X" required="yes" />
+
+    <AttributeType name="Y">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y" required="yes" />
+
+    <AttributeType name="Z">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="machine_part" content="eltOnly" model="closed">
+
+    <AttributeType name="NAME">
+      <datatype dt:type="id" />
+    </AttributeType>
+    <attribute type="NAME" />
+
+    <element type="axis" minOccurs="0" />
+    <element type="model_list" minOccurs="0" />
+    <element type="machine_part" minOccurs="0" maxOccurs="*" />
+
+  </ElementType>
+
+
+  <ElementType name="model_list" content="eltOnly" model="closed">
+    <group order="many">
+      <element type="dmt_file" />
+      <element type="geometry" />
+    </group>
+  </ElementType>
+
+
+  <ElementType name="dmt_file" content="eltOnly" model="closed" >
+    <element type="path" />
+    <element type="rgb" />
+  </ElementType>
+
+
+  <ElementType name="geometry" content="eltOnly" model="closed" >
+    <group order="many">
+      <element type="cone" />
+      <element type="box" />
+    </group>
+    <element type="rgb" />
+  </ElementType>
+
+
+  <ElementType name="axis" content="eltOnly" model="closed" >
+    <element type="control_info" />
+    <group order="one">
+      <element type="simple_linear" />
+      <element type="simple_rotary" />
+    </group>
+  </ElementType>
+
+
+  <ElementType name="control_info" content="empty" model="closed" >
+
+    <AttributeType name="ADDRESS">
+      <datatype dt:type="char" />
+    </AttributeType>
+    <attribute type="ADDRESS" required="yes" />
+
+    <AttributeType name="VALUE">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="VALUE" />
+
+    <AttributeType name="MIN">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="MIN" />
+
+    <AttributeType name="MAX">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="MAX" />
+
+  </ElementType>
+
+
+  <ElementType name="simple_linear" content="empty" model="closed" >
+
+    <AttributeType name="I">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="I" required="yes" />
+
+    <AttributeType name="J">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="J" required="yes" />
+
+    <AttributeType name="K">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="K" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="simple_rotary" content="empty" model="closed" >
+
+    <AttributeType name="X">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X" required="yes" />
+
+    <AttributeType name="Y">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y" required="yes" />
+
+    <AttributeType name="Z">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z" required="yes" />
+
+    <AttributeType name="I">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="I" required="yes" />
+
+    <AttributeType name="J">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="J" required="yes" />
+
+    <AttributeType name="K">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="K" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="rgb" content="empty" model="closed" >
+
+    <AttributeType name="R">
+      <datatype dt:type="ui1" />
+    </AttributeType>
+    <attribute type="R" required="yes" />
+
+    <AttributeType name="G">
+      <datatype dt:type="ui1" />
+    </AttributeType>
+    <attribute type="G" required="yes" />
+
+    <AttributeType name="B">
+      <datatype dt:type="ui1" />
+    </AttributeType>
+    <attribute type="B" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="path" content="empty" model="closed" >
+
+    <AttributeType name="FILE">
+      <datatype dt:type="string" />
+    </AttributeType>
+    <attribute type="FILE" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="box" content="empty" model="closed" >
+
+    <AttributeType name="X1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X1" required="yes" />
+
+    <AttributeType name="Y1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y1" required="yes" />
+
+    <AttributeType name="Z1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z1" required="yes" />
+
+    <AttributeType name="X2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X2" required="yes" />
+
+    <AttributeType name="Y2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y2" required="yes" />
+
+    <AttributeType name="Z2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z2" required="yes" />
+
+  </ElementType>
+
+
+  <ElementType name="cone" content="empty" model="closed" >
+
+    <AttributeType name="X1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X1" required="yes" />
+
+    <AttributeType name="Y1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y1" required="yes" />
+
+    <AttributeType name="Z1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z1" required="yes" />
+
+    <AttributeType name="R1">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="R1" required="yes" />
+
+    <AttributeType name="X2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="X2" required="yes" />
+
+    <AttributeType name="Y2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Y2" required="yes" />
+
+    <AttributeType name="Z2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="Z2" required="yes" />
+
+    <AttributeType name="R2">
+      <datatype dt:type="float" />
+    </AttributeType>
+    <attribute type="R2" required="yes" />
+
+  </ElementType>
+
+</Schema>

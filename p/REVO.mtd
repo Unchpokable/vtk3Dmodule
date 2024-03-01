@@ -1,0 +1,68 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the REVO Head for simulation                                 -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2006  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History:                                                                    -->
+<!-- Who When     What                                                           -->
+<!-- ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- GJM 24/03/04 Written.                                                       -->
+<!-- DLM 22/01/08 Added head attachment-point (pinspect#5902).                   -->
+<!-- DICC  Who When     What                                                     -->
+<!-- ~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- 72219 SNB 05/06/08 pinspect#7117. Fixed lower limit of A angle range for REVO -->
+<!--                    Fixed upper limit of A angle range for REVO              -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-50.8" I="0" J="0" K="1" /> 
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/REVO/Revo_Head_Static.dmt" />
+    <rgb R="40" G="40" B="40" />
+    </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/REVO/Revo_Head_Static_Lettering.dmt" />
+        <rgb R="250" G="250" B="250" />
+      </dmt_file>
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B"/>
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+ <dmt_file>
+        <path FILE="probeheads/REVO/Revo_Head_Rotate.dmt" />
+        <rgb R="40" G="40" B="40" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/REVO/Revo_Head_Rotate_Lettering.dmt" />
+        <rgb R="250" G="250" B="250" />
+      </dmt_file>
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="-5" MAX="120"/>
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/REVO/Revo_Head_Pivot.dmt" />
+          <rgb R="40" G="40" B="40" />
+        </dmt_file>
+      </model_list>
+            <machine_part NAME="head" />
+    </machine_part>
+   
+  </machine_part>
+</machine>

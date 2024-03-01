@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+//D Validation for ProbePartCatalogue.xml
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// COPYRIGHT 2003  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//        ER  21/11/03 Written.
+//        FHA 11/12/03 remove the use="requiered" on global object because 
+//                     that was Throwing exeption on msxml4
+//        ER  12/12/03 Added Geometry element in Explosion'
+//        FHA 22/01/04 Fixed XML4.0 conformance problem
+//        GJM 03/08/06 Added new to_mounting and from_mounting 
+//                     interface types.  pinspect#4961.
+//        GJM 11/12/06 Added SP600Magnetic and SP25Magnetic to and from 
+//                     interfaces
+//        GJM 10/11/08 Added c1 to_mounting and from_mounting interface for 
+//                       machine tool CMS laser probe
+// 111765 MGA 15/04/14 MDM Heads connection types added (changes supplied by GJM)
+// 113416 CLH 08/07/14 Added dock_type attribute , from RackCommonTypes.xsd
+// 113905 CLH 31/07/14 move docking_height to probepart_common_element
+// 115306 JND 23/03/15 Change Eleemnt to allow only 1 Connections node
+// 126696 MGA 08/03/16 Added SM25-4Magnetic and SM25-5Magnetic
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified"
+           xmlns:rct="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+>
+  
+  <xs:import
+    namespace="http://powerinspect.delcam.com/XMLOutput/RackCommonTypes"
+    schemaLocation="RackCommonTypes.xsd"
+  />
+
+  <xs:element name="ProbeParts">
+    <xs:annotation>
+      <xs:documentation>A collection of probe part elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Connector"/>
+        <xs:element ref="Stylus"/>
+        <xs:element ref="Extension"/>
+        <xs:element name="Module">
+          <xs:annotation>
+            <xs:documentation>a module</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="probepart_common_element">
+                <xs:attribute ref="to_mounting" use="required"/>
+                <xs:attribute name="length" type="xs:double" use="required"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProbeBody">
+          <xs:annotation>
+            <xs:documentation>a probe body</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="probepart_common_element">
+                <xs:attribute ref="to_mounting" use="required"/>
+                <xs:attribute name="length" type="xs:double" use="required"/>
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Assemblies">
+    <xs:annotation>
+      <xs:documentation>A collection of probe assemblies</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Assembly"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Assembly">
+    <xs:annotation>
+      <xs:documentation>A probe assembly definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Image">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="ref" type="xs:string"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="Description" minOccurs="0"/>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="Element"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute ref="from_mounting" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AssemblyDefinition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Assembly"/>
+        <xs:element ref="ProbeParts"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Catalogue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Assemblies"/>
+        <xs:element ref="ProbeParts"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Extension">
+    <xs:annotation>
+      <xs:documentation>represents a probe body , a module , an extension bar or a stylus externsion</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="probepart_common_element">
+          <xs:attribute ref="to_mounting" use="required"/>
+          <xs:attribute name="length" type="xs:double" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Stylus">
+    <xs:annotation>
+      <xs:documentation>represent a touch trigger stylus</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="probepart_common_element">
+          <xs:attribute name="length" type="xs:double" use="required"/>
+          <xs:attribute name="diameter" type="xs:double" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Connector">
+    <xs:complexType mixed="0">
+      <xs:complexContent mixed="0">
+        <xs:extension base="probepart_common_element">
+          <xs:sequence>
+            <xs:element ref="Explosions"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="VectorAttributes">
+    <xs:attribute name="I" type="xs:double" use="required"/>
+    <xs:attribute name="J" type="xs:double" use="required"/>
+    <xs:attribute name="K" type="xs:double" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="PointAttributes">
+    <xs:attribute name="X" type="xs:double" use="required"/>
+    <xs:attribute name="Y" type="xs:double" use="required"/>
+    <xs:attribute name="Z" type="xs:double" use="required"/>
+  </xs:attributeGroup>
+  <xs:attribute name="ref" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>A reference to a Probe Part</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:element name="Element">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="1">
+        <xs:element ref="Connections"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="xs:string" use="required"/>
+      <xs:attribute name="ref" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Connections">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="Connection"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Connection">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="Element"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="probepart_common_element">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="Description" minOccurs="0"/>
+      <xs:element ref="Manufacturer" minOccurs="0"/>
+      <xs:element ref="Geometry"/>
+    </xs:choice>
+    <xs:attribute name="dock_type" type="rct:dock_type" use="optional"/>
+    <xs:attribute ref="from_mounting" use="required"/>
+    <xs:attribute name="price" type="xs:double" use="optional"/>
+    <xs:attribute name="name" type="xs:string" use="optional"/>
+    <xs:attribute name="part_number" type="xs:string" use="optional"/>
+    <xs:attribute name="docking_height" type="xs:double" use="optional"/>
+  </xs:complexType>
+  <xs:element name="Manufacturer" type="xs:string"/>
+  <xs:element name="Description">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="lang" type="xs:string" use="optional" default="english"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Explosions">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element name="Explosion">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="Direction">
+                <xs:complexType>
+                  <xs:attributeGroup ref="VectorAttributes"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Point">
+                <xs:complexType>
+                  <xs:attributeGroup ref="PointAttributes"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="Geometry" minOccurs="0"/>
+            </xs:all>
+            <xs:attribute name="id" type="xs:integer" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+            <xs:attribute ref="to_mounting" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Geometry">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Cylinder">
+          <xs:complexType>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attribute name="diameter" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Sphere">
+          <xs:complexType>
+            <xs:attribute name="diameter" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Cone">
+          <xs:complexType>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attribute name="diameter1" type="xs:double" use="required"/>
+            <xs:attribute name="diameter2" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Cube">
+          <xs:complexType>
+            <xs:attribute name="width" type="xs:double" use="required"/>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ExternalGeometry">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="File"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TruncatedSphere">
+          <xs:complexType>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="GeometryAttributes">
+    <xs:attribute name="color" type="xs:string" use="required"/>
+    <xs:attribute name="material" type="xs:string" use="required"/>
+    <xs:attribute name="offset" type="xs:double" use="required"/>
+    <xs:attribute name="reference_length" type="xs:double" use="required"/>
+  </xs:attributeGroup>
+  <xs:attribute name="material" default="Stainless">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Black Anodised"/>
+        <xs:enumeration value="Aluminium"/>
+        <xs:enumeration value="Stainless"/>
+        <xs:enumeration value="Bakeolite"/>
+        <xs:enumeration value="Ruby"/>
+        <xs:enumeration value="Ceramic"/>
+        <xs:enumeration value="Black Anodised"/>
+        <xs:enumeration value="Carbon Fiber"/>
+        <xs:enumeration value="Black Plastic"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="to_mounting">
+    <xs:annotation>
+      <xs:documentation>the reference ot the type of interface</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="m2"/>
+        <xs:enumeration value="m3"/>
+        <xs:enumeration value="m4"/>
+        <xs:enumeration value="m5"/>
+        <xs:enumeration value="m8"/>
+        <xs:enumeration value="c1"/>
+        <xs:enumeration value="AutoJoint"/>
+        <xs:enumeration value="AutoMagnetic"/>
+        <xs:enumeration value="REVOMagnetic"/>
+        <xs:enumeration value="RSP2Magnetic"/>
+        <xs:enumeration value="RSP3Magnetic"/>
+        <xs:enumeration value="SM25-1Magnetic"/>
+        <xs:enumeration value="SM25-2Magnetic"/>
+        <xs:enumeration value="SM25-3Magnetic"/>
+        <xs:enumeration value="SM25-4Magnetic"/>
+        <xs:enumeration value="SM25-5Magnetic"/>
+        <xs:enumeration value="SP600Magnetic"/>
+        <xs:enumeration value="SP25Magnetic"/>
+        <xs:enumeration value="MDM_Head"/>
+        <xs:enumeration value="MDM_kinematic"/>
+        <xs:enumeration value="MDM_Offset_Head"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="from_mounting">
+    <xs:annotation>
+      <xs:documentation>the reference ot the type of interface </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="m2"/>
+        <xs:enumeration value="m3"/>
+        <xs:enumeration value="m4"/>
+        <xs:enumeration value="m5"/>
+        <xs:enumeration value="m8"/>
+        <xs:enumeration value="c1"/>
+        <xs:enumeration value="AutoJoint"/>
+        <xs:enumeration value="AutoMagnetic"/>
+        <xs:enumeration value="REVOMagnetic"/>
+        <xs:enumeration value="RSP2Magnetic"/>
+        <xs:enumeration value="RSP3Magnetic"/>
+        <xs:enumeration value="SM25-1Magnetic"/>
+        <xs:enumeration value="SM25-2Magnetic"/>
+        <xs:enumeration value="SM25-3Magnetic"/>
+        <xs:enumeration value="SM25-4Magnetic"/>
+        <xs:enumeration value="SM25-5Magnetic"/>
+        <xs:enumeration value="SP600Magnetic"/>
+        <xs:enumeration value="SP25Magnetic"/>
+        <xs:enumeration value="MDM_Head"/>
+        <xs:enumeration value="MDM_kinematic"/>
+        <xs:enumeration value="MDM_Offset_Head"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+</xs:schema>

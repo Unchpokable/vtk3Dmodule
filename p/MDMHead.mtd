@@ -1,0 +1,36 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the Franco's Head for simulation                              -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        GJM 20/05/04 Written.                                                -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="0" Z="-116.5" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/MDM_Head/MDM_Head.dmt" />
+    <rgb R="100" G="100" B="100" />
+    </dmt_file>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/MDM_Head/MDM_Head_Logo.dmt" />
+    <rgb R="10" G="10" B="150" />
+    </dmt_file>
+  </model_list>
+	</machine_part>
+	<machine_part NAME="table"/>
+	<!-- The Guts-->
+	<machine_part NAME="head"/>
+
+</machine>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--=============================================================================-->
+<!--Schema for catalogue of available hardware elements used to build up a probe -->
+<!-- system configuration.                                                       -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History:                                                                    -->
+<!-- Who When     What                                                           -->
+<!-- ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- ER  01/05/01 Written.                                                       -->
+<!-- BGB 08/05/01 Renamed files, changed scheme slighly and made minor           -->
+<!--              corrections.                                                   -->
+<!-- ER  12/08/02 add a_hinge_offset element  ( used for PH50 support )          -->
+<!-- ER  14/12/03 Removed probe part definition from this schema                 -->
+<!-- FHA 06/02/04 Converted to w3 schema                                         -->
+<!-- ATC 01/07/04 Added constraints on values of "to_mounting" attribute         -->
+<!-- ER  25/05/05 Added the technology attribute on probe head element           -->
+<!-- ER  09/01/06 Added Geometry and envelope pinspect#4197                      -->
+<!-- PRH 17/11/06 Added REVOMagnetic                                             -->
+<!-- DDG 27/03/08 pinspect#6689. Added two new probe head types                  -->
+<!-- DICC  Who When     What                                                     -->
+<!-- ~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!-- 75018 GJM 10/11/08 Added c1 to_mounting definition                          -->
+<!-- 81051 AEK 09/11/09 Added "*" to to_mounting definition                      -->
+<!-- 93895 PRH 27/04/11 Added TP20Joint and SP25Magnetic                         -->
+<!---111765 MGA 15/04/14 Added MDM_Head connection type (provided by GJM)        -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="a_hinge_offset">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="application" type="xs:string"/>
+  <xs:element name="axis">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="param"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="components">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="probeheads" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="junction_offset">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kinematic">
+    <xs:complexType>
+      <xs:attribute name="filename" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="manufacturer" type="xs:string"/>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="options">
+    <xs:complexType>
+      <xs:attribute name="trust_initial_values" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:attribute name="minvalue" type="xs:float" use="required"/>
+      <xs:attribute name="maxvalue" type="xs:float" use="required"/>
+      <xs:attribute name="increment" type="xs:float" use="required"/>
+      <xs:attribute name="defaultvalue" type="xs:float" use="required"/>
+      <xs:attribute name="unit" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="degree"/>
+            <xs:enumeration value="mm"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="picture" type="xs:string"/>
+  <xs:element name="point">
+    <xs:complexType>
+      <xs:attribute name="X" type="xs:float" use="required"/>
+      <xs:attribute name="Y" type="xs:float" use="required"/>
+      <xs:attribute name="Z" type="xs:float" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="probe_tool_mounting_point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="probehead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="description" minOccurs="0"/>
+        <xs:element ref="manufacturer" minOccurs="0"/>
+        <xs:element ref="application" minOccurs="0"/>
+        <xs:element ref="quill_mounting_point" minOccurs="0"/>
+        <xs:element ref="probe_tool_mounting_point" minOccurs="0"/>
+        <xs:element ref="a_hinge_offset" minOccurs="0"/>
+        <xs:element ref="axis" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="kinematic" minOccurs="0"/>
+        <xs:element ref="picture" minOccurs="0"/>
+        <xs:element ref="options" minOccurs="0"/>
+        <xs:element name="envelope" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="Geometry"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="required"/>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="FIXED"/>
+            <xs:enumeration value="ADJUSTABLE"/>
+            <xs:enumeration value="INDEXABLE_MANUAL"/>
+            <xs:enumeration value="INDEXABLE_CNC"/>
+            <xs:enumeration value="INDEXABLE_CONTINIOUS_5AXIS_MANUAL"/>
+            <xs:enumeration value="INDEXABLE_CONTINIOUS_5AXIS_CNC"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="to_mounting" use="required">
+        <xs:annotation>
+          <xs:documentation>the reference ot the type of interface</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="m2"/>
+            <xs:enumeration value="m3"/>
+            <xs:enumeration value="m4"/>
+            <xs:enumeration value="m5"/>
+            <xs:enumeration value="m8"/>
+            <xs:enumeration value="TP20Joint"/>
+            <xs:enumeration value="AutoJoint"/>
+            <xs:enumeration value="AutoMagnetic"/>
+            <xs:enumeration value="REVOMagnetic"/>
+            <xs:enumeration value="SP25Magnetic"/>
+            <xs:enumeration value="MDM_Head"/>
+            <xs:enumeration value="MDM_kinematic"/>
+            <xs:enumeration value="MDM_Offset_Head"/>
+            <xs:enumeration value="c1"/>
+            <xs:enumeration value="*"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="technology" use="required">
+        <xs:annotation>
+          <xs:documentation>the technology of the probe head</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="CMM"/>
+            <xs:enumeration value="OMV"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="probeheads">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="probehead" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="quill_mounting_point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Geometry">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Cylinder">
+          <xs:complexType>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attribute name="diameter" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Sphere">
+          <xs:complexType>
+            <xs:attribute name="diameter" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Cone">
+          <xs:complexType>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attribute name="diameter1" type="xs:double" use="required"/>
+            <xs:attribute name="diameter2" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Cube">
+          <xs:complexType>
+            <xs:attribute name="width" type="xs:double" use="required"/>
+            <xs:attribute name="height" type="xs:double" use="required"/>
+            <xs:attributeGroup ref="GeometryAttributes"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ExternalGeometry">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="File"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TruncatedSphere">
+          <xs:complexType/>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="GeometryAttributes">
+    <xs:attribute name="color" type="xs:string" use="required"/>
+    <xs:attribute name="material" type="xs:string" use="required"/>
+    <xs:attribute name="offset" type="xs:double" use="required"/>
+    <xs:attribute name="reference_length" type="xs:double" use="required"/>
+  </xs:attributeGroup>
+</xs:schema>

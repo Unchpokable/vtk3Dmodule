@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//=============================================================================
+//D Rack Catalogue
+//
+// Each rack, port and insert that PowerINSPECT supports should be defined in 
+// here. other files referenced in RackCatalogue.xml should be created in the 
+// correct location before using the rack.
+//
+// RackCatalogue.xml should follow the schema defined in RackCatalogue.xsd
+//
+// Internal to Delcam see http://wiki/wiki/index.php/PWI:_CNC_Racks_Geometry
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Copyright 2018 Autodesk, Inc.  All rights reserved.
+//
+// This computer source code and related instructions and comments are the
+// unpublished confidential and proprietary information of Autodesk, Inc.
+// and are protected under applicable copyright and trade secret law. They
+// may not be disclosed to, copied or used by any third party without the
+// prior written consent of Autodesk, Inc.
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// History.
+// DICC   Who When     What
+// ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 111111 JND 13/05/14 Written.
+// 112659 JND 30/05/14 Added CalibrationImages to the MCR20 rack
+// 113008 JND 17/06/14 Added PQR insert with Socket_MCR30 mounting
+// 113634 JND 17/07/14 Added rack and insert image paths
+// 113644 JND 30/07/14 Updated insert probe paths
+// 113846 CLH 28/07/14 Added FCR25
+// 113905 CLH 31/07/14 Add NominalOffset for inserts, by rough measurement
+// 113960 JND 06/08/14 Corrected MCR20 port nominal offsets
+// 114279 JND 26/08/14 Updated Ports to contain a Calibration node
+// 115447 CLH 15/10/14 XML for images of insert calib, correct FCR25 offsets
+// 115598 CLH 17/10/14 Add <CalibrationOffset> to <Insert> update offsets
+//                     for all inserts as per actual measurements.
+// 115756 CLH 28/10/14 Standardise file names and paths
+// 116155 CLH 06/11/14 Correct FCR25 / PA25-20 drop off error
+// 116748 JND 27/11/14 Comment out unsuported FCR25 rack inserts
+// 116854 JND 03/12/14 Replaced the term calibrate with locate
+// 117505 JND 02/01/15 Updated MCR20 and FCR25 check in and out distances 
+// 117558 JND 06/01/15 Updated MCR20 and FCR25 default approach positions
+// 117894 JND 22/01/15 Removed port location node
+// 118532 JND 18/02/15 Uncomment unsupported inserts. Added debug only flag.
+// 119276 JND 28/04/15 Removed LocationImages. Added Locate nodes.
+// 121713 JND 21/07/15 Added HR-P4 rack and insert
+// 122222 JND 12/08/15 Added HR-P2 and HR-P6 racks. Moved all insert files
+//                     from within rack folders to seperate insert folder.
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+<RackCatalog version="1">
+  <Racks>
+    <Rack type="MCR20" >
+      <!--
+        The location point (rack 0,0,0) is defined as the top of the main
+        solid metal face, on the front face in the centre of the port. As you 
+        look into the ports  X is to the right and Y is from the front to rear 
+        of the port. Z is then up, from the port up to the sliding door.
+      -->
+      <Parameters
+        check_in_distance="25"
+        check_out_distance="25"
+        docking_speed="50"
+        coupling_speed="10"
+      >
+        <Approach X="75" Y="-100" Z="200" />
+      </Parameters>
+      <Ports total_ports="6">
+        <Port number="1" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="0" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="2" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="30" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="3" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="60" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="4" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="90" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="5" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="120" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="6" to_mounting="Socket_MCR20">
+          <Alignment>
+            <Origin X="150" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+      </Ports>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/mcr20/mcr20_1.png" description="Open all of the port doors, and then take 3 points on the top face of the rack" />
+          <Stage id="1" ref="Racks/mcr20/mcr20_2.png" description="Take 2 points on the front edge of the rack" />
+          <Stage id="2" ref="Racks/mcr20/mcr20_3.png" description="Take 2 points between the jaws of port one, using the probe shank" />
+          <Stage id="3" ref="Racks/mcr20/mcr20_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/mcr20/mcr20_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/mcr20/mcr20_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/mcr20/mcr20_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/mcr20/mcr20_failed.png" description="Locate failed, points were not taken as directed" />
+          <Stage id="8" ref="Racks/mcr20/mcr20_warning.png" description="Locate was successful, but the following ports can't be used in a rack change: %s" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/mcr20/mcr20.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Rack>
+
+    <Rack type="FCR25" >
+      <!--
+        The location point (rack 0,0,0) is defined as the top front
+        face of port 1 in the centre of the port. As you look into the ports
+        X is to the right and Y is from the front to rear of the port. Z is
+        then up, from the port up to the door.
+      -->
+      <Parameters
+        check_in_distance="25"
+        check_out_distance="25"
+        docking_speed="50"
+        coupling_speed="10"
+      >
+        <Approach X="35.25" Y="-100" Z="200" />
+      </Parameters>
+      <Ports total_ports="3">
+        <Port number="1" to_mounting="Socket_FCR25">
+          <Alignment>
+            <Origin X="0" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="2" to_mounting="Socket_FCR25">
+          <Alignment>
+            <Origin X="35.25" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="3" to_mounting="Socket_FCR25">
+          <Alignment>
+            <Origin X="70.50" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+      </Ports>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/fcr25/fcr25_1.png" description="Open all of the port doors and lock open with wedges. Then take 3 points on the top face of the rack" />
+          <Stage id="1" ref="Racks/fcr25/fcr25_2.png" description="Take 2 points on the front edge of the rack" />
+          <Stage id="2" ref="Racks/fcr25/fcr25_3.png" description="Take 2 points between the jaws of port one. Probe the actual rack surface (you may need to remove the insert)" />
+          <Stage id="3" ref="Racks/fcr25/fcr25_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/fcr25/fcr25_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/fcr25/fcr25_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/fcr25/fcr25_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/fcr25/fcr25_failed.png" description="Locate failed, points were not taken as directed" />
+          <Stage id="8" ref="Racks/fcr25/fcr25_warning.png" description="Locate was successful, but the following ports can't be used in a rack change: %s" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/fcr25/fcr25.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Rack>
+
+    <Rack type="HR-P2" >
+      <!--
+        The location point (rack 0,0,0) is defined as the top of the main
+        solid metal face, on the front face in the centre of the port. As you 
+        look into the ports  X is to the right and Y is from the front to rear 
+        of the port. Z is then up, from the port up to the sliding door.
+      -->
+      <Parameters
+        check_in_distance="25"
+        check_out_distance="25"
+        docking_speed="50"
+        coupling_speed="10"
+      >
+        <Approach X="15" Y="-100" Z="200" />
+      </Parameters>
+      <Ports total_ports="2">
+        <Port number="1" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="0" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="2" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="30" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+      </Ports>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/hr-p2/hr-p2_1.png" description="Open all of the port doors, and then take 3 points on the top face of the rack" />
+          <Stage id="1" ref="Racks/hr-p2/hr-p2_2.png" description="Take 2 points on the front edge of the rack" />
+          <Stage id="2" ref="Racks/hr-p2/hr-p2_3.png" description="Take 2 points between the jaws of port one, using the probe shank" />
+          <Stage id="3" ref="Racks/hr-p2/hr-p2_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/hr-p2/hr-p2_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/hr-p2/hr-p2_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/hr-p2/hr-p2_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/hr-p2/hr-p2_failed.png" description="Locate failed, points were not taken as directed" />
+          <Stage id="8" ref="Racks/hr-p2/hr-p2_warning.png" description="Locate was successful, but the following ports can't be used in a rack change: %s" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/hr-p2/hr-p2.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Rack>
+    
+    <Rack type="HR-P4" >
+      <!--
+        The location point (rack 0,0,0) is defined as the top of the main
+        solid metal face, on the front face in the centre of the port. As you 
+        look into the ports  X is to the right and Y is from the front to rear 
+        of the port. Z is then up, from the port up to the sliding door.
+      -->
+      <Parameters
+        check_in_distance="25"
+        check_out_distance="25"
+        docking_speed="50"
+        coupling_speed="10"
+      >
+        <Approach X="45" Y="-100" Z="200" />
+      </Parameters>
+      <Ports total_ports="4">
+        <Port number="1" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="0" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="2" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="30" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="3" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="60" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="4" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="90" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+      </Ports>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/hr-p4/hr-p4_1.png" description="Open all of the port doors, and then take 3 points on the top face of the rack" />
+          <Stage id="1" ref="Racks/hr-p4/hr-p4_2.png" description="Take 2 points on the front edge of the rack" />
+          <Stage id="2" ref="Racks/hr-p4/hr-p4_3.png" description="Take 2 points between the jaws of port one, using the probe shank" />
+          <Stage id="3" ref="Racks/hr-p4/hr-p4_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/hr-p4/hr-p4_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/hr-p4/hr-p4_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/hr-p4/hr-p4_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/hr-p4/hr-p4_failed.png" description="Locate failed, points were not taken as directed" />
+          <Stage id="8" ref="Racks/hr-p4/hr-p4_warning.png" description="Locate was successful, but the following ports can't be used in a rack change: %s" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/hr-p4/hr-p4.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Rack>
+
+    <Rack type="HR-P6" >
+      <!--
+        The location point (rack 0,0,0) is defined as the top of the main
+        solid metal face, on the front face in the centre of the port. As you 
+        look into the ports  X is to the right and Y is from the front to rear 
+        of the port. Z is then up, from the port up to the sliding door.
+      -->
+      <Parameters
+        check_in_distance="25"
+        check_out_distance="25"
+        docking_speed="50"
+        coupling_speed="10"
+      >
+        <Approach X="75" Y="-100" Z="200" />
+      </Parameters>
+      <Ports total_ports="6">
+        <Port number="1" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="0" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="2" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="30" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="3" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="60" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="4" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="90" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="5" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="120" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+        <Port number="6" to_mounting="Socket_HR-P">
+          <Alignment>
+            <Origin X="150" Y="0" Z="0" />
+            <XAxis I="1" J="0" K="0" />
+            <YAxis I="0" J="1" K="0" />
+          </Alignment>
+        </Port>
+      </Ports>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/hr-p6/hr-p6_1.png" description="Open all of the port doors, and then take 3 points on the top face of the rack" />
+          <Stage id="1" ref="Racks/hr-p6/hr-p6_2.png" description="Take 2 points on the front edge of the rack" />
+          <Stage id="2" ref="Racks/hr-p6/hr-p6_3.png" description="Take 2 points between the jaws of port one, using the probe shank" />
+          <Stage id="3" ref="Racks/hr-p6/hr-p6_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/hr-p6/hr-p6_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/hr-p6/hr-p6_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/hr-p6/hr-p6_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/hr-p6/hr-p6_failed.png" description="Locate failed, points were not taken as directed" />
+          <Stage id="8" ref="Racks/hr-p6/hr-p6_warning.png" description="Locate was successful, but the following ports can't be used in a rack change: %s" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/hr-p6/hr-p6.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Rack>
+  </Racks>
+
+  <Sockets>
+    <Socket to_mounting="Socket_MCR20" default_insert="MCR20_None"/>
+    <Socket to_mounting="Socket_FCR25" default_insert="FCR25_PA25-20"/>
+    <Socket to_mounting="Socket_HR-P" default_insert="HR-P_None"/>
+  </Sockets>
+
+  <Inserts>
+    <Insert name="MCR20 No Insert" type="MCR20_None" from_mounting="Socket_MCR20" dock_type="TP20">
+      <NominalOffset X="0" Y="8.75" Z="-6.5"/>
+      <LocationOffset X="0" Y="-8.75" Z="6.5"/>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+        <PickUp ref="Racks/Inserts/mcr20_none/mcr20_none_pick_up.xml"/>
+        <DropOff ref="Racks/Inserts/mcr20_none/mcr20_none_drop_off.xml"/>
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/Inserts/mcr20_none/mcr20_none_1.png" description="Open all of the port doors, and then take 3 points on the top face of the port" />
+          <Stage id="1" ref="Racks/Inserts/mcr20_none/mcr20_none_2.png" description="Take 2 points on the front edge of the port" />
+          <Stage id="2" ref="Racks/Inserts/mcr20_none/mcr20_none_3.png" description="Take 2 points between the jaws of the port, using the probe shank" />
+          <Stage id="3" ref="Racks/Inserts/mcr20_none/mcr20_none_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/Inserts/mcr20_none/mcr20_none_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/Inserts/mcr20_none/mcr20_none_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/Inserts/mcr20_none/mcr20_none_failed.png" description="Locate failed, can't detect which side the insert is on" />
+          <Stage id="7" ref="Racks/Inserts/mcr20_none/mcr20_none_failed.png" description="Locate failed, points were not taken as directed" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/Inserts/mcr20_none/mcr20_none.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Insert>
+    
+    <Insert name="HR-P No Insert" type="HR-P_None" from_mounting="Socket_HR-P" dock_type="TP20">
+      <NominalOffset X="0" Y="7.75" Z="-12"/>
+      <LocationOffset X="0" Y="-7.75" Z="12"/>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+        <PickUp ref="Racks/Inserts/hr-p_none/hr-p_none_pick_up.xml"/>
+        <DropOff ref="Racks/Inserts/hr-p_none/hr-p_none_drop_off.xml"/>
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/Inserts/hr-p_none/hr-p_none_1.png" description="Open all of the port doors, and then take 3 points on the top face of the port" />
+          <Stage id="1" ref="Racks/Inserts/hr-p_none/hr-p_none_2.png" description="Take 2 points on the front edge of the port" />
+          <Stage id="2" ref="Racks/Inserts/hr-p_none/hr-p_none_3.png" description="Take 2 points between the jaws of the port, using the probe shank" />
+          <Stage id="3" ref="Racks/Inserts/hr-p_none/hr-p_none_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/Inserts/hr-p_none/hr-p_none_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/Inserts/hr-p_none/hr-p_none_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/Inserts/hr-p_none/hr-p_none_failed.png" description="Locate failed, can't detect which side the insert is on" />
+          <Stage id="7" ref="Racks/Inserts/hr-p_none/hr-p_none_failed.png" description="Locate failed, points were not taken as directed" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/Inserts/hr-p_none/hr-p_none.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Insert>
+
+    <!--
+      SP25 is currently unsupported in PowerINSPECT
+      Enabling these inserts in debug mode only
+    -->
+    
+    <Insert name="FCR25 No Insert" type="FCR25_None" from_mounting="Socket_FCR25" dock_type="FCR25" debug_only="true">
+      <!--
+        No insert takes TM25-20 adapter module/SM25 modules. The 
+        InsertDockingPoint in Z the centre lines of the rail on to which 
+        the module slides.
+      -->
+      <NominalOffset X="0" Y="13" Z="-7.4"/>
+      <LocationOffset X="0" Y="-13.0" Z="7.4"/>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+        <PickUp ref="Racks/Inserts/fcr25_none/fcr25_none_pick_up.xml"/>
+        <DropOff ref="Racks/Inserts/fcr25_none/fcr25_none_drop_off.xml"/>
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/Inserts/fcr25_none/fcr25_none_1.png" description="Open the port door and lock open with wedges. Then take 3 points on the top face of the port" />
+          <Stage id="1" ref="Racks/Inserts/fcr25_none/fcr25_none_2.png" description="Take 2 points on the front edge of the port" />
+          <Stage id="2" ref="Racks/Inserts/fcr25_none/fcr25_none_3.png" description="Take 2 points between the jaws of the port, using the probe shank" />
+          <Stage id="3" ref="Racks/Inserts/fcr25_none/fcr25_none_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/Inserts/fcr25_none/fcr25_none_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/Inserts/fcr25_none/fcr25_none_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/Inserts/fcr25_none/fcr25_none_failed.png" description="Locate failed, can't detect which side the port is on" />
+          <Stage id="7" ref="Racks/Inserts/fcr25_none/fcr25_none_failed.png" description="Locate failed, points were not taken as directed" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/Inserts/fcr25_none/fcr25_none.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Insert>
+
+    <Insert name="PA25-SH (Plastic)" type="FCR25_PA25-SH" from_mounting="Socket_FCR25" dock_type="PA25-SH" debug_only="true">
+      <!-- 
+        This is the plastic insert that can take a stylus holder. The 
+        InsertDockingPoint point Z is set to the top face of the insert w
+        hich mates to the underside of the SH25 holder. The holders docking 
+        is such that it lightly compresses the holder onto the insert before
+        docking to ensure a snug fit.
+      -->
+      <NominalOffset X="0" Y="12" Z="-6.0"/>
+      <LocationOffset X="0" Y="-12.0" Z="0.0"/>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml" />
+        <PickUp ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_pick_up.xml"/>
+        <DropOff ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_drop_off.xml"/>
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_1.png" description="Open the port door and lock open with wedges. Then take 3 points on the top face of the insert" />
+          <Stage id="1" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_2.png" description="Take 2 points on the front edge of the insert, ensure that you probe the insert and not the port" />
+          <Stage id="2" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_3.png" description="Take 2 points between the jaws of the insert, using the probe shank" />
+          <Stage id="3" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_failed.png" description="Locate failed, can't detect which side the insert is on" />
+          <Stage id="7" ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh_failed.png" description="Locate failed, points were not taken as directed" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/Inserts/pa25_sh/fcr25_pa25_sh.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Insert>
+
+    <Insert name="PA25-20 (Metal)" type="FCR25_PA25-20" from_mounting="Socket_FCR25" dock_type="TP20">
+      <!-- 
+        This is the metal insert that can take a TP20. The 
+        InsertDockingPoint Z is the centre line of the rails on to which
+        the module slides.
+      -->
+      <NominalOffset X="0" Y="8.75" Z="-9.3"/>
+      <LocationOffset X="0" Y="-8.75" Z="6.8"/>
+      <ProbePaths>
+        <Location ref="Racks/dummy.xml"/>
+        <PickUp ref="Racks/Inserts/PA25_20/fcr25_pa25_20_pick_up.xml"/>
+        <DropOff ref="Racks/Inserts/PA25_20/fcr25_pa25_20_drop_off.xml"/>
+      </ProbePaths>
+      <Locate type="7Pts">
+        <Stages>
+          <Stage id="0" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_1.png" description="Open the port door and lock open with wedges. Then take 3 points on the top face of the insert" />
+          <Stage id="1" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_2.png" description="Take 2 points on the front edge of the insert, ensure that you probe the insert and not the port" />
+          <Stage id="2" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_3.png" description="Take 2 points between the jaws of the insert, using the probe shank" />
+          <Stage id="3" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_complete.png" description="Locate was successful" />
+          <Stage id="4" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_failed.png" description="Locate failed, can't create plane from the first 3 points" />
+          <Stage id="5" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_failed.png" description="Locate failed, can't create line from the 2 points" />
+          <Stage id="6" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_failed.png" description="Locate failed, can't detect which side the rack is on" />
+          <Stage id="7" ref="Racks/Inserts/pa25_20/fcr25_pa25_20_failed.png" description="Locate failed, points were not taken as directed" />
+        </Stages>
+      </Locate>
+      <Image ref="Racks/Inserts/pa25_20/fcr25_pa25_20.png"/>
+      <CAD ref="Racks/dummy.xml"/>
+    </Insert>
+  </Inserts>
+
+</RackCatalog>

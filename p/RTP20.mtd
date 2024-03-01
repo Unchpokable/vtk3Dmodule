@@ -1,0 +1,76 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the RTP20 Head for simulation                                 -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        GJM 08/03/11 Written.                                                -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+  <table_attach_point PART="table" X="0" Y="0" Z="0" />
+  <head_attach_point  PART="head" X="0" Y="-5.7" Z="-43.2" I="0" J="0" K="1" />
+  <!-- Static bits -->
+  <machine_part >
+  <model_list>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/RTP20/StaticBits.dmt" />
+    <rgb R="40" G="40" B="40" />
+    </dmt_file>
+    <dmt_file>
+    <!-- Comment !-->
+    <path FILE="probeheads/RTP20/StaticLetters.dmt" />
+    <rgb R="250" G="250" B="250" />
+    </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/RTP20/LED.dmt" />
+        <rgb R="250" G="0" B="0" />
+      </dmt_file>
+  </model_list>
+  </machine_part>
+  <machine_part NAME="table" />        
+  <!-- The Guts-->
+  <machine_part>
+    <axis>
+      <control_info ADDRESS="B" />
+      <simple_rotary X="0" Y="0" Z="0" I="0" J="0" K="1" />
+    </axis>
+    <model_list>
+      <dmt_file>
+        <path FILE="probeheads/RTP20/RotaryText.dmt" />
+        <rgb R="250" G="250" B="250" />
+      </dmt_file>
+      <dmt_file>
+        <path FILE="probeheads/RTP20/RotaryBits.dmt" />
+        <rgb R="40" G="40" B="40" />
+      </dmt_file>
+
+    </model_list>
+    <machine_part>
+      <axis>
+        <control_info ADDRESS="A" MIN="0" MAX="105" />
+        <simple_rotary X="0" Y="0" Z="0" I="1" J="0" K="0" />
+      </axis>
+      <model_list>
+        <dmt_file>
+          <path FILE="probeheads/RTP20/PivotBitsBlack.dmt" />
+          <rgb R="40" G="40" B="40" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/RTP20/PivotBitsWhite.dmt" />
+          <rgb R="250" G="250" B="250" />
+        </dmt_file>
+        <dmt_file>
+          <path FILE="probeheads/RTP20/PivotBitsSilver.dmt" />
+          <rgb R="250" G="250" B="250" />
+        </dmt_file>
+      </model_list>        
+      <machine_part NAME="head" />
+    </machine_part>
+  </machine_part>
+</machine>

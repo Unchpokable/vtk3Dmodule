@@ -1,0 +1,31 @@
+<!-- ==========================================================================  -->
+<!-- Kinematics of the Revo Head Adaptor                                         -->
+<!-- This is used for a Revo Machine NOT a Revo head                             -->
+<!-- It allows the Revo Probes to be added to the machine kinematics directly    -->
+<!--                                                                             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- COPYRIGHT 2001  DELCAM INTERNATIONAL PLC., BIRMINGHAM, ENGLAND.             -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--                                                                             -->
+<!-- History.                                                                    -->
+<!-- DICC   Who When     What                                                    -->
+<!-- ~~~~~~ ~~~ ~~~~~~~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--        PRH 02/11/06 Written.                                                -->
+<!--        PRH 02/04/07 Make 40mm square to hide from view.                     -->
+<!-- 130753 SIB 25/11/16 Make compatible with xerces based dmkSimLoader.         -->
+<!-- =========================================================================== -->
+<machine xmlns="x-schema:PowermillMachineTool" POST="pmpMultiaxis.mxs4PMill">
+	<!-- Static bits -->
+	<machine_part>
+		<model_list>
+      <geometry>
+        <box X1="-20" Y1="-20" Z1="0" X2="20" Y2="20" Z2="1"/>
+        <rgb R="240" G="240" B="240"/>
+      </geometry>
+		</model_list>
+	</machine_part>
+	<machine_part NAME="table"/>
+	<!-- The Guts-->
+	<machine_part NAME="head"/>
+</machine>
+
