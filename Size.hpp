@@ -2,10 +2,6 @@
 
 #include "pch.h"
 
-#include "Property.hpp"
-
-#define ALLOW_EXPERIMENTAL_CODE
-
 class Size {
 public:
     Size() : _width(0), _height(0) {
@@ -49,27 +45,15 @@ public:
         return _height != r._height || _width != r._width;
     }
 
-#ifdef ALLOW_EXPERIMENTAL_CODE
-    Property<int> Width()
-    {
-        return Property<int>(_width, [](int w) { return w >= 0; });
-    }
-
-    Property<int> Height()
-    {
-        return Property<int>(_height, [](int h) { return h >= 0; });
-    }
-#else
-    int Width() const
+    int& Width()
     {
         return _width;
     }
 
-    int Height() const
+    int& Height()
     {
         return _height;
     }
-#endif
 
 private:
     int _width, _height;

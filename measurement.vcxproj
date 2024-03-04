@@ -128,7 +128,6 @@
     <QtMoc Include="CreateLineDialog.h" />
     <ClInclude Include="Point3D.hpp" />
     <ClInclude Include="MachineHeadAssembly.hpp" />
-    <ClInclude Include="Property.hpp" />
     <ClInclude Include="LineData.hpp" />
     <ClInclude Include="MarkerManager.hpp" />
     <ClInclude Include="RgbaF.hpp" />

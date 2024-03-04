@@ -110,9 +110,6 @@
     <ClInclude Include="LineData.hpp">
       <Filter>classes</Filter>
     </ClInclude>
-    <ClInclude Include="Property.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
     <ClInclude Include="MarkerManager.hpp">
       <Filter>classes</Filter>
     </ClInclude>
