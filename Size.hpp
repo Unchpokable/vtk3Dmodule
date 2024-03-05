@@ -2,30 +2,37 @@
 
 #include "pch.h"
 
-class Size {
+class Size
+{
 public:
-    Size() : _width(0), _height(0) {
+    Size() : _width(0), _height(0)
+    {
     }
 
-    Size(int width, int height) : _width(width), _height(height) {
+    Size(int width, int height) : _width(width), _height(height)
+    {
     }
 
     Size(const Size& other)  = default;
 
-    Size(Size&& other) noexcept : _width(other._width), _height(other._height) {
+    Size(Size&& other) noexcept : _width(other._width), _height(other._height)
+    {
         other._width = 0;
         other._height = 0;
     }
 
-    Size& operator=(const Size& other) {
-        if(this != &other) {
+    Size& operator=(const Size& other)
+    {
+        if(this != &other) 
+        {
             _width = other._width;
             _height = other._height;
         }
         return *this;
     }
 
-    Size& operator=(Size&& other) noexcept {
+    Size& operator=(Size&& other) noexcept
+    {
         if(this != &other) {
             _width = other._width;
             _height = other._height;

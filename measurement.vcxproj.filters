@@ -81,6 +81,9 @@
     <QtMoc Include="CreateLineDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="xmltools.hpp">
+      <Filter>hpps</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generators.hpp">
@@ -119,10 +122,10 @@
     <ClInclude Include="MachineHeadAssembly.hpp">
       <Filter>classes</Filter>
     </ClInclude>
-    <ClInclude Include="xmltools.hpp">
-      <Filter>hpps</Filter>
-    </ClInclude>
     <ClInclude Include="ProbeToolAssembly.hpp">
+      <Filter>classes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineHead.hpp">
       <Filter>classes</Filter>
     </ClInclude>
   </ItemGroup>

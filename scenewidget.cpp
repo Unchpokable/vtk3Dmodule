@@ -1,6 +1,8 @@
 #include "pch.h"
 
 #include "scenewidget.h"
+
+#include "MachineHead.hpp"
 #include "vtkUtils.hpp"
 #include "MarkerManager.hpp"
 #include "ProbeToolAssembly.hpp"
@@ -80,12 +82,12 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderer->AddActor(_polyLine->GetActor());*/
 
-    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+    /*ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
     const auto extensions = catalog.Extensions();
     const auto modules = catalog.Modules();
     const auto probes = catalog.Probes();
-    const auto styluses = catalog.Styluses();
+    const auto styluses = catalog.Styluses();*/
 
     /*const auto part = catalog.FindByName("TP20_STD");
     const auto foundPartActor = GeneratePolyPart(part->Geometry());
@@ -102,14 +104,20 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     toolModel->SetPosition(0, 0, 60);
     _renderer->AddActor(toolModel);*/
 
-    ProbeToolAssembly manualTool;
+    /*ProbeToolAssembly manualTool;
     manualTool.Build(catalog, {"PAA2 x 140", "M2x90_CF", "TP20_EM2", "Eagle_p_touch_LF", "M2_20x1_TC"});
 
     const auto manualToolModel = manualTool.Weld();
 
     SetActorLightingPlastic(manualToolModel);
 
-    _renderer->AddActor(manualToolModel);
+    _renderer->AddActor(manualToolModel);*/
+
+    MachineHead machineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
+
+    const auto actors = machineHead.Actors();
+
+    AddActorsToRenderer(_renderer, actors);
 
     _renderer->ResetCamera();
     showGizmo();

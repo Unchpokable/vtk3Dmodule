@@ -1,10 +1,43 @@
 #pragma once
 
 #include "pch.h"
+#include "RgbaF.hpp"
 
 //TODO: Need refactoring
 
 using byte = unsigned char;
+
+class RotationAddress : QObject
+{
+    Q_OBJECT
+    Q_ENUMS(Address)
+
+public:
+    explicit RotationAddress() = default; 
+
+    enum Address
+    {
+        A, B, None
+    };
+
+    static Address FromString(const QString& str)
+    {
+        const int index = staticMetaObject.indexOfEnumerator("Address");
+        const auto metaEnum = staticMetaObject.enumerator(index);
+
+        return static_cast<Address>(metaEnum.keyToValue(str.toStdString().c_str()));
+    }
+
+    static QString ToString(Address val)
+    {
+        const int index = staticMetaObject.indexOfEnumerator("Address");
+        const auto metaEnum = staticMetaObject.enumerator(index);
+
+        return metaEnum.valueToKey(val);
+    }
+};
+
+using RotAddress = RotationAddress::Address;
 
 enum class GeometryType
 {
@@ -476,7 +509,7 @@ struct RotaryAxis
 
 struct RotaryControlInfo
 {
-    std::string Address;
+    RotationAddress::Address Address;
     double Min;
     double Max;
 };
@@ -491,7 +524,7 @@ public:
         const auto controlInfoTag = xmlDom.firstChildElement("control_info");
         const auto rotaryInfoTag = xmlDom.firstChildElement("simple_rotary");
 
-        _controlInfo.Address = controlInfoTag.attribute("ADDRESS").toStdString();
+        _controlInfo.Address = RotationAddress::FromString(controlInfoTag.attribute("ADDRESS"));
         _controlInfo.Min = controlInfoTag.attribute("MIN", "0").toDouble();
         _controlInfo.Max = controlInfoTag.attribute("MAX", "0").toDouble();
 
@@ -555,11 +588,17 @@ public:
         return _color;
     }
 
+    RgbaF ColorF() const noexcept
+    {
+        return RgbaF(static_cast<double>(_color.R) / 255, static_cast<double>(_color.G) / 255, static_cast<double>(_color.B) / 255);
+    }
+
 private:
     QString _actualMeshFile;
     Rgb _color;
 
-    static std::optional<std::filesystem::path> ResolveRealObjectFilePath(const std::string& declaredDmtPath, int stepBack = 0) {
+    static std::optional<std::filesystem::path> ResolveRealObjectFilePath(const std::string& declaredDmtPath, int stepBack = 1)
+    {
         const auto fileName = std::filesystem::path(declaredDmtPath).filename().replace_extension(".obj").string();
         std::filesystem::path currentPath = std::filesystem::current_path();
 
@@ -597,7 +636,7 @@ public:
         }
     }
 
-    std::vector<DmtFileModel> Parts()
+    std::vector<DmtFileModel> Parts() const
     {
         return _parts;
     }
@@ -640,7 +679,7 @@ public:
         return _has_rotation_axis;
     }
 
-    std::string RotationAxisAddress() const noexcept
+    RotAddress RotationAxisAddress() const noexcept
     {
         return _axes.ControlInfo().Address;
     }
@@ -673,8 +712,6 @@ using MachinePartCollection = std::vector<MachinePart>;
 class ProbeHeadLoader
 {
 public:
-
-    
     static MachinePartCollection FromMtd(const QString& path) {
         QDomDocument document;
         QFile file(path);

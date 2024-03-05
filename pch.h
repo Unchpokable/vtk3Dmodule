@@ -6,6 +6,7 @@
 #include <QVTKOpenGLNativeWidget.h>
 #include <QColorDialog>
 #include <QFile>
+#include <QMetaEnum>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>
@@ -48,6 +49,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 #include <algorithm>
 #include <filesystem>

@@ -4,6 +4,8 @@
 
 #include <array>
 
+using byte = unsigned char;
+
 class RgbaF {
 public:
     RgbaF()

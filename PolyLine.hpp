@@ -143,10 +143,8 @@ public:
 
     PolyLineCallbackIdType SetCallback(const PolyLineCallback& cb) noexcept
     {
-        static PolyLineCallbackIdType idCounter = 0;
-
-        _callbackListeners[idCounter] = cb;
-        return idCounter++;
+        _callbackListeners[_callbackId] = cb;
+        return _callbackId++;
     }
 
     void RemoveCallback(PolyLineCallbackIdType id) noexcept
@@ -181,6 +179,8 @@ private:
     std::unordered_map<PolyLineCallbackIdType, PolyLineCallback> _callbackListeners;
 
     std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> _pointsPositions {};
+
+    PolyLineCallbackIdType _callbackId = 0;
 
     void UpdateData() noexcept
     {

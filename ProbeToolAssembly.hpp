@@ -58,5 +58,5 @@ private:
     double _toolLength = 0;
     std::vector<vtkActorPointer> _parts;
 
-    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> _stylusesPoints;
+    std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>> _stylusesPoints; //TODO
 };

@@ -37,7 +37,12 @@ class MarkerManager
     template<typename ...Indices>
     using is_std_size_t_indices = std::conjunction<is_std_size_t<Indices>...>;
     // ---------
-    
+
+    MarkerManager(const MarkerManager&) = delete;
+    MarkerManager(MarkerManager&&) = delete;
+    MarkerManager& operator=(const MarkerManager&) = delete;
+    MarkerManager& operator=(MarkerManager&&) = delete;
+
 public:
     enum class MarkerType {
         Star, // Define purpose of this marker and rename it

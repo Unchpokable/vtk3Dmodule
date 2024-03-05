@@ -20,6 +20,7 @@ void AddActorsToRenderer(const vtkRendererPointer& renderer, Actors... actors)
         return;
     (renderer->AddActor(actors), ...);
 }
+
 //std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true
 template<typename ActorPtr, template<class, class = std::allocator<ActorPtr>> class X, std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true>
 Status AddActorsToRenderer(const vtkRendererPointer& renderer, const X<ActorPtr>& actors)
