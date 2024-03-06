@@ -8,18 +8,19 @@
 class MachineHeadAssembly
 {
 public:
-    MachineHeadAssembly(MachinePart part) : _part(std::move(part))
+    MachineHeadAssembly(MachinePart part, MachineHeadAssembly* parent = nullptr) : _part(std::move(part))
     {
         _assembly = LoadObj(_part.Models());
-
+        _parent = parent;
         for(const auto child: _part.ChildMachines())
         {
-            _childElements.push_back(new MachineHeadAssembly(*child));
+            _childElements.push_back(new MachineHeadAssembly(*child, this));
         }
     }
 
     void Rotate(RotAddress address, double angle) const
     {
+        _assembly->SetUserMatrix(vtkMatrix4x4::New());
         RotateImpl(this, address, angle);
     }
 
@@ -48,11 +49,12 @@ private:
     vtkActorPointer _assembly;
 
     std::vector<MachineHeadAssembly*> _childElements;
+    MachineHeadAssembly* _parent;
 
     void RotateImpl(const MachineHeadAssembly* target, RotAddress address, double angle) const
     {
         // uga-buga code moment
-        if(_part.CanRotate() && _part.RotationAxisAddress() == address)
+        if(target->_part.CanRotate() && target->_part.RotationAxisAddress() == address)
         {
             const auto axis = target->_part.Axis().Axis();
 
@@ -62,15 +64,15 @@ private:
             auto affineTransform = Eigen::Affine3d::Identity();
             affineTransform.translate(offset);
 
-            affineTransform.rotate(Eigen::AngleAxisd(angle * M_PI / 180, rotation.normalized()));
+            affineTransform.rotate(Eigen::AngleAxisd(angle * M_PI / 180, rotation));
 
             target->ApplyAffine(affineTransform);
-            target->ForceRotateChildren(affineTransform);
+            target->ForceRotateChildren(affineTransform, address);
         }
 
-        if (!target->_childElements.empty())
+        else if (!target->_childElements.empty())
         {
-            for (const auto child: _childElements)
+            for (const auto child: target->_childElements)
             {
                 RotateImpl(child, address, angle);
             }
@@ -81,34 +83,59 @@ private:
     {
         auto matrix = transform.matrix();
 
-        const vtkNew<vtkMatrix4x4> vtkMat {};
+        const vtkNew<vtkMatrix4x4> affine {};
 
-        for(int i = 0; i < 4; ++i) {
-            for(int j = 0; j < 4; ++j) {
-                vtkMat->SetElement(i, j, matrix(i, j));
+        for(int i = 0; i < 4; ++i)
+        {
+            for(int j = 0; j < 4; ++j)
+            {
+                affine->SetElement(i, j, matrix(i, j));
             }
         }
 
-        _assembly->SetUserMatrix(vtkMat);
+        auto thisMat = _assembly->GetUserMatrix();
+
+        if (!thisMat) 
+        {
+            thisMat = vtkMatrix4x4::New();
+        }
+
+        auto res = vtkMatrix4x4::New();
+        auto intermediate = vtkMatrix4x4::New();
+
+        if (_parent != nullptr)
+        {
+            auto parentMat = _parent->_assembly->GetUserMatrix();
+            if (!parentMat)
+                parentMat = vtkMatrix4x4::New();
+            vtkMatrix4x4::Multiply4x4(parentMat, thisMat, intermediate);
+            vtkMatrix4x4::Multiply4x4(intermediate, affine, res);
+        }
+        else
+            vtkMatrix4x4::Multiply4x4(thisMat, affine, res);
+
+        _assembly->SetUserMatrix(res);
     }
 
-    void ForceRotateChildren(const Eigen::Affine3d& transform) const
+    void ForceRotateChildren(const Eigen::Affine3d& transform, RotAddress address) const
     {
         for (const auto child: _childElements)
         {
+            //if (child->RotationAddress() == address)
+
+            //child->_assembly->SetUserMatrix(_assembly->GetUserMatrix());
             child->ApplyAffine(transform);
-            child->ForceRotateChildren(transform);
+            child->ForceRotateChildren(transform, address);
         }
     }
 
     static vtkActorPointer LoadObj(const MachineModelList& models)
     {
-        const auto reader = vtkSmartPointer<vtkOBJReader>::New();
-
         std::vector<vtkSmartPointer<vtkActor>> result;
 
         for (const auto& obj: models.Parts())
         {
+            const auto reader = vtkSmartPointer<vtkOBJReader>::New();
             reader->SetFileName(obj.MeshFile().toStdString().c_str());
             reader->Update();
 

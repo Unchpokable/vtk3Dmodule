@@ -524,7 +524,7 @@ public:
         const auto controlInfoTag = xmlDom.firstChildElement("control_info");
         const auto rotaryInfoTag = xmlDom.firstChildElement("simple_rotary");
 
-        _controlInfo.Address = RotationAddress::FromString(controlInfoTag.attribute("ADDRESS"));
+        _controlInfo.Address = RotationAddress::FromString(controlInfoTag.attribute("ADDRESS", "None"));
         _controlInfo.Min = controlInfoTag.attribute("MIN", "0").toDouble();
         _controlInfo.Max = controlInfoTag.attribute("MAX", "0").toDouble();
 
@@ -668,8 +668,9 @@ public:
 
             else if (elem.tagName() == "machine_part")
             {
+                if (elem.hasChildNodes())
                 // Recursion. Looks like quite nice solution for not so big XML, but need to invent some better way to to that for big XML's. Also hope MTD files still so small through
-                _nestedMachinePart.push_back(new MachinePart(elem));
+                    _nestedMachinePart.push_back(new MachinePart(elem));
             }
         }
     }

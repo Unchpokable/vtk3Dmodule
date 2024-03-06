@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "MachineHeadAssembly.hpp"
+#include "ProbeToolAssembly.hpp"
 
 class MachineHead
 {
@@ -25,6 +26,19 @@ public:
         }
 
         return result;
+    }
+
+    void RotatePart(RotAddress address, double angle) 
+    {
+        for (const auto part : _topLevelParts) 
+        {
+            part.Rotate(address, angle);
+        }
+    }
+
+    void AddStylus(const ProbeToolAssembly& tool) 
+    {
+
     }
 
 private:

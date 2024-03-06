@@ -25,8 +25,9 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _markerManager = new MarkerManager(_renderer->GetActiveCamera(), renderWindow());
 
     _renderTimer = new QTimer(this);
-    _renderTimer->setInterval(0);
-    _renderTimer->setSingleShot(true);
+    _renderTimer->setInterval(30);
+    _renderTimer->start();
+    //_renderTimer->setSingleShot(true);
 
     connect(_renderTimer, &QTimer::timeout, this, &SceneWidget::renderScene);
 
@@ -113,9 +114,10 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderer->AddActor(manualToolModel);*/
 
-    MachineHead machineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
-
-    const auto actors = machineHead.Actors();
+    _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
+    _machineHead->RotatePart(RotAddress::A, 45);
+    _machineHead->RotatePart(RotAddress::B, 130);
+    const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
 
@@ -142,7 +144,11 @@ void SceneWidget::clear() const
     }
 }
 
-void SceneWidget::renderScene() {
+void SceneWidget::renderScene()
+{
+    static double angle = 1;
+    /*_machineHead->RotatePart(RotAddress::A, 34);
+    _machineHead->RotatePart(RotAddress::B, 130);*/
     _renderer->GetRenderWindow()->Render();
 }
 

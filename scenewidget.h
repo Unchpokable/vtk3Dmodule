@@ -1,5 +1,6 @@
 #pragma once
 #include "MarkerManager.hpp"
+#include "MachineHead.hpp"
 #include "PolyLine.hpp"
 #include "pch.h"
 
@@ -44,6 +45,6 @@ private:
     PolyLine* _polyLine;
     MarkerManager* _markerManager;
     vtkSmartPointer<vtkOrientationMarkerWidget> _gizmo;
-
+    MachineHead* _machineHead;
     std::vector<vtkSmartPointer<vtkActor>> _demoSpheres;
 };
