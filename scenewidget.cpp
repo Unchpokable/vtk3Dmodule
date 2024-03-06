@@ -115,8 +115,8 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _renderer->AddActor(manualToolModel);*/
 
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
-    _machineHead->RotatePart(RotAddress::A, 45);
-    _machineHead->RotatePart(RotAddress::B, 130);
+    /*_machineHead->RotatePart(RotAddress::A, 45);
+    _machineHead->RotatePart(RotAddress::B, 130);*/
     const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
@@ -147,8 +147,8 @@ void SceneWidget::clear() const
 void SceneWidget::renderScene()
 {
     static double angle = 1;
-    /*_machineHead->RotatePart(RotAddress::A, 34);
-    _machineHead->RotatePart(RotAddress::B, 130);*/
+    _machineHead->RotatePart(RotAddress::A, 45);
+    _machineHead->RotatePart(RotAddress::B, angle++);
     _renderer->GetRenderWindow()->Render();
 }
 

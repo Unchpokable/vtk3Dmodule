@@ -20,7 +20,6 @@ public:
 
     void Rotate(RotAddress address, double angle) const
     {
-        _assembly->SetUserMatrix(vtkMatrix4x4::New());
         RotateImpl(this, address, angle);
     }
 
@@ -56,6 +55,7 @@ private:
         // uga-buga code moment
         if(target->_part.CanRotate() && target->_part.RotationAxisAddress() == address)
         {
+            target->_assembly->SetUserMatrix(vtkMatrix4x4::New());
             const auto axis = target->_part.Axis().Axis();
 
             const auto offset = Eigen::Vector3d(axis.X, axis.Y, axis.Z);
@@ -121,9 +121,6 @@ private:
     {
         for (const auto child: _childElements)
         {
-            //if (child->RotationAddress() == address)
-
-            //child->_assembly->SetUserMatrix(_assembly->GetUserMatrix());
             child->ApplyAffine(transform);
             child->ForceRotateChildren(transform, address);
         }

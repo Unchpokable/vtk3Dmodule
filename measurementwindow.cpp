@@ -7,6 +7,7 @@
 #include "vtkUtils.hpp"
 #include "generators.hpp"
 #include "xmltools.hpp"
+#include "MachineHead.hpp"
 
 MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MeasurementWindow) {
     _ui->setupUi(this);
@@ -71,7 +72,7 @@ void MeasurementWindow::paintObject()
 
 void MeasurementWindow::demoPaintObject()
 {
-    const auto color = QColorDialog::getColor(Qt::white, this, "Please, provide color for demo");
+    /*const auto color = QColorDialog::getColor(Qt::white, this, "Please, provide color for demo");
 
     if(color.isValid()) {
         const auto rgbafColor = RgbaF::FromQColor(color);
@@ -89,7 +90,10 @@ void MeasurementWindow::demoPaintObject()
         }
 
         _ui->sceneWidget->renderScene();
-    }
+    }*/
+
+    _ui->sceneWidget->_machineHead->RotatePart(RotAddress::A, rand() % 120);
+    _ui->sceneWidget->_machineHead->RotatePart(RotAddress::B, rand() % 120);
 }
 
 void MeasurementWindow::demoSetMarkersOnPolyLine()
