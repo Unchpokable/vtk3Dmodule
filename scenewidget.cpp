@@ -147,7 +147,7 @@ void SceneWidget::clear() const
 void SceneWidget::renderScene()
 {
     static double angle = 1;
-    _machineHead->RotatePart(RotAddress::A, 45);
+    _machineHead->RotatePart(RotAddress::A, angle);
     _machineHead->RotatePart(RotAddress::B, angle++);
     _renderer->GetRenderWindow()->Render();
 }

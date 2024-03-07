@@ -24,7 +24,7 @@ public:
         }
     }
 
-    void Rotate(RotAddress address, double angle) const
+    void SetPartRotation(RotAddress address, double angle) const
     {
         RotateImpl(this, address, angle);
     }
@@ -59,22 +59,9 @@ private:
 
     void RotateImpl(const MachineHeadAssembly* target, RotAddress address, double angle) const
     {
-        // uga-buga code moment
+        // not uga-buga code
         if(target->_part.CanRotate() && target->_part.RotationAxisAddress() == address)
         {
-            /*target->_actor->SetUserMatrix(vtkMatrix4x4::New());
-
-            const auto offset = Eigen::Vector3d(axis.X, axis.Y, axis.Z);
-            const auto rotation = Eigen::Vector3d(axis.I, axis.J, axis.K);
-
-            auto affineTransform = Eigen::Affine3d::Identity();
-            affineTransform.translate(offset);
-
-            affineTransform.rotate(Eigen::AngleAxisd(angle * M_PI / 180, rotation));
-
-            target->ApplyAffine(affineTransform);
-            target->ForceRotateChildren(affineTransform, address);*/
-            
             const auto axis = target->_part.Axis().Axis();
 
             target->_transform->Identity();
@@ -93,59 +80,12 @@ private:
         }
     }
 
-    void ApplyAffine(const Eigen::Affine3d& transform) const
-    {
-        auto matrix = transform.matrix();
-
-        const vtkNew<vtkMatrix4x4> affine {};
-
-        for(int i = 0; i < 4; ++i)
-        {
-            for(int j = 0; j < 4; ++j)
-            {
-                affine->SetElement(i, j, matrix(i, j));
-            }
-        }
-
-        auto thisMat = _actor->GetUserMatrix();
-
-        if (!thisMat) 
-        {
-            thisMat = vtkMatrix4x4::New();
-        }
-
-        const auto res = vtkMatrix4x4::New();
-        const auto intermediate = vtkMatrix4x4::New();
-
-        if (_parent != nullptr)
-        {
-            auto parentMat = _parent->_actor->GetUserMatrix();
-            if (!parentMat)
-                parentMat = vtkMatrix4x4::New();
-            vtkMatrix4x4::Multiply4x4(parentMat, thisMat, intermediate);
-            vtkMatrix4x4::Multiply4x4(intermediate, affine, res);
-        }
-        else
-            vtkMatrix4x4::Multiply4x4(thisMat, affine, res);
-
-        _actor->SetUserMatrix(res);
-    }
-
     void TransformChildren(const vtkSmartPointer<vtkTransform>& transform) const
     {
         for(const auto child: _childElements)
         {
             child->_transform->Concatenate(transform);
             child->TransformChildren(transform);
-        }
-    }
-
-    void ForceRotateChildren(const Eigen::Affine3d& transform, RotAddress address) const
-    {
-        for (const auto child: _childElements)
-        {
-            child->ApplyAffine(transform);
-            child->ForceRotateChildren(transform, address);
         }
     }
 

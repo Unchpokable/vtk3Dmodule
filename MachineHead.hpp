@@ -32,7 +32,7 @@ public:
     {
         for (const auto& part : _topLevelParts) 
         {
-            part.Rotate(address, angle);
+            part.SetPartRotation(address, angle);
         }
     }
 
