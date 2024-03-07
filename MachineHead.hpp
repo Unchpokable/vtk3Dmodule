@@ -28,9 +28,9 @@ public:
         return result;
     }
 
-    void RotatePart(RotAddress address, double angle) 
+    void RotatePart(RotAddress address, double angle) const
     {
-        for (const auto part : _topLevelParts) 
+        for (const auto& part : _topLevelParts) 
         {
             part.Rotate(address, angle);
         }
