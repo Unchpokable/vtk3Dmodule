@@ -83,12 +83,12 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderer->AddActor(_polyLine->GetActor());*/
 
-    /*ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
     const auto extensions = catalog.Extensions();
     const auto modules = catalog.Modules();
     const auto probes = catalog.Probes();
-    const auto styluses = catalog.Styluses();*/
+    const auto styluses = catalog.Styluses();
 
     /*const auto part = catalog.FindByName("TP20_STD");
     const auto foundPartActor = GeneratePolyPart(part->Geometry());
@@ -105,16 +105,17 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     toolModel->SetPosition(0, 0, 60);
     _renderer->AddActor(toolModel);*/
 
-    /*ProbeToolAssembly manualTool;
-    manualTool.Build(catalog, {"PAA2 x 140", "M2x90_CF", "TP20_EM2", "Eagle_p_touch_LF", "M2_20x1_TC"});
+    ProbeToolAssembly manualTool;
+    manualTool.Build(catalog, {"TP20_EM2", "Eagle_p_touch_LF", "M2x90_CF", "M2_20x1_TC"});
 
     const auto manualToolModel = manualTool.Weld();
 
     SetActorLightingPlastic(manualToolModel);
 
-    _renderer->AddActor(manualToolModel);*/
+    /*_renderer->AddActor(manualToolModel);*/
 
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
+    _machineHead->AddStylus(manualTool);
     /*_machineHead->RotatePart(RotAddress::A, 45);
     _machineHead->RotatePart(RotAddress::B, 130);*/
     const auto actors = _machineHead->Actors();

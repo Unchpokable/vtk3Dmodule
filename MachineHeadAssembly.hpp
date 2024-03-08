@@ -2,15 +2,16 @@
 
 #include "pch.h"
 
+#include "ProbeToolAssembly.hpp"
 #include "vtkUtils.hpp"
 #include "xmltools.hpp"
 
 class MachineHeadAssembly
 {
 public:
-    MachineHeadAssembly(MachinePart part, MachineHeadAssembly* parent = nullptr) : _part(std::move(part))
+    MachineHeadAssembly(MachinePart* part, MachineHeadAssembly* parent = nullptr) : _part(part)
     {
-        _actor = LoadObj(_part.Models());
+        _actor = LoadObj(_part->Models());
         _parent = parent;
         _transform = vtkSmartPointer<vtkTransform>::New();
 
@@ -18,25 +19,47 @@ public:
             _transform->PostMultiply();
 
         _actor->SetUserTransform(_transform);
-        for(const auto child: _part.ChildMachines())
+        for(const auto child: _part->ChildMachines())
         {
-            _childElements.push_back(new MachineHeadAssembly(*child, this));
+            _childElements.push_back(new MachineHeadAssembly(child, this));
         }
+    }
+
+    // Special constructor to make MachineHeadAssembly with Stylus tool
+    MachineHeadAssembly(const vtkActorPointer& tool, MachineHeadAssembly* parent = nullptr)
+    {
+        _actor = tool;
+        _part = nullptr;
+        _parent = parent;
+
+        _transform = vtkSmartPointer<vtkTransform>::New();
+        const auto matrix = tool->GetUserTransform()->GetMatrix();
+        _transform->SetMatrix(matrix);
+
+        _transform->PostMultiply();
+        //_transform->Concatenate(tool->GetUserTransform());
+
+        _actor->SetUserTransform(_transform);
     }
 
     void SetPartRotation(RotAddress address, double angle) const
     {
-        RotateImpl(this, address, angle);
+        if (_part)
+            RotateImpl(this, address, angle);
     }
 
     bool HasRotation() const 
     {
-        return _part.CanRotate();
+        if (_part)
+            return _part->CanRotate();
+        return false;
     }
 
     RotAddress RotationAddress() const
     {
-        return _part.RotationAxisAddress();
+        if (_part)
+            return _part->RotationAxisAddress();
+        return RotAddress::None;
     }
 
     vtkActorPointer Actor() const
@@ -49,8 +72,35 @@ public:
         return _childElements;
     }
 
+    void InsertChild(MachineHeadAssembly* child)
+    {
+        if (child)
+            _childElements.push_back(child);
+    }
+
+    const MachineHeadAssembly* LastChild() const
+    {
+        if(!_childElements.empty())
+            return _childElements.back()->LastChild();
+
+        return this;
+    }
+
+    const MachineHeadAssembly* Parent() const
+    {
+        return _parent;
+    }
+
+    void AppendMesh(const vtkActorPointer& object)
+    {
+        dynamic_cast<vtkTransform*>(object->GetUserTransform())->PostMultiply();
+        dynamic_cast<vtkTransform*>(object->GetUserTransform())->Concatenate(_actor->GetUserTransform());
+        _actor = MergeActors({ _actor, object }, false);
+        _actor->SetUserTransform(_transform);
+    }
+
 private:
-    MachinePart _part;
+    MachinePart* _part;
     vtkActorPointer _actor;
 
     vtkSmartPointer<vtkTransform> _transform;
@@ -60,9 +110,9 @@ private:
     void RotateImpl(const MachineHeadAssembly* target, RotAddress address, double angle) const
     {
         // not uga-buga code
-        if(target->_part.CanRotate() && target->_part.RotationAxisAddress() == address)
+        if(target->_part->CanRotate() && target->_part->RotationAxisAddress() == address)
         {
-            const auto axis = target->_part.Axis().Axis();
+            const auto axis = target->_part->Axis().Axis();
 
             target->_transform->Identity();
             target->_transform->Translate(axis.X, axis.Y, axis.Z);
