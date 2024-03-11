@@ -38,6 +38,7 @@ public:
 
     void AddStylus(const ProbeToolAssembly& tool) const
     {
+        RemoveStylus();
         const auto lastChild = const_cast<MachineHeadAssembly*>(_topLevelParts.back().LastChild());
 
         const vtkNew<vtkTransform> transform;
@@ -46,10 +47,16 @@ public:
 
         const auto actor = tool.Weld();
         actor->SetUserTransform(transform);
+        lastChild->Restore();
+        lastChild->AppendMesh(actor);
 
-        //lastChild->AppendMesh(actor);
+        //const_cast<MachineHeadAssembly*>(lastChild->Parent())->InsertChild(new MachineHeadAssembly(actor, lastChild));
+    }
 
-        const_cast<MachineHeadAssembly*>(lastChild->Parent())->InsertChild(new MachineHeadAssembly(actor, lastChild));
+    void RemoveStylus() const
+    {
+        const auto lastChild = const_cast<MachineHeadAssembly*>(_topLevelParts.back().LastChild());
+        lastChild->Restore();
     }
 
 private:

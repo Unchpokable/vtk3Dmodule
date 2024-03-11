@@ -8,6 +8,7 @@
 using vtkRendererPointer = vtkSmartPointer<vtkRenderer>;
 using vtkActorPointer = vtkSmartPointer<vtkActor>;
 using vtkTexturePointer = vtkSmartPointer<vtkTexture>;
+using vtkPolyDataMapperPointer = vtkSmartPointer<vtkPolyDataMapper>;
 
 template<typename ...Props>
 using is_vtk_prop_ptr = std::conjunction<std::is_convertible<Props, vtkProp*>...>;

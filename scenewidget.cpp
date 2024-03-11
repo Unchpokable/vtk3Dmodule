@@ -25,7 +25,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _markerManager = new MarkerManager(_renderer->GetActiveCamera(), renderWindow());
 
     _renderTimer = new QTimer(this);
-    _renderTimer->setInterval(30);
+    _renderTimer->setInterval(100);
     _renderTimer->start();
     //_renderTimer->setSingleShot(true);
 
@@ -148,8 +148,10 @@ void SceneWidget::clear() const
 void SceneWidget::renderScene()
 {
     static double angle = 1;
-    _machineHead->RotatePart(RotAddress::A, angle);
-    _machineHead->RotatePart(RotAddress::B, angle++);
+    //_machineHead->RotatePart(RotAddress::A, angle);
+    //_machineHead->RotatePart(RotAddress::B, angle++);
+
+    //_machineHead->RemoveStylus();
     _renderer->GetRenderWindow()->Render();
 }
 

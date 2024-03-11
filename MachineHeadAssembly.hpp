@@ -91,11 +91,28 @@ public:
         return _parent;
     }
 
+    void Restore()
+    {
+        const auto newActor = LoadObj(_part->Models());
+        _actor->SetMapper(newActor->GetMapper());
+
+        _transform = vtkSmartPointer<vtkTransform>::New();
+
+        if(_parent != nullptr)
+        {
+            _transform->PostMultiply();
+            _transform->Concatenate(_parent->_transform);
+        }
+
+        _actor->SetUserTransform(_transform);
+    }
+
     void AppendMesh(const vtkActorPointer& object)
     {
         dynamic_cast<vtkTransform*>(object->GetUserTransform())->PostMultiply();
         dynamic_cast<vtkTransform*>(object->GetUserTransform())->Concatenate(_actor->GetUserTransform());
-        _actor = MergeActors({ _actor, object }, false);
+        const auto newActor = MergeActors({ _actor, object }, false);
+        _actor->SetMapper(newActor->GetMapper());
         _actor->SetUserTransform(_transform);
     }
 
@@ -160,5 +177,23 @@ private:
         }
 
         return MergeActors(result);
+    }
+
+    static vtkSmartPointer<vtkPolyData> LoadObjectPoly(const MachineModelList& models)
+    {
+        const auto appendPolyData = vtkSmartPointer<vtkAppendPolyData>::New();
+
+        for(const auto& obj : models.Parts()) 
+        {
+            const auto reader = vtkSmartPointer<vtkOBJReader>::New();
+            reader->SetFileName(obj.MeshFile().toStdString().c_str());
+            reader->Update();
+
+            appendPolyData->AddInputData(reader->GetOutput());
+        }
+
+        appendPolyData->Update();
+
+        return appendPolyData->GetOutput();
     }
 };
