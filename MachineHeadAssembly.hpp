@@ -178,22 +178,4 @@ private:
 
         return MergeActors(result);
     }
-
-    static vtkSmartPointer<vtkPolyData> LoadObjectPoly(const MachineModelList& models)
-    {
-        const auto appendPolyData = vtkSmartPointer<vtkAppendPolyData>::New();
-
-        for(const auto& obj : models.Parts()) 
-        {
-            const auto reader = vtkSmartPointer<vtkOBJReader>::New();
-            reader->SetFileName(obj.MeshFile().toStdString().c_str());
-            reader->Update();
-
-            appendPolyData->AddInputData(reader->GetOutput());
-        }
-
-        appendPolyData->Update();
-
-        return appendPolyData->GetOutput();
-    }
 };
