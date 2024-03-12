@@ -15,6 +15,13 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QPushButton" name="paintSomehowButton">
+      <property name="text">
+       <string>ЖОПА</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
@@ -40,55 +47,6 @@
         <widget class="SceneWidget" name="sceneWidget" native="true"/>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Удалить последнего Actor-а</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="addLineButton">
-      <property name="text">
-       <string>Добавить линию</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="paintElementButton">
-      <property name="text">
-       <string>Покрасить</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
-     <widget class="QPushButton" name="markupPolyLineButton">
-      <property name="text">
-       <string>Расставить маркеры по линии</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="addSphereButton">
-      <property name="text">
-       <string>Добавить сферу</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QPushButton" name="paintSomehowButton">
-      <property name="text">
-       <string>ЖОПА</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
-     <widget class="QPushButton" name="resetCameraButton">
-      <property name="text">
-       <string>Ресет камеры</string>
-      </property>
      </widget>
     </item>
    </layout>

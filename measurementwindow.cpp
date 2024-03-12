@@ -15,20 +15,20 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
 
     _renderer = _ui->sceneWidget->getRenderer();
 
-    connect(_ui->pushButton, &QPushButton::clicked, _ui->sceneWidget, &SceneWidget::clear);
+    /*connect(_ui->pushButton, &QPushButton::clicked, _ui->sceneWidget, &SceneWidget::clear);
     connect(_ui->pushButton, &QPushButton::clicked, _ui->sceneWidget, &SceneWidget::requestRender);
 
     connect(_ui->addSphereButton, &QPushButton::clicked, this, &MeasurementWindow::addSphere);
-    connect(_ui->addLineButton, &QPushButton::clicked, this, &MeasurementWindow::addLine);
+    connect(_ui->addLineButton, &QPushButton::clicked, this, &MeasurementWindow::addLine);*/
 
     connect(_ui->paintSomehowButton, &QPushButton::clicked, this, &MeasurementWindow::rotateMachineHead);
 
-    connect(_ui->markupPolyLineButton, &QPushButton::clicked, this, &MeasurementWindow::demoSetMarkersOnPolyLine);
+    /*connect(_ui->markupPolyLineButton, &QPushButton::clicked, this, &MeasurementWindow::demoSetMarkersOnPolyLine);
 
     connect(_ui->resetCameraButton, &QPushButton::clicked, this, [this]() {
         _ui->sceneWidget->_renderer->ResetCamera();
         _ui->sceneWidget->renderScene();
-    });
+    });*/
 
     //ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
@@ -102,7 +102,7 @@ void MeasurementWindow::rotateMachineHead()
 
     if (rotateDialog->result() == QDialog::Accepted) 
     {
-        qDebug() << "ZAEBISSSS";
+        _ui->sceneWidget->renderScene();
     }
 }
 

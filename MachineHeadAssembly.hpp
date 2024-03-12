@@ -8,38 +8,28 @@
 
 class MachineHeadAssembly
 {
+    friend class MachineHead;
+
 public:
     MachineHeadAssembly(MachinePart* part, MachineHeadAssembly* parent = nullptr) : _part(part)
     {
         _actor = LoadObj(_part->Models());
         _parent = parent;
-        _transform = vtkSmartPointer<vtkTransform>::New();
+        const auto transform = vtkSmartPointer<vtkTransform>::New();
 
-        if(_parent != nullptr)
-            _transform->PostMultiply();
+        if (_parent != nullptr)
+        {
+            transform->PostMultiply();
+            transform->SetInput(_parent->_transform);
+        }
 
-        _actor->SetUserTransform(_transform);
+        _actor->SetUserTransform(transform);
+
+        _transform = vtkTransform::SafeDownCast(_actor->GetUserTransform());
         for(const auto child: _part->ChildMachines())
         {
             _childElements.push_back(new MachineHeadAssembly(child, this));
         }
-    }
-
-    // Special constructor to make MachineHeadAssembly with Stylus tool
-    MachineHeadAssembly(const vtkActorPointer& tool, MachineHeadAssembly* parent = nullptr)
-    {
-        _actor = tool;
-        _part = nullptr;
-        _parent = parent;
-
-        _transform = vtkSmartPointer<vtkTransform>::New();
-        const auto matrix = tool->GetUserTransform()->GetMatrix();
-        _transform->SetMatrix(matrix);
-
-        _transform->PostMultiply();
-        //_transform->Concatenate(tool->GetUserTransform());
-
-        _actor->SetUserTransform(_transform);
     }
 
     void SetPartRotation(RotAddress address, double angle) const
@@ -93,34 +83,56 @@ public:
 
     void Restore()
     {
+        if (_rzRotation && _rzRotation.GetPointer())
+            SetBaseRZ(_rzRotation);
+        //TODO Check memory usage here
         const auto newActor = LoadObj(_part->Models());
         _actor->SetMapper(newActor->GetMapper());
-
-        _transform = vtkSmartPointer<vtkTransform>::New();
 
         if(_parent != nullptr)
         {
             _transform->PostMultiply();
-            _transform->Concatenate(_parent->_transform);
+            _transform->SetInput(_parent->_transform);
         }
 
         _actor->SetUserTransform(_transform);
     }
 
-    void AppendMesh(const vtkActorPointer& object)
+    void UpdateChild() 
     {
-        dynamic_cast<vtkTransform*>(object->GetUserTransform())->PostMultiply();
-        dynamic_cast<vtkTransform*>(object->GetUserTransform())->Concatenate(_actor->GetUserTransform());
-        const auto newActor = MergeActors({ _actor, object }, false);
-        _actor->SetMapper(newActor->GetMapper());
+        TransformChildren(_transform);
+    }
+
+    void SetBaseRZ(const vtkSmartPointer<vtkTransform> rz) 
+    {
+        _transform->PostMultiply();
+        _transform->SetInput(rz);
         _actor->SetUserTransform(_transform);
+
+        _rzRotation = rz;
+
+        for (const auto child : _childElements) 
+        {
+            child->SetBaseRZ(rz);
+        }
+    }
+
+    void SetOrientation(double x, double y, double z) 
+    {
+        _actor->SetOrientation(x, y, z);
+
+        for (const auto child : _childElements)
+        {
+            child->SetOrientation(x, y, z);
+        }
     }
 
 private:
     MachinePart* _part;
     vtkActorPointer _actor;
 
-    vtkSmartPointer<vtkTransform> _transform;
+    vtkTransform* _transform;
+    vtkSmartPointer<vtkTransform> _rzRotation;
     std::vector<MachineHeadAssembly*> _childElements;
     MachineHeadAssembly* _parent;
 
@@ -132,6 +144,8 @@ private:
             const auto axis = target->_part->Axis().Axis();
 
             target->_transform->Identity();
+            target->_transform->PostMultiply();
+
             target->_transform->Translate(axis.X, axis.Y, axis.Z);
             target->_transform->RotateWXYZ(angle, axis.I, axis.J, axis.K);
 
@@ -152,8 +166,17 @@ private:
         for(const auto child: _childElements)
         {
             child->_transform->Concatenate(transform);
-            child->TransformChildren(transform);
+            child->TransformChildren(child->_transform);
         }
+    }
+
+    void AppendMesh(const vtkActorPointer& object)
+    {
+        vtkTransform::SafeDownCast(object->GetUserTransform())->PostMultiply();
+        vtkTransform::SafeDownCast(object->GetUserTransform())->SetInput(_actor->GetUserTransform());
+        const auto newActor = MergeActors({ _actor, object }, false);
+        _actor->SetMapper(newActor->GetMapper());
+        _actor->SetUserTransform(_transform);
     }
 
     static vtkActorPointer LoadObj(const MachineModelList& models)

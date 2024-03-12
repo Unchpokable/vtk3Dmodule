@@ -38,6 +38,28 @@ public:
         }
     }
 
+    void RotateRZ(double angle, const Eigen::Vector3d& rzAxis)
+    {
+        if (_topLevelParts.empty())
+            return;
+
+        /*const auto transform = vtkSmartPointer<vtkTransform>::New();
+        transform->RotateWXYZ(angle, rzAxis.x(), rzAxis.y(), rzAxis.z());
+        
+        vtkTransform::SafeDownCast(_topLevelParts[0].Actor()->GetUserTransform())->PostMultiply();
+        vtkTransform::SafeDownCast(_topLevelParts[0].Actor()->GetUserTransform())->SetInput(transform);*/
+
+        for (std::size_t i = 0; i < _topLevelParts.size(); i++) 
+        {
+            /*auto actorTransform = vtkTransform::SafeDownCast(_topLevelParts[i].Actor()->GetUserTransform());
+            actorTransform->PostMultiply();
+            actorTransform->SetInput(_topLevelParts[i - 1].Actor()->GetUserTransform());
+            _topLevelParts[i].SetBaseRZ(transform);*/
+
+            _topLevelParts[i].SetOrientation(rzAxis.x() * angle, rzAxis.y() * angle, rzAxis.z() * angle);
+        }
+    }
+
     void AddStylus(const ProbeToolAssembly& tool) const
     {
         RemoveStylus();

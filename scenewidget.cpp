@@ -33,56 +33,6 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     // -------------------------
 
-    //Маркеры
-    //const auto nodePosition = Eigen::Vector3d(10, 25, 14);
-
-    //auto line = CreateLine({ 0, 0, 0 }, nodePosition, { 0, 1, 0 }); // Line from (0,0,0) to (10, 25, 14) with green color
-    //auto line2 = CreateLine(nodePosition, { 43, 11, 35 }, { 0, 1, 0 });
-    //auto line3 = CreateLine(nodePosition, { -20, -10, -8 }, { 0, 1, 0});
-    //auto sphere = CreateSphere(10, { 0, 0, 0 }, { 1, 0, 0 });
-    //auto sphere2 = CreateSphere(5, { 43, 11, 35 }, { 1, .3, .7 });
-    //auto sphere3 = CreateSphere(8, { -20, -10, -8 }, { 0, 0, 1 });
-
-    //_demoSpheres.push_back(sphere);
-    //_demoSpheres.push_back(sphere2);
-    //_demoSpheres.push_back(sphere3);
-
-    //AddActorsToRenderer(_renderer, line, line2, line3, sphere, sphere2, sphere3);
-    //const auto node = _markerManager->CreateMany(StdMarkers::Path, nodePosition).value().at(0);
-    //const auto node2 = _markerManager->CreateMarkerOfType(StdMarkers::Circle, { 15, 35, 24 });
-    //const auto node3 = _markerManager->CreateMarkerOfType(StdMarkers::Star, { 25, 45, 34 });
-
-    //const auto nodePos2 = Eigen::Vector3d(45, 65, 54);
-    //const auto nodePos3 = Eigen::Vector3d(55, 75, 64);
-
-    //const auto antiNormalMarkers = _markerManager->CreateManyWithUserTexture("AntiNormal.png", nodePos2, nodePos3).value();
-
-    //AddActorsToRenderer(_renderer, 
-    //    node, 
-    //    node2.value(), 
-    //    node3.value(),
-    //    _markerManager->CreateMarkerOfType(StdMarkers::Normal, { 35, 55, 44 }).value(),
-    //    antiNormalMarkers.at(0),
-    //    antiNormalMarkers.at(1)
-    //    
-    //);
-
-    /*const auto cone = CreateTruncatedCone(10, 25, 14, { 60, 60, 60 }, { .5, .5, .5 }, DetailsLevel::High);
-
-    const auto realCone = CreateCone(24, 50, { 50, 50, 50 }, { .5, .5, .5 });
-
-    const auto cylinder = CreateCylinder(50, 25, { -45, -63, -54 }, { .5, .5, .5 });
-
-    AddActorsToRenderer(_renderer, cone, realCone, cylinder);*/
-
-    /*_polyLine = new PolyLine();
-
-    _polyLine->SetCallback([this](PolyLine*) {
-        renderWindow()->Render();
-    });
-
-    _renderer->AddActor(_polyLine->GetActor());*/
-
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
     const auto extensions = catalog.Extensions();
@@ -106,7 +56,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _renderer->AddActor(toolModel);*/
 
     ProbeToolAssembly manualTool;
-    manualTool.Build(catalog, {"TP20_EM2", "Eagle_p_touch_LF", "M2x90_CF", "M2_20x1_TC"});
+    manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
 
     const auto manualToolModel = manualTool.Weld();
 
@@ -116,11 +66,42 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
     _machineHead->AddStylus(manualTool);
-    /*_machineHead->RotatePart(RotAddress::A, 45);
-    _machineHead->RotatePart(RotAddress::B, 130);*/
+
+    //_machineHead->RotateRZ(30, { 1, 0, 0 });
     const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
+
+    auto mountTransform = vtkSmartPointer<vtkTransform>::New();
+    mountTransform->RotateX(30);
+
+    actors[0]->SetUserTransform(mountTransform);
+
+    auto headBTransform = vtkSmartPointer<vtkTransform>::New();
+    headBTransform->Concatenate(mountTransform);
+    headBTransform->RotateZ(45);
+
+    actors[1]->SetUserTransform(headBTransform);
+
+    auto headATransform = vtkSmartPointer<vtkTransform>::New();
+    headATransform->Concatenate(headBTransform);
+    headATransform->RotateX(60);
+
+    actors[2]->SetUserTransform(headATransform);
+
+    double x{}, y{}, z{};
+    for (const auto& actor : actors) 
+    {
+        // actor->SetPosition(x, y, z);
+        // x += 60;
+       
+        // auto currentTransform = vtkSmartPointer<vtkTransform>::New();
+        // currentTransform->DeepCopy(transform);
+
+        // actor->SetUserTransform(currentTransform);
+
+        // transform->Concatenate(30);
+    }
 
     _renderer->ResetCamera();
     showGizmo();
@@ -147,7 +128,7 @@ void SceneWidget::clear() const
 
 void SceneWidget::renderScene()
 {
-    static double angle = 1;
+    //static double angle = 1;
     //_machineHead->RotatePart(RotAddress::A, angle);
     //_machineHead->RotatePart(RotAddress::B, angle++);
 
