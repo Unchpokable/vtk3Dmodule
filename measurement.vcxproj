@@ -37,7 +37,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.5.1_msvc2022_64</QtInstall>
+    <QtInstall>6.5.1</QtInstall>
     <QtModules>core;gui;widgets;opengl;openglwidgets;xml</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
+    <ClCompile Include="RotateTestDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
     <ClInclude Include="MachineHead.hpp" />
     <ClInclude Include="ProbeToolAssembly.hpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="EigenUtils.hpp" />
     <ClInclude Include="PolyLine.hpp" />
     <ClInclude Include="result.hpp" />
+    <QtMoc Include="RotateTestDialog.h" />
     <ClInclude Include="Size.hpp" />
     <ClInclude Include="SphereData.hpp" />
     <ClInclude Include="vtkUtils.hpp" />
@@ -152,6 +154,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <QtUic Include="RotateTestDialog.ui" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="AntiNormal.png" />

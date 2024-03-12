@@ -8,6 +8,7 @@
 #include "generators.hpp"
 #include "xmltools.hpp"
 #include "MachineHead.hpp"
+#include "RotateTestDialog.h"
 
 MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MeasurementWindow) {
     _ui->setupUi(this);
@@ -20,7 +21,7 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
     connect(_ui->addSphereButton, &QPushButton::clicked, this, &MeasurementWindow::addSphere);
     connect(_ui->addLineButton, &QPushButton::clicked, this, &MeasurementWindow::addLine);
 
-    connect(_ui->paintSomehowButton, &QPushButton::clicked, this, &MeasurementWindow::demoPaintObject);
+    connect(_ui->paintSomehowButton, &QPushButton::clicked, this, &MeasurementWindow::rotateMachineHead);
 
     connect(_ui->markupPolyLineButton, &QPushButton::clicked, this, &MeasurementWindow::demoSetMarkersOnPolyLine);
 
@@ -70,7 +71,7 @@ void MeasurementWindow::paintObject()
     
 }
 
-void MeasurementWindow::demoPaintObject()
+void MeasurementWindow::rotateMachineHead()
 {
     /*const auto color = QColorDialog::getColor(Qt::white, this, "Please, provide color for demo");
 
@@ -92,8 +93,17 @@ void MeasurementWindow::demoPaintObject()
         _ui->sceneWidget->renderScene();
     }*/
 
-    _ui->sceneWidget->_machineHead->RotatePart(RotAddress::A, rand() % 120);
-    _ui->sceneWidget->_machineHead->RotatePart(RotAddress::B, rand() % 120);
+    //_ui->sceneWidget->_machineHead->RotatePart(RotAddress::A, rand() % 120);
+    //_ui->sceneWidget->_machineHead->RotatePart(RotAddress::B, rand() % 120);
+
+    const auto rotateDialog = new RotateTestDialog(this, _ui->sceneWidget->_machineHead);
+
+    rotateDialog->exec();
+
+    if (rotateDialog->result() == QDialog::Accepted) 
+    {
+        qDebug() << "ZAEBISSSS";
+    }
 }
 
 void MeasurementWindow::demoSetMarkersOnPolyLine()

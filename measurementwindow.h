@@ -17,7 +17,7 @@ private slots:
     void addSphere();
     void addLine();
     void paintObject();
-    void demoPaintObject();
+    void rotateMachineHead();
     void demoSetMarkersOnPolyLine();
 
 private:

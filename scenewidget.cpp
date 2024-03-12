@@ -26,7 +26,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderTimer = new QTimer(this);
     _renderTimer->setInterval(100);
-    _renderTimer->start();
+    //_renderTimer->start();
     //_renderTimer->setSingleShot(true);
 
     connect(_renderTimer, &QTimer::timeout, this, &SceneWidget::renderScene);
