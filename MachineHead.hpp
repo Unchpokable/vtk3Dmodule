@@ -28,8 +28,10 @@ public:
         return result;
     }
 
-    void RotatePart(RotAddress address, double angle) const
+    void RotatePart(RotAddress address, double angle)
     {
+        _rotations[address] = angle;
+
         for (const auto& part : _topLevelParts) 
         {
             part.SetPartRotation(address, angle);
@@ -42,6 +44,8 @@ public:
         const auto lastChild = const_cast<MachineHeadAssembly*>(_topLevelParts.back().LastChild());
 
         const vtkNew<vtkTransform> transform;
+
+        //TODO Fix magic numbers in translate
         transform->RotateWXYZ(-90, 1, 0, 0);
         transform->Translate(0, 37, 0);
 
@@ -59,9 +63,20 @@ public:
         lastChild->Restore();
     }
 
+    double GetRotation(RotAddress address) const
+    {
+        return _rotations.at(address);
+    }
+
 private:
     MachinePartCollection _parts;
     std::vector<MachineHeadAssembly> _topLevelParts;
+
+    std::map<RotAddress, double> _rotations = 
+    {
+        {RotAddress::A, 0},
+        {RotAddress::B, 0}
+    };
 
     static std::vector<vtkActorPointer> GetActors(const MachineHeadAssembly* assembly)
     {
