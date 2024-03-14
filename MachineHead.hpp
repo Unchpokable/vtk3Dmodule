@@ -32,7 +32,7 @@ public:
     {
         _rotations[address] = angle;
 
-        for (const auto& part : _topLevelParts) 
+        for (auto& part : _topLevelParts) 
         {
             part.SetPartRotation(address, angle);
         }
@@ -43,26 +43,18 @@ public:
         if (_topLevelParts.empty())
             return;
 
-        /*const auto transform = vtkSmartPointer<vtkTransform>::New();
+        const auto transform = vtkSmartPointer<vtkTransform>::New();
         transform->RotateWXYZ(angle, rzAxis.x(), rzAxis.y(), rzAxis.z());
-        
-        vtkTransform::SafeDownCast(_topLevelParts[0].Actor()->GetUserTransform())->PostMultiply();
-        vtkTransform::SafeDownCast(_topLevelParts[0].Actor()->GetUserTransform())->SetInput(transform);*/
 
-        for (std::size_t i = 0; i < _topLevelParts.size(); i++) 
+        for (auto& _topLevelPart : _topLevelParts)
         {
-            /*auto actorTransform = vtkTransform::SafeDownCast(_topLevelParts[i].Actor()->GetUserTransform());
-            actorTransform->PostMultiply();
-            actorTransform->SetInput(_topLevelParts[i - 1].Actor()->GetUserTransform());
-            _topLevelParts[i].SetBaseRZ(transform);*/
-
-            _topLevelParts[i].SetOrientation(rzAxis.x() * angle, rzAxis.y() * angle, rzAxis.z() * angle);
+            _topLevelPart.SetBaseRZ(transform);
         }
     }
 
     void AddStylus(const ProbeToolAssembly& tool) const
     {
-        RemoveStylus();
+        //RemoveStylus();
         const auto lastChild = const_cast<MachineHeadAssembly*>(_topLevelParts.back().LastChild());
 
         const vtkNew<vtkTransform> transform;

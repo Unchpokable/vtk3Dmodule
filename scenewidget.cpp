@@ -67,41 +67,41 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
     _machineHead->AddStylus(manualTool);
 
-    //_machineHead->RotateRZ(30, { 1, 0, 0 });
+    _machineHead->RotateRZ(30, { 1, 0, 0 });
     const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
 
-    auto mountTransform = vtkSmartPointer<vtkTransform>::New();
-    mountTransform->RotateX(30);
+    //auto mountTransform = vtkSmartPointer<vtkTransform>::New(); // rz
+    //mountTransform->RotateX(30);
 
-    actors[0]->SetUserTransform(mountTransform);
+    //actors[0]->SetUserTransform(mountTransform);
 
-    auto headBTransform = vtkSmartPointer<vtkTransform>::New();
-    headBTransform->Concatenate(mountTransform);
-    headBTransform->RotateZ(45);
+    //auto headBTransform = vtkSmartPointer<vtkTransform>::New();
+    //headBTransform->Concatenate(mountTransform);
+    //headBTransform->RotateZ(45);
 
-    actors[1]->SetUserTransform(headBTransform);
+    //actors[1]->SetUserTransform(headBTransform);
 
-    auto headATransform = vtkSmartPointer<vtkTransform>::New();
-    headATransform->Concatenate(headBTransform);
-    headATransform->RotateX(60);
+    //auto headATransform = vtkSmartPointer<vtkTransform>::New();
+    //headATransform->Concatenate(headBTransform);
+    //headATransform->RotateX(60);
 
-    actors[2]->SetUserTransform(headATransform);
+    //actors[2]->SetUserTransform(headATransform);
 
-    double x{}, y{}, z{};
-    for (const auto& actor : actors) 
-    {
-        // actor->SetPosition(x, y, z);
-        // x += 60;
-       
-        // auto currentTransform = vtkSmartPointer<vtkTransform>::New();
-        // currentTransform->DeepCopy(transform);
+    //double x{}, y{}, z{};
+    //for (const auto& actor : actors) 
+    //{
+    //    // actor->SetPosition(x, y, z);
+    //    // x += 60;
+    //   
+    //    // auto currentTransform = vtkSmartPointer<vtkTransform>::New();
+    //    // currentTransform->DeepCopy(transform);
 
-        // actor->SetUserTransform(currentTransform);
+    //    // actor->SetUserTransform(currentTransform);
 
-        // transform->Concatenate(30);
-    }
+    //    // transform->Concatenate(30);
+    //}
 
     _renderer->ResetCamera();
     showGizmo();

@@ -17,7 +17,7 @@ public:
 
     enum Address
     {
-        A, B, None
+        A, B, RZ, None
     };
 
     static Address FromString(const QString& str)

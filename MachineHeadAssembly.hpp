@@ -35,7 +35,7 @@ public:
     void SetPartRotation(RotAddress address, double angle) const
     {
         if (_part)
-            RotateImpl(this, address, angle);
+            RotateImpl(address, angle);
     }
 
     bool HasRotation() const 
@@ -81,50 +81,34 @@ public:
         return _parent;
     }
 
-    void Restore()
+    void Restore() const
     {
-        if (_rzRotation && _rzRotation.GetPointer())
-            SetBaseRZ(_rzRotation);
-        //TODO Check memory usage here
         const auto newActor = LoadObj(_part->Models());
         _actor->SetMapper(newActor->GetMapper());
-
-        if(_parent != nullptr)
-        {
-            _transform->PostMultiply();
-            _transform->SetInput(_parent->_transform);
-        }
-
-        _actor->SetUserTransform(_transform);
     }
 
-    void UpdateChild() 
+    void UpdateChild() const
     {
         TransformChildren(_transform);
     }
 
-    void SetBaseRZ(const vtkSmartPointer<vtkTransform> rz) 
+    void SetBaseRZ(const vtkSmartPointer<vtkTransform>& rz, bool isChild = false) 
     {
-        _transform->PostMultiply();
-        _transform->SetInput(rz);
+        _transform->DeepCopy(rz);
         _actor->SetUserTransform(_transform);
 
-        _rzRotation = rz;
-
-        for (const auto child : _childElements) 
-        {
-            child->SetBaseRZ(rz);
-        }
-    }
-
-    void SetOrientation(double x, double y, double z) 
-    {
-        _actor->SetOrientation(x, y, z);
+        if (!isChild)
+            _rzRotation = rz;
 
         for (const auto child : _childElements)
         {
-            child->SetOrientation(x, y, z);
+            child->SetBaseRZ(rz, true);
         }
+    }
+
+    vtkSmartPointer<vtkTransform> GetRZ() const
+    {
+        return _rzRotation;
     }
 
 private:
@@ -136,27 +120,29 @@ private:
     std::vector<MachineHeadAssembly*> _childElements;
     MachineHeadAssembly* _parent;
 
-    void RotateImpl(const MachineHeadAssembly* target, RotAddress address, double angle) const
+    void RotateImpl(RotAddress address, double angle) const
     {
-        // not uga-buga code
-        if(target->_part->CanRotate() && target->_part->RotationAxisAddress() == address)
+        if(_part->CanRotate() && _part->RotationAxisAddress() == address) 
         {
-            const auto axis = target->_part->Axis().Axis();
+            const auto axis = _part->Axis().Axis();
 
-            target->_transform->Identity();
-            target->_transform->PostMultiply();
+            _transform->Identity();
+            _transform->PreMultiply();
 
-            target->_transform->Translate(axis.X, axis.Y, axis.Z);
-            target->_transform->RotateWXYZ(angle, axis.I, axis.J, axis.K);
+            if(_rzRotation && _rzRotation.GetPointer())
+                _transform->Concatenate(GetRZ());
 
-            target->TransformChildren(target->_transform);
+            _transform->Translate(axis.X, axis.Y, axis.Z);
+            _transform->RotateWXYZ(angle, axis.I, axis.J, axis.K);
+
+            TransformChildren(_transform);
         }
 
-        else if (!target->_childElements.empty())
+        else if(!_childElements.empty()) 
         {
-            for (const auto child: target->_childElements)
+            for(const auto child : _childElements) 
             {
-                RotateImpl(child, address, angle);
+                child->RotateImpl(address, angle);
             }
         }
     }
@@ -165,7 +151,9 @@ private:
     {
         for(const auto child: _childElements)
         {
+            child->_transform->PostMultiply();
             child->_transform->Concatenate(transform);
+            child->_transform->PreMultiply();
             child->TransformChildren(child->_transform);
         }
     }
