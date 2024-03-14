@@ -67,7 +67,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
     _machineHead->AddStylus(manualTool);
 
-    _machineHead->RotateRZ(30, { 1, 0, 0 });
+    _machineHead->RotateRZ(180, { .5, .5, 0 });
     const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
