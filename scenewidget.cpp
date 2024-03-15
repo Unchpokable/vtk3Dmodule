@@ -40,21 +40,6 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     const auto probes = catalog.Probes();
     const auto styluses = catalog.Styluses();
 
-    /*const auto part = catalog.FindByName("TP20_STD");
-    const auto foundPartActor = GeneratePolyPart(part->Geometry());
-    SetActorLightingPlastic(foundPartActor);
-    foundPartActor->SetPosition(140, 0, 0);
-    _renderer->AddActor(foundPartActor);*/
-
-    /*ProbeToolAssembly toolFromAssembly;
-    const auto assembly = catalog.FindAssembly(std::string("SP25xModulex20x2"));
-    toolFromAssembly.Build(catalog, assembly);
-
-    const auto toolModel = toolFromAssembly.Weld();
-
-    toolModel->SetPosition(0, 0, 60);
-    _renderer->AddActor(toolModel);*/
-
     ProbeToolAssembly manualTool;
     manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
 
@@ -67,7 +52,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
     _machineHead->AddStylus(manualTool);
 
-    _machineHead->RotateRZ(180, { .5, .5, 0 });
+    _machineHead->RotateRZ(-90, { 1, 0, 0 });
     const auto actors = _machineHead->Actors();
 
     AddActorsToRenderer(_renderer, actors);
@@ -88,20 +73,6 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     //headATransform->RotateX(60);
 
     //actors[2]->SetUserTransform(headATransform);
-
-    //double x{}, y{}, z{};
-    //for (const auto& actor : actors) 
-    //{
-    //    // actor->SetPosition(x, y, z);
-    //    // x += 60;
-    //   
-    //    // auto currentTransform = vtkSmartPointer<vtkTransform>::New();
-    //    // currentTransform->DeepCopy(transform);
-
-    //    // actor->SetUserTransform(currentTransform);
-
-    //    // transform->Concatenate(30);
-    //}
 
     _renderer->ResetCamera();
     showGizmo();

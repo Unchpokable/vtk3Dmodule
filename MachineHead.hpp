@@ -54,7 +54,7 @@ public:
 
     void AddStylus(const ProbeToolAssembly& tool) const
     {
-        //RemoveStylus();
+        RemoveStylus();
         const auto lastChild = const_cast<MachineHeadAssembly*>(_topLevelParts.back().LastChild());
 
         const vtkNew<vtkTransform> transform;
