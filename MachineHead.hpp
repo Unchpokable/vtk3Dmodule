@@ -43,8 +43,10 @@ public:
         if (_topLevelParts.empty())
             return;
 
+        const auto axis = rzAxis.normalized();
+
         const auto transform = vtkSmartPointer<vtkTransform>::New();
-        transform->RotateWXYZ(angle, rzAxis.x(), rzAxis.y(), rzAxis.z());
+        transform->RotateWXYZ(angle, axis.x(), axis.y(), axis.z());
 
         for (auto& _topLevelPart : _topLevelParts)
         {
