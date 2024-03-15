@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "MachineHeadAssembly.hpp"
 
 MachineHeadAssembly::MachineHeadAssembly(MachinePart* part, MachineHeadAssembly* parent) : _part(part)
