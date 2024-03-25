@@ -67,6 +67,15 @@
     <ClCompile Include="CreateLineDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RotateTestDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewCapture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallelCameraSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="scenewidget.h">
@@ -83,6 +92,9 @@
     </QtMoc>
     <QtMoc Include="xmltools.hpp">
       <Filter>hpps</Filter>
+    </QtMoc>
+    <QtMoc Include="RotateTestDialog.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +140,12 @@
     <ClInclude Include="MachineHead.hpp">
       <Filter>classes</Filter>
     </ClInclude>
+    <ClInclude Include="ViewCapture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallelCameraSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="node.png">
@@ -151,6 +169,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="CreateLineDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="RotateTestDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
