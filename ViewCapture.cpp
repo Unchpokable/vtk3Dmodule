@@ -8,13 +8,13 @@ ViewCapture::ViewCapture(const vtkSmartPointer<vtkRenderer>& target)
     _target = target;
 }
 
-std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, const Size& size, const std::string& outputPath) const
+std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, const Size& size, const std::string& outputPath, bool drawFrame) const
 {
     const vtkNew<vtkRenderer> renderer {};
     const vtkNew<vtkRenderWindow> renderWindow {};
 
     AddActorsToRenderer(renderer, const_cast<vtkActorCollection*>(sceneObjects));
-
+    SetActorsToWireframeDisplay(renderer);
     renderer->SetBackground(1, 1, 1);
 
     renderWindow->AddRenderer(renderer);
@@ -31,7 +31,10 @@ std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, 
     if (_rawSettings)
         _rawSettings->ApplyToCamera(camera);
 
-    renderer->ResetCameraClippingRange();
+    /*camera->Azimuth(180);
+    camera->Elevation(30);*/
+
+    renderer->ResetCamera();
 
     renderWindow->Render();
 
@@ -46,15 +49,17 @@ std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, 
     writer->SetInputConnection(wnd2Img->GetOutputPort());
     writer->Write();
 
+    SetActorsToSurfaceDisplay(renderer);
+
     return std::filesystem::absolute(std::filesystem::path(outputPath)).string();
 }
 
-std::string ViewCapture::TakeScreenshot(const Size& size, const std::string& path, PreShotAction prepareAction) const
+std::string ViewCapture::TakeScreenshot(const Size& size, const std::string& path, PreShotAction prepareAction, bool drawFrame) const
 {
     if (prepareAction)
         prepareAction(_target);
 
-    return TakeScreenshot(const_cast<vtkRenderer*>(_target)->GetActors(), size, path);
+    return TakeScreenshot(const_cast<vtkRenderer*>(_target)->GetActors(), size, path, drawFrame);
 }
 
 

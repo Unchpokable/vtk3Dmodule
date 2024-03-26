@@ -84,17 +84,28 @@ public:
         return _rotations.at(address);
     }
 
+    std::unordered_map<RotAddress, double> Rotations()
+    {
+        return _rotations;
+    }
+
     void SetZero() noexcept 
     {
         RotatePart(RotAddress::A, 0);
         RotatePart(RotAddress::B, 0);
     }
 
+    void RotationsFromMap(std::unordered_map<RotAddress, double> angles)
+    {
+        RotatePart(RotAddress::A, angles[RotAddress::A]);
+        RotatePart(RotAddress::B, angles[RotAddress::B]);
+    }
+
 private:
     MachinePartCollection _parts;
     std::vector<MachineHeadAssembly> _topLevelParts;
 
-    std::map<RotAddress, double> _rotations = 
+    std::unordered_map<RotAddress, double> _rotations = 
     {
         {RotAddress::A, 0},
         {RotAddress::B, 0}

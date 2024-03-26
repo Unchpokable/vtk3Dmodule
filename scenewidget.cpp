@@ -82,15 +82,17 @@ std::string SceneWidget::demoScreenshot()
     cap.SetSpecialCameraConfigs(rawConfig);
     auto size = renderWindow()->GetSize();
 
-
     Size s{ size[0], size[1] };
 
+    const auto oldRots = _machineHead->Rotations();
+
     const auto path = cap.TakeScreenshot(s, "AwesomeScreenshot.png", [this](const vtkRenderer* r) {
+        _machineHead->SetZero();
         _machineHead->RotatePart(RotAddress::A, 30);
         _machineHead->RotatePart(RotAddress::B, 30);
-    });
+    }, true);
 
-    _machineHead->SetZero();
+    _machineHead->RotationsFromMap(oldRots);
 
     return path;
 }

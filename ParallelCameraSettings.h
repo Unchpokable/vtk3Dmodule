@@ -22,6 +22,7 @@ public:
     ParallelCameraSettings& Rotate(double yaw, double pitch, double roll);
 
     static ParallelCameraSettings FromCamera(const vtkSmartPointer<vtkCamera>& camera);
+    static ParallelCameraSettings Default();
 
 private:
     double* _position;

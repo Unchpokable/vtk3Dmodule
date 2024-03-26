@@ -116,13 +116,6 @@ ParallelCameraSettings& ParallelCameraSettings::operator=(ParallelCameraSettings
 
 void ParallelCameraSettings::ApplyToCamera(const vtkSmartPointer<vtkCamera>& camera) const noexcept
 {
-    camera->SetPosition(_position);
-    camera->SetFocalPoint(_focalPoint);
-    camera->SetViewUp(_viewUp);
-    camera->SetParallelProjection(1);
-    camera->SetParallelScale(_parallelScale);
-    camera->SetClippingRange(_clippingRange);
-
     camera->Azimuth(_azimuth);
     camera->Elevation(_elevation);
     camera->Roll(_roll);
@@ -149,19 +142,25 @@ ParallelCameraSettings& ParallelCameraSettings::Rotate(double yaw, double pitch,
     return *this;
 }
 
+// Copies Focal Points, ViewUp vector, parallel scale and clippingRange from given camera. Other parameters sets to 0
 ParallelCameraSettings ParallelCameraSettings::FromCamera(const vtkSmartPointer<vtkCamera>& camera)
 {
-    double position[3];
+    double position[3]{};
     double focalPoint[3];
     double viewUp[3];
     double clippingRange[2];
     const double parallelScale = camera->GetParallelScale();
 
-    camera->GetPosition(position);
+
     camera->GetFocalPoint(focalPoint);
     camera->GetViewUp(viewUp);
     camera->GetClippingRange(clippingRange);
 
-    return { position, focalPoint, viewUp, parallelScale, clippingRange, 0, 0, camera->GetRoll(), 0, 0};
+    return { position, focalPoint, viewUp, parallelScale, clippingRange, 0, 0, 0, 0, 0};
+}
+
+ParallelCameraSettings ParallelCameraSettings::Default()
+{
+    return ParallelCameraSettings::FromCamera(vtkSmartPointer<vtkCamera>::New());
 }
 

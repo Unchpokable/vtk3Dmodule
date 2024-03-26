@@ -10,6 +10,9 @@ using vtkActorPointer = vtkSmartPointer<vtkActor>;
 using vtkTexturePointer = vtkSmartPointer<vtkTexture>;
 using vtkPolyDataMapperPointer = vtkSmartPointer<vtkPolyDataMapper>;
 
+using vtkActorTransformAction = std::function<vtkActor* (vtkActor*)>;
+using vtkActorTransformActionVoid = std::function<void(vtkActor*)>;
+
 template<typename ...Props>
 using is_vtk_prop_ptr = std::conjunction<std::is_convertible<Props, vtkProp*>...>;
 
@@ -27,7 +30,6 @@ inline void AddActorsToRenderer(const vtkRendererPointer& renderer, vtkActorColl
     actors->InitTraversal();
 
     auto actor = actors->GetNextActor();
-
     while(actor)
     {
         renderer->AddActor(actor);
@@ -53,6 +55,33 @@ Status AddActorsToRenderer(const vtkRendererPointer& renderer, const X<ActorPtr>
     }
 
     return Status::Success;
+}
+
+inline void TransformRendererActors(const vtkRendererPointer& renderer, const vtkActorTransformActionVoid& transform)
+{
+    auto actors = renderer->GetActors();
+
+    actors->InitTraversal();
+
+    auto actor = actors->GetNextActor();
+
+    while (actor)
+    {
+        transform(actor);
+        actor = actors->GetNextActor();
+    }
+}
+
+inline void SetActorsToWireframeDisplay(const vtkRendererPointer& renderer) {
+    TransformRendererActors(renderer, [](vtkActor* actor) {
+        actor->GetProperty()->SetRepresentationToWireframe();
+    });
+}
+
+inline void SetActorsToSurfaceDisplay(const vtkRendererPointer& renderer) {
+    TransformRendererActors(renderer, [](vtkActor* actor) {
+        actor->GetProperty()->SetRepresentationToSurface();
+    });
 }
 
 inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path) {
