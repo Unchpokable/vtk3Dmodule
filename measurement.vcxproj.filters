@@ -75,6 +75,11 @@
     </ClCompile>
     <ClCompile Include="MachineHeadAssembly.cpp">
       <Filter>Source Files\Classes</Filter>
+    <ClCompile Include="ViewCapture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallelCameraSettings.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +100,9 @@
     </QtMoc>
     <QtMoc Include="xmltools.hpp">
       <Filter>Header Files\Hpps</Filter>
+    </QtMoc>
+    <QtMoc Include="RotateTestDialog.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +147,12 @@
     </ClInclude>
     <ClInclude Include="vtkUtils.hpp">
       <Filter>Header Files\Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewCapture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallelCameraSettings.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

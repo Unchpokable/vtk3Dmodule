@@ -22,6 +22,21 @@ void AddActorsToRenderer(const vtkRendererPointer& renderer, Actors... actors)
     (renderer->AddActor(actors), ...);
 }
 
+inline void AddActorsToRenderer(const vtkRendererPointer& renderer, vtkActorCollection* actors)
+{
+    actors->InitTraversal();
+
+    auto actor = actors->GetNextActor();
+
+    while(actor)
+    {
+        renderer->AddActor(actor);
+
+        actor = actors->GetNextActor();
+    }
+}
+
+
 //std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true
 
 template<typename ActorPtr, template<class, class = std::allocator<ActorPtr>> class X, std::enable_if_t<std::is_convertible_v<ActorPtr, vtkProp*>, bool> = true>

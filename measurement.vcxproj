@@ -122,9 +122,12 @@
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
     <ClCompile Include="MachineHeadAssembly.cpp" />
+    <ClCompile Include="ParallelCameraSettings.cpp" />
     <ClCompile Include="RotateTestDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
+    <ClCompile Include="ViewCapture.cpp" />
     <ClInclude Include="MachineHead.hpp" />
+    <ClInclude Include="ParallelCameraSettings.h" />
     <ClInclude Include="ProbeToolAssembly.hpp" />
     <QtMoc Include="xmltools.hpp" />
     <QtMoc Include="CreateSphereDialog.h" />
@@ -140,6 +143,7 @@
     <QtMoc Include="RotateTestDialog.h" />
     <ClInclude Include="Size.hpp" />
     <ClInclude Include="SphereData.hpp" />
+    <ClInclude Include="ViewCapture.h" />
     <ClInclude Include="vtkUtils.hpp" />
     <QtMoc Include="scenewidget.h" />
     <QtRcc Include="measurementwindow.qrc" />

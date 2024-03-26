@@ -47,6 +47,8 @@
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkMatrix4x4.h>
+#include <vtkWindowToImageFilter.h>
+#include <vtkPNGWriter.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>

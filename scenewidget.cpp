@@ -35,11 +35,6 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    const auto extensions = catalog.Extensions();
-    const auto modules = catalog.Modules();
-    const auto probes = catalog.Probes();
-    const auto styluses = catalog.Styluses();
-
     ProbeToolAssembly manualTool;
     manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
 

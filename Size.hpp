@@ -52,6 +52,15 @@ public:
         return _height != r._height || _width != r._width;
     }
 
+    int Width() const {
+        return _width;
+    }
+
+    int Height() const
+    {
+        return _height;
+    }
+
     int& Width()
     {
         return _width;
