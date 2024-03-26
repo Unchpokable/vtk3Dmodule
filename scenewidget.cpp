@@ -77,7 +77,7 @@ std::string SceneWidget::demoScreenshot()
 {
     ViewCapture cap(_renderer);
 
-    auto rawConfig = ParallelCameraSettings::FromCamera(_renderer->GetActiveCamera()).AroundFocal(180, 30);
+    auto rawConfig = ParallelCameraSettings::FromCamera(_renderer->GetActiveCamera()).AroundFocal(120, 40);
 
     cap.SetSpecialCameraConfigs(rawConfig);
     auto size = renderWindow()->GetSize();
@@ -86,10 +86,10 @@ std::string SceneWidget::demoScreenshot()
 
     const auto oldRots = _machineHead->Rotations();
 
-    const auto path = cap.TakeScreenshot(s, "AwesomeScreenshot.png", [this](const vtkRenderer* r) {
+    const auto path = cap.TakeScreenshot(s, "AwesomeScreenshot4.png", [this](const vtkRenderer*) {
         _machineHead->SetZero();
-        _machineHead->RotatePart(RotAddress::A, 30);
-        _machineHead->RotatePart(RotAddress::B, 30);
+        _machineHead->RotatePart(RotAddress::A, 100);
+        _machineHead->RotatePart(RotAddress::B, 100);
     }, true);
 
     _machineHead->RotationsFromMap(oldRots);

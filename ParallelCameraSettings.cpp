@@ -142,7 +142,7 @@ ParallelCameraSettings& ParallelCameraSettings::Rotate(double yaw, double pitch,
     return *this;
 }
 
-// Copies Focal Points, ViewUp vector, parallel scale and clippingRange from given camera. Other parameters sets to 0
+// Copies Focal Point, ViewUp vector, parallel scale and clippingRange from given camera. Other parameters sets to 0
 ParallelCameraSettings ParallelCameraSettings::FromCamera(const vtkSmartPointer<vtkCamera>& camera)
 {
     double position[3]{};
