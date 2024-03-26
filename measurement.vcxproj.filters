@@ -1,186 +1,158 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <ClCompile Include="CreateLineDialog.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateSphereDialog.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineHeadAssembly.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="measurementwindow.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallelCameraSettings.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateTestDialog.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="scenewidget.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewCapture.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EigenUtils.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="generators.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LineData.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineHead.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineHeadAssembly.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MarkerManager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallelCameraSettings.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3D.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyLine.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProbeToolAssembly.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="result.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RgbaF.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereData.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewCapture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vtkUtils.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="AntiNormal.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="node.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Normal.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="pathNode.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Star.png">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="CreateLineDialog.h">
+      <Filter>Headers</Filter>
+    </QtMoc>
+    <QtMoc Include="CreateSphereDialog.h">
+      <Filter>Headers</Filter>
+    </QtMoc>
+    <QtMoc Include="measurementwindow.h">
+      <Filter>Headers</Filter>
+    </QtMoc>
+    <QtMoc Include="RotateTestDialog.h">
+      <Filter>Headers</Filter>
+    </QtMoc>
+    <QtMoc Include="scenewidget.h">
+      <Filter>Headers</Filter>
+    </QtMoc>
+    <QtMoc Include="xmltools.hpp">
+      <Filter>Headers</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="CreateLineDialog.ui">
+      <Filter>Headers\Widgets</Filter>
+    </QtUic>
+    <QtUic Include="CreateSphere.ui">
+      <Filter>Headers\Widgets</Filter>
+    </QtUic>
+    <QtUic Include="measurementwindow.ui">
+      <Filter>Headers\Widgets</Filter>
+    </QtUic>
+    <QtUic Include="RotateTestDialog.ui">
+      <Filter>Headers\Widgets</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{c88a41fb-ffb1-4d71-a471-2fbd1869c79c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{cffb3ca9-7cd3-46d6-b89e-00501a81051f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{53088ed9-856d-466b-972c-319888f36f85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-    </Filter>
-    <Filter Include="Translation Files">
-      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
-      <Extensions>ts</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Widgets">
-      <UniqueIdentifier>{d6f89425-610c-49d2-897d-97c3c1add588}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Widgets">
-      <UniqueIdentifier>{3cf6ceda-6d1d-447d-9474-a3fbf9111224}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Classes">
-      <UniqueIdentifier>{f553e30e-fb1a-4137-9412-510feaaf53d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Hpps">
-      <UniqueIdentifier>{943a4b2e-6795-47ab-9119-73223b6cec38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Classes">
-      <UniqueIdentifier>{f96efe5a-313e-464d-882f-679f2e9b2387}</UniqueIdentifier>
+    <Filter Include="Headers\Widgets">
+      <UniqueIdentifier>{068d761e-6c26-4e5d-8278-789b95f40a2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="measurementwindow.qrc">
-      <Filter>Resource Files</Filter>
+      <Filter>Headers\Widgets</Filter>
     </QtRcc>
-    <QtUic Include="measurementwindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtMoc Include="measurementwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="measurementwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="scenewidget.cpp">
-      <Filter>Source Files\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateSphereDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateLineDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateTestDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MachineHeadAssembly.cpp">
-      <Filter>Source Files\Classes</Filter>
-    <ClCompile Include="ViewCapture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParallelCameraSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="scenewidget.h">
-      <Filter>Header Files\Widgets</Filter>
-    </QtMoc>
-    <QtMoc Include="scenewidget.h">
-      <Filter>Header Files\Widgets</Filter>
-    </QtMoc>
-    <QtMoc Include="CreateSphereDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="CreateLineDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="RotateTestDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="xmltools.hpp">
-      <Filter>Header Files\Hpps</Filter>
-    </QtMoc>
-    <QtMoc Include="RotateTestDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SphereData.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="LineData.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MachineHead.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MachineHeadAssembly.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MarkerManager.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Point3D.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="PolyLine.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="ProbeToolAssembly.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="result.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="RgbaF.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Size.hpp">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="EigenUtils.hpp">
-      <Filter>Header Files\Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="generators.hpp">
-      <Filter>Header Files\Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="vtkUtils.hpp">
-      <Filter>Header Files\Hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewCapture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParallelCameraSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="node.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="pathNode.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Star.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="AntiNormal.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Normal.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="CreateSphere.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="CreateLineDialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="RotateTestDialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ public:
         //delete _polyLine;
     }
 
+    std::string demoScreenshot();
+
     vtkCamera* camera() const;
 
     const vtkSmartPointer<vtkRenderer>& getRenderer();

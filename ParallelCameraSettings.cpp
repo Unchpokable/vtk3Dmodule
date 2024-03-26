@@ -3,8 +3,8 @@
 
 ParallelCameraSettings::ParallelCameraSettings(
     const double* position, const double* focalPoint, const double* viewUp,
-    double parallelScale, const double* clippingRange)
-    : _parallelScale(parallelScale)
+    double parallelScale, const double* clippingRange, double azimuth, double elevation, double roll, double pitch, double yaw)
+    : _parallelScale(parallelScale), _azimuth(azimuth), _elevation(elevation), _roll(roll), _yaw(yaw), _pitch(pitch)
 {
     _position = new double[3];
     std::copy_n(position, 3, _position);
@@ -20,7 +20,7 @@ ParallelCameraSettings::ParallelCameraSettings(
 }
 
 ParallelCameraSettings::ParallelCameraSettings(const ParallelCameraSettings& other)
-    : _parallelScale(other._parallelScale)
+    : _parallelScale(other._parallelScale), _azimuth(other._azimuth), _elevation(other._elevation), _roll(other._roll), _yaw(other._yaw), _pitch(other._pitch)
 {
     _position = new double[3];
     std::copy_n(other._position, 3, _position);
@@ -35,14 +35,21 @@ ParallelCameraSettings::ParallelCameraSettings(const ParallelCameraSettings& oth
     std::copy_n(other._clippingRange, 2, _clippingRange);
 }
 
-ParallelCameraSettings& ParallelCameraSettings::operator=(const ParallelCameraSettings& other) {
-    if(this != &other) {
+ParallelCameraSettings& ParallelCameraSettings::operator=(const ParallelCameraSettings& other)
+{
+    if(this != &other) 
+    {
         delete[] _position;
         delete[] _focalPoint;
         delete[] _viewUp;
         delete[] _clippingRange;
 
         _parallelScale = other._parallelScale;
+        _azimuth = other._azimuth;
+        _elevation = other._elevation;
+        _roll = other._roll;
+        _yaw = other._yaw;
+        _pitch = other._pitch;
 
         _position = new double[3];
         std::copy_n(other._position, 3, _position);
@@ -70,7 +77,7 @@ ParallelCameraSettings::~ParallelCameraSettings()
 ParallelCameraSettings::ParallelCameraSettings(ParallelCameraSettings&& other) noexcept
     : _position(other._position), _focalPoint(other._focalPoint),
     _viewUp(other._viewUp), _parallelScale(other._parallelScale),
-    _clippingRange(other._clippingRange)
+    _clippingRange(other._clippingRange), _azimuth(other._azimuth), _elevation(other._elevation), _roll(other._roll), _pitch(other._pitch), _yaw(other._yaw)
 {
     other._position = nullptr;
     other._focalPoint = nullptr;
@@ -78,7 +85,8 @@ ParallelCameraSettings::ParallelCameraSettings(ParallelCameraSettings&& other) n
     other._clippingRange = nullptr;
 }
 
-ParallelCameraSettings& ParallelCameraSettings::operator=(ParallelCameraSettings&& other) noexcept {
+ParallelCameraSettings& ParallelCameraSettings::operator=(ParallelCameraSettings&& other) noexcept
+{
     if(this != &other) 
     {
         delete[] _position;
@@ -91,6 +99,12 @@ ParallelCameraSettings& ParallelCameraSettings::operator=(ParallelCameraSettings
         _viewUp = other._viewUp;
         _parallelScale = other._parallelScale;
         _clippingRange = other._clippingRange;
+
+        _azimuth = other._azimuth;
+        _elevation = other._elevation;
+        _roll = other._roll;
+        _pitch = other._pitch;
+        _yaw = other._yaw;
 
         other._position = nullptr;
         other._focalPoint = nullptr;
@@ -108,6 +122,31 @@ void ParallelCameraSettings::ApplyToCamera(const vtkSmartPointer<vtkCamera>& cam
     camera->SetParallelProjection(1);
     camera->SetParallelScale(_parallelScale);
     camera->SetClippingRange(_clippingRange);
+
+    camera->Azimuth(_azimuth);
+    camera->Elevation(_elevation);
+    camera->Roll(_roll);
+    camera->Yaw(_yaw);
+    camera->Pitch(_pitch);
+
+    camera->OrthogonalizeViewUp();
+}
+
+ParallelCameraSettings& ParallelCameraSettings::AroundFocal(double azimuth, double elevation)
+{
+    _azimuth = azimuth;
+    _elevation = elevation;
+
+    return *this;
+}
+
+ParallelCameraSettings& ParallelCameraSettings::Rotate(double yaw, double pitch, double roll)
+{
+    _yaw = yaw;
+    _pitch = pitch;
+    _roll = roll;
+
+    return *this;
 }
 
 ParallelCameraSettings ParallelCameraSettings::FromCamera(const vtkSmartPointer<vtkCamera>& camera)
@@ -123,6 +162,6 @@ ParallelCameraSettings ParallelCameraSettings::FromCamera(const vtkSmartPointer<
     camera->GetViewUp(viewUp);
     camera->GetClippingRange(clippingRange);
 
-    return { position, focalPoint, viewUp, parallelScale, clippingRange };
+    return { position, focalPoint, viewUp, parallelScale, clippingRange, 0, 0, camera->GetRoll(), 0, 0};
 }
 

@@ -9,15 +9,26 @@
 class ViewCapture
 {
 public:
+
+    using PreShotAction = std::function<void(const vtkRenderer*)>;
+
     ViewCapture() = default;
 
-    //
-    void TakeScreenshot(const vtkActorCollection*, const Size&, const std::string&) const;
+    ViewCapture(const vtkSmartPointer<vtkRenderer>& target);
 
-    void SetCameraConfiguration(const ParallelCameraSettings& cfg) const;
+    //
+    std::string TakeScreenshot(const vtkActorCollection*, const Size&, const std::string&) const;
+
+    std::string TakeScreenshot(const Size&, const std::string&, PreShotAction = nullptr) const;
+
+
+    void SetBaseCamera(const vtkSmartPointer<vtkCamera>&);
+    void SetSpecialCameraConfigs(ParallelCameraSettings&);
 
 private:
-    // 
-    ParallelCameraSettings* _settings = nullptr;
+    const vtkRenderer* _target;
+    vtkSmartPointer<vtkCamera> _settingsProxy = nullptr;
+
+    ParallelCameraSettings* _rawSettings = nullptr;
 };
 

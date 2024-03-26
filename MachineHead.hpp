@@ -84,6 +84,12 @@ public:
         return _rotations.at(address);
     }
 
+    void SetZero() noexcept 
+    {
+        RotatePart(RotAddress::A, 0);
+        RotatePart(RotAddress::B, 0);
+    }
+
 private:
     MachinePartCollection _parts;
     std::vector<MachineHeadAssembly> _topLevelParts;

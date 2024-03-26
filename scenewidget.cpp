@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "scenewidget.h"
-
+#include "ViewCapture.h"
 #include "MachineHead.hpp"
 #include "vtkUtils.hpp"
 #include "MarkerManager.hpp"
@@ -71,6 +71,28 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderer->ResetCamera();
     showGizmo();
+}
+
+std::string SceneWidget::demoScreenshot()
+{
+    ViewCapture cap(_renderer);
+
+    auto rawConfig = ParallelCameraSettings::FromCamera(_renderer->GetActiveCamera()).AroundFocal(180, 30);
+
+    cap.SetSpecialCameraConfigs(rawConfig);
+    auto size = renderWindow()->GetSize();
+
+
+    Size s{ size[0], size[1] };
+
+    const auto path = cap.TakeScreenshot(s, "AwesomeScreenshot.png", [this](const vtkRenderer* r) {
+        _machineHead->RotatePart(RotAddress::A, 30);
+        _machineHead->RotatePart(RotAddress::B, 30);
+    });
+
+    _machineHead->SetZero();
+
+    return path;
 }
 
 vtkCamera* SceneWidget::camera() const {

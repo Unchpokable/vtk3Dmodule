@@ -9,6 +9,7 @@
 #include "xmltools.hpp"
 #include "MachineHead.hpp"
 #include "RotateTestDialog.h"
+#include "ViewCapture.h"
 
 MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MeasurementWindow) {
     _ui->setupUi(this);
@@ -22,6 +23,7 @@ MeasurementWindow::MeasurementWindow(QWidget *parent) : QMainWindow(parent), _ui
     connect(_ui->addLineButton, &QPushButton::clicked, this, &MeasurementWindow::addLine);*/
 
     connect(_ui->paintSomehowButton, &QPushButton::clicked, this, &MeasurementWindow::rotateMachineHead);
+    connect(_ui->screenshotButton, &QPushButton::clicked, this, &MeasurementWindow::makeScreenshot);
 
     /*connect(_ui->markupPolyLineButton, &QPushButton::clicked, this, &MeasurementWindow::demoSetMarkersOnPolyLine);
 
@@ -66,9 +68,9 @@ void MeasurementWindow::addSphere()
     _ui->sceneWidget->_demoSpheres.push_back(sphere);
 }
 
-void MeasurementWindow::paintObject()
+void MeasurementWindow::makeScreenshot()
 {
-    
+    qDebug() << _ui->sceneWidget->demoScreenshot();
 }
 
 void MeasurementWindow::rotateMachineHead()
