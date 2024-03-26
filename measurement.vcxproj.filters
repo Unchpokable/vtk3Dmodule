@@ -152,7 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="measurementwindow.qrc">
-      <Filter>Headers\Widgets</Filter>
+      <Filter>Resources</Filter>
     </QtRcc>
   </ItemGroup>
 </Project>
