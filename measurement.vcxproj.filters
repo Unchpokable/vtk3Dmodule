@@ -27,11 +27,14 @@
     <Filter Include="Header Files\Widgets">
       <UniqueIdentifier>{3cf6ceda-6d1d-447d-9474-a3fbf9111224}</UniqueIdentifier>
     </Filter>
-    <Filter Include="hpps">
-      <UniqueIdentifier>{b369cad8-ea06-46a1-94e2-cf09f52a34ba}</UniqueIdentifier>
+    <Filter Include="Header Files\Classes">
+      <UniqueIdentifier>{f553e30e-fb1a-4137-9412-510feaaf53d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes">
-      <UniqueIdentifier>{5750ea5c-b6dc-4570-af02-2c8f76a2c3c7}</UniqueIdentifier>
+    <Filter Include="Header Files\Hpps">
+      <UniqueIdentifier>{943a4b2e-6795-47ab-9119-73223b6cec38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{f96efe5a-313e-464d-882f-679f2e9b2387}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +73,8 @@
     <ClCompile Include="RotateTestDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MachineHeadAssembly.cpp">
+      <Filter>Source Files\Classes</Filter>
     <ClCompile Include="ViewCapture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,55 +95,58 @@
     <QtMoc Include="CreateLineDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="RotateTestDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="xmltools.hpp">
-      <Filter>hpps</Filter>
+      <Filter>Header Files\Hpps</Filter>
     </QtMoc>
     <QtMoc Include="RotateTestDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generators.hpp">
-      <Filter>hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="vtkUtils.hpp">
-      <Filter>hpps</Filter>
-    </ClInclude>
-    <ClInclude Include="EigenUtils.hpp">
-      <Filter>hpps</Filter>
-    </ClInclude>
     <ClInclude Include="SphereData.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Size.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="RgbaF.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="result.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="PolyLine.hpp">
-      <Filter>classes</Filter>
+      <Filter>Header Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="LineData.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MarkerManager.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Point3D.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="MachineHeadAssembly.hpp">
-      <Filter>classes</Filter>
-    </ClInclude>
-    <ClInclude Include="ProbeToolAssembly.hpp">
-      <Filter>classes</Filter>
+      <Filter>Header Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="MachineHead.hpp">
-      <Filter>classes</Filter>
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineHeadAssembly.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="MarkerManager.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3D.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyLine.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ProbeToolAssembly.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="result.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RgbaF.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.hpp">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="EigenUtils.hpp">
+      <Filter>Header Files\Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="generators.hpp">
+      <Filter>Header Files\Hpps</Filter>
+    </ClInclude>
+    <ClInclude Include="vtkUtils.hpp">
+      <Filter>Header Files\Hpps</Filter>
     </ClInclude>
     <ClInclude Include="ViewCapture.h">
       <Filter>Header Files</Filter>

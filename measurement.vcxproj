@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
+    <ClCompile Include="MachineHeadAssembly.cpp" />
     <ClCompile Include="ParallelCameraSettings.cpp" />
     <ClCompile Include="RotateTestDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
