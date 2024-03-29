@@ -389,7 +389,6 @@ private:
 
         // Call CreateMarker for each one in points array and push result value to result vector
         (result.push_back(CreateMarker(texture.value(), std::get<I>(points)).value()), ...);
-
         return result;
     }
 

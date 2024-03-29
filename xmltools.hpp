@@ -409,6 +409,7 @@ public:
             }
         }
 
+        // Span Scan
         return nullptr;
     }
 
