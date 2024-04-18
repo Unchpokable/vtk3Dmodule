@@ -1,4 +1,8 @@
 #pragma once
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <QMainWindow>
 #include <QOpenGLWidget>
 #include <QTimer>
@@ -7,6 +11,9 @@
 #include <QColorDialog>
 #include <QFile>
 #include <QMetaEnum>
+#include <QPixmap>
+#include <QTableWidget>
+#include <QHeaderView>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>
@@ -49,6 +56,8 @@
 #include <vtkMatrix4x4.h>
 #include <vtkWindowToImageFilter.h>
 #include <vtkPNGWriter.h>
+#include <vtkQWidgetTexture.h>
+#include <vtkQWidgetRepresentation.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>

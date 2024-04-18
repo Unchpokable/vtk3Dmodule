@@ -50,7 +50,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     _machineHead->RotateRZ(-90, { 1, 0, 0 });
     const auto actors = _machineHead->Actors();
 
-    AddActorsToRenderer(_renderer, actors);
+    //AddActorsToRenderer(_renderer, actors);
 
     //auto mountTransform = vtkSmartPointer<vtkTransform>::New(); // rz
     //mountTransform->RotateX(30);
@@ -68,6 +68,29 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     //headATransform->RotateX(60);
 
     //actors[2]->SetUserTransform(headATransform);
+
+    auto table = new QTableWidget(3, 3);
+    table->setWindowTitle("VTK-Qt Texture Example");
+    const QStringList labels { "Column 1", "Column 2", "Column 3" };
+    table->setHorizontalHeaderLabels(labels);
+
+    for(int i = 0; i < 3; ++i) 
+        for(int j = 0; j < 3; ++j) 
+        {
+            table->setItem(i, j, new QTableWidgetItem(QString("Data %1-%2").arg(i + 1).arg(j + 1)));
+        }
+
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    /*const auto tableAsActor = CreateTextureFromQWidget(&table);
+
+    _renderer->AddViewProp(tableAsActor);*/
+
+    auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
+    widgetRepresentation->SetWidget(table);
+
+    _renderer->AddViewProp(widgetRepresentation);
 
     _renderer->ResetCamera();
     showGizmo();

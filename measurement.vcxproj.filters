@@ -31,6 +31,9 @@
     <ClCompile Include="ViewCapture.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGLInfoWidgetRenderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EigenUtils.hpp">
@@ -82,6 +85,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="vtkUtils.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLInfoWidgetRenderer.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

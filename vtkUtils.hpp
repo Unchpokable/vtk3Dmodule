@@ -5,6 +5,7 @@
 #include "result.hpp"
 #include "pch.h"
 
+
 using vtkRendererPointer = vtkSmartPointer<vtkRenderer>;
 using vtkActorPointer = vtkSmartPointer<vtkActor>;
 using vtkTexturePointer = vtkSmartPointer<vtkTexture>;
@@ -171,6 +172,54 @@ inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, b
     auto result = vtkActorPointer::New();
     result->SetMapper(finalMapper);
     return result;
+}
+
+inline vtkSmartPointer<vtkImageData> HandleQWidgetToVtkImageData(QWidget* target)
+{
+    QPixmap pixmap(target->size());
+
+    target->render(&pixmap);
+    const auto image = pixmap.toImage();
+
+    auto imageData = vtkSmartPointer<vtkImageData>::New();
+
+    imageData->SetDimensions(image.width(), image.height(), 1);
+    imageData->AllocateScalars(VTK_UNSIGNED_CHAR, 3);
+
+    for(int y = 0; y < image.height(); ++y) 
+    {
+        for(int x = 0; x < image.width(); ++x) 
+        {
+            const QRgb color = image.pixel(x, y);
+            const auto pixel = static_cast<unsigned char*>(imageData->GetScalarPointer(x, y, 0));
+            pixel[0] = static_cast<unsigned char>(qRed(color));
+            pixel[1] = static_cast<unsigned char>(qGreen(color));
+            pixel[2] = static_cast<unsigned char>(qBlue(color));
+        }
+    }
+
+    return imageData;
+}
+
+inline vtkActorPointer CreateTextureFromQWidget(QWidget* source)
+{
+    const auto widgetTexture = HandleQWidgetToVtkImageData(source);
+
+    const auto texture = vtkSmartPointer<vtkTexture>::New();
+
+    texture->SetInputData(widgetTexture);
+
+    const auto plane = vtkSmartPointer<vtkPlaneSource>::New();
+    plane->Update();
+
+    const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    mapper->SetInputConnection(plane->GetOutputPort());
+
+    auto actor = vtkSmartPointer<vtkActor>::New();
+    actor->SetMapper(mapper);
+    actor->SetTexture(texture);
+
+    return actor;
 }
 
 // Kinda shader config
