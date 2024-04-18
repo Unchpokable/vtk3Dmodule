@@ -19,16 +19,16 @@ public:
     std::string TakeScreenshot(const vtkActorCollection*, const Size&, const std::string&, PreShotAction = nullptr, bool drawFrame = false) const;
 
     // 
-    std::string TakeScreenshot(const Size&, const std::string&, PreShotAction = nullptr, bool drawFrame = false) const;
+    std::string TakeScreenshot(const Size&, const std::string&, const PreShotAction& = nullptr, bool drawFrame = false) const;
 
 
     void SetBaseCamera(const vtkSmartPointer<vtkCamera>&);
     void SetSpecialCameraConfigs(ParallelCameraSettings&);
-
+    void AddSpecialActors(const std::vector<vtkSmartPointer<vtkProp>>&);
 private:
     const vtkRenderer* _target;
     vtkSmartPointer<vtkCamera> _settingsProxy = nullptr;
-
+    std::vector<vtkSmartPointer<vtkProp>> _additionalActors;
     ParallelCameraSettings* _rawSettings = nullptr;
 };
 

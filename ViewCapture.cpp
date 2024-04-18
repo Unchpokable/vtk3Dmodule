@@ -17,7 +17,12 @@ std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, 
 
     if (drawFrame)
         SetActorsToWireframeDisplay(renderer);
-    renderer->SetBackground(1, 1, 1);
+
+
+    if(prepareAction)
+        prepareAction(renderer);
+    else
+        renderer->SetBackground(1, 1, 1);
 
     renderWindow->AddRenderer(renderer);
     renderWindow->SetOffScreenRendering(true);
@@ -50,13 +55,11 @@ std::string ViewCapture::TakeScreenshot(const vtkActorCollection* sceneObjects, 
 
     SetActorsToSurfaceDisplay(renderer);
 
-    return std::filesystem::absolute(std::filesystem::path(outputPath)).string();
+    return absolute(std::filesystem::path(outputPath)).string();
 }
 
-std::string ViewCapture::TakeScreenshot(const Size& size, const std::string& path, PreShotAction prepareAction, bool drawFrame) const
+std::string ViewCapture::TakeScreenshot(const Size& size, const std::string& path, const PreShotAction& prepareAction, bool drawFrame) const
 {
-    if (prepareAction)
-        prepareAction(_target);
 
     return TakeScreenshot(const_cast<vtkRenderer*>(_target)->GetActors(), size, path, prepareAction, drawFrame);
 }
@@ -75,4 +78,8 @@ void ViewCapture::SetSpecialCameraConfigs(ParallelCameraSettings& conf)
         *_rawSettings = conf;
 
     else _rawSettings = new ParallelCameraSettings(conf);
+}
+
+void ViewCapture::AddSpecialActors(const std::vector<vtkSmartPointer<vtkProp>>& actors) {
+    _additionalActors = actors;
 }
