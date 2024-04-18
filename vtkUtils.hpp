@@ -1,9 +1,9 @@
 #pragma once
 
-#include <type_traits>
-
-#include "result.hpp"
 #include "pch.h"
+
+#include <type_traits>
+#include "result.hpp"
 
 
 using vtkRendererPointer = vtkSmartPointer<vtkRenderer>;
@@ -73,19 +73,22 @@ inline void TransformRendererActors(const vtkRendererPointer& renderer, const vt
     }
 }
 
-inline void SetActorsToWireframeDisplay(const vtkRendererPointer& renderer) {
+inline void SetActorsToWireframeDisplay(const vtkRendererPointer& renderer)
+{
     TransformRendererActors(renderer, [](vtkActor* actor) {
         actor->GetProperty()->SetRepresentationToWireframe();
     });
 }
 
-inline void SetActorsToSurfaceDisplay(const vtkRendererPointer& renderer) {
+inline void SetActorsToSurfaceDisplay(const vtkRendererPointer& renderer)
+{
     TransformRendererActors(renderer, [](vtkActor* actor) {
         actor->GetProperty()->SetRepresentationToSurface();
     });
 }
 
-inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path) {
+inline Result<vtkTexturePointer> LoadVtkTexture(const std::string& path)
+{
     const auto reader = vtkSmartPointer<vtkPNGReader>::New();
 
     if(!reader->CanReadFile(path.c_str()))
