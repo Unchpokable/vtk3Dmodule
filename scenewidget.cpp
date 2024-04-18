@@ -8,6 +8,7 @@
 #include "ProbeToolAssembly.hpp"
 
 SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNativeWidget(parent) {
+    QSurfaceFormat::setDefaultFormat(defaultFormat());
     _renderer = vtkSmartPointer<vtkRenderer>::New();
     _renderer->GetActiveCamera()->ParallelProjectionOn();
     _renderer->GradientBackgroundOn();
