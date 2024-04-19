@@ -185,6 +185,7 @@ inline vtkSmartPointer<vtkTexture> CreateTextureFromQWidget(QWidget* target)
     const auto texture = vtkSmartPointer<vtkOpenGLTexture>::New();
     texture->SetTextureObject(widgetRepr->GetQWidgetTexture());
 
+    texture->InterpolateOff();
     return texture;
 }
 

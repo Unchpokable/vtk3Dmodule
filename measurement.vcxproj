@@ -42,7 +42,7 @@
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.5.1_msvc2022_64</QtInstall>
+    <QtInstall>6.5.1</QtInstall>
     <QtModules>core;gui;widgets;opengl;openglwidgets;xml</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -80,7 +80,7 @@
       <AdditionalIncludeDirectories>$(LIBRARIES_DIR)\boost\include;$(LIBRARIES_DIR)\eigen\include;$(LIBRARIES_DIR)\pcl\include\pcl-1.13;$(LIBRARIES_DIR)\vtk\include\vtk-9.2;$(LIBRARIES_DIR)\opencascade\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>vtkCommonCore-9.2.lib;vtkRenderingCore-9.2.lib;vtkCommonMath-9.2.lib;vtkGUISupportQt-9.2.lib;vtkCommonDataModel-9.2.lib;vtkInteractionStyle-9.2.lib;vtkRenderingOpenGL2-9.2.lib;vtkRenderingQt-9.2.lib;vtkCommonExecutionModel-9.2.lib;vtkFiltersSources-9.2.lib;vtkFiltersExtraction-9.2.lib;vtkFiltersCore-9.2.lib;vtkFiltersGeneral-9.2.lib;vtkFiltersGeometry-9.2.lib;vtkFiltersHybrid-9.2.lib;vtkRenderingLOD-9.2.lib;vtkInteractionWidgets-9.2.lib;vtkRenderingAnnotation-9.2.lib;vtkRenderingFreeType-9.2.lib;vtkCommonTransforms-9.2.lib;vtkIOImage-9.2.lib;vtkIOXML-9.2.lib;vtkCommonColor-9.2.lib;vtksys-9.2.lib;pcl_common.lib;pcl_filters.lib;pcl_search.lib;pcl_features.lib;pcl_surface.lib;pcl_io.lib;pcl_sample_consensus.lib;pcl_segmentation.lib;pcl_octree.lib;pcl_kdtree.lib;flann_cpp_s.lib;TKernel.lib;TKIGES.lib;TKMath.lib;TKXSBase.lib;TKV3d.lib;TKIVtk.lib;TKBRep.lib;TKSTEP.lib;TKTopAlgo.lib;TKPrim.lib;TKG3d.lib;TKGeomBase.lib;TKGeomAlgo.lib;TKBO.lib;TKBool.lib;TKOffset.lib;TKService.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vtkCommonCore-9.2.lib;vtkRenderingCore-9.2.lib;vtkCommonMath-9.2.lib;vtkGUISupportQt-9.2.lib;vtkCommonDataModel-9.2.lib;vtkInteractionStyle-9.2.lib;vtkRenderingOpenGL2-9.2.lib;vtkRenderingQt-9.2.lib;vtkCommonExecutionModel-9.2.lib;vtkFiltersSources-9.2.lib;vtkFiltersExtraction-9.2.lib;vtkFiltersCore-9.2.lib;vtkFiltersGeneral-9.2.lib;vtkFiltersGeometry-9.2.lib;vtkFiltersHybrid-9.2.lib;vtkRenderingLOD-9.2.lib;vtkInteractionWidgets-9.2.lib;vtkRenderingAnnotation-9.2.lib;vtkRenderingFreeType-9.2.lib;vtkCommonTransforms-9.2.lib;vtkIOImage-9.2.lib;vtkIOXML-9.2.lib;vtkIOImport-9.2.lib;vtkIOGeometry-9.2.lib;vtkCommonColor-9.2.lib;vtksys-9.2.lib;pcl_common.lib;pcl_filters.lib;pcl_search.lib;pcl_features.lib;pcl_surface.lib;pcl_io.lib;pcl_sample_consensus.lib;pcl_segmentation.lib;pcl_octree.lib;pcl_kdtree.lib;flann_cpp_s.lib;TKernel.lib;TKIGES.lib;TKMath.lib;TKXSBase.lib;TKV3d.lib;TKIVtk.lib;TKBRep.lib;TKSTEP.lib;TKTopAlgo.lib;TKPrim.lib;TKG3d.lib;TKGeomBase.lib;TKGeomAlgo.lib;TKBO.lib;TKBool.lib;TKOffset.lib;TKService.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(LIBRARIES_DIR)\boost\lib;$(LIBRARIES_DIR)\vtk\lib;$(LIBRARIES_DIR)\pcl\lib;$(LIBRARIES_DIR)\flann\lib;$(LIBRARIES_DIR)\opencascade\win64\vc14\libi;$(LIBRARIES_DIR)\botan\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -119,6 +119,7 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="captionwidget.cpp" />
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
     <ClCompile Include="MachineHeadAssembly.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="RotateTestDialog.cpp" />
     <ClCompile Include="scenewidget.cpp" />
     <ClCompile Include="ViewCapture.cpp" />
+    <QtMoc Include="captionwidget.h" />
     <ClInclude Include="MachineHead.hpp" />
     <ClInclude Include="OpenGLInfoWidgetRenderer.h" />
     <ClInclude Include="ParallelCameraSettings.h" />
@@ -149,6 +151,7 @@
     <ClInclude Include="vtkUtils.hpp" />
     <QtMoc Include="scenewidget.h" />
     <QtRcc Include="measurementwindow.qrc" />
+    <QtUic Include="captionwidget.ui" />
     <QtUic Include="CreateLineDialog.ui" />
     <QtUic Include="CreateSphere.ui" />
     <QtUic Include="measurementwindow.ui" />

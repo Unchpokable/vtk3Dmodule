@@ -13,6 +13,7 @@
 #include <QHeaderView>
 #include <QVTKRenderWidget.h>
 #include <QStyleFactory>
+#include <QElapsedTimer>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>

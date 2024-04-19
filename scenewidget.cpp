@@ -81,8 +81,8 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
             table->setItem(i, j, new QTableWidgetItem(QString("Data %1-%2").arg(i + 1).arg(j + 1)));
         }
 
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     table->resize(256, 128);
 
@@ -100,7 +100,12 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     connect(table, &QTableWidget::cellChanged, this, [&, this]
     {
+        QElapsedTimer elapsedTimer;
+        elapsedTimer.start();
+
         actor->SetTexture(CreateTextureFromQWidget(table));
+
+        qDebug() << "Texture:" << elapsedTimer.nsecsElapsed() / 1000000.0 << "ms";
     });
 
     const auto timer = new QTimer();
