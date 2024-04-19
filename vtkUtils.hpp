@@ -177,52 +177,48 @@ inline vtkActorPointer MergeActors(const std::vector<vtkActorPointer>& actors, b
     return result;
 }
 
-inline vtkSmartPointer<vtkImageData> HandleQWidgetToVtkImageData(QWidget* target)
+inline vtkSmartPointer<vtkTexture> CreateTextureFromQWidget(QWidget* target)
 {
-    QPixmap pixmap(target->size());
+    const auto widgetRepr = vtkSmartPointer<vtkQWidgetRepresentation>::New();
+    widgetRepr->SetWidget(target);
 
-    target->render(&pixmap);
-    const auto image = pixmap.toImage();
+    const auto texture = vtkSmartPointer<vtkOpenGLTexture>::New();
+    texture->SetTextureObject(widgetRepr->GetQWidgetTexture());
 
-    auto imageData = vtkSmartPointer<vtkImageData>::New();
-
-    imageData->SetDimensions(image.width(), image.height(), 1);
-    imageData->AllocateScalars(VTK_UNSIGNED_CHAR, 3);
-
-    for(int y = 0; y < image.height(); ++y) 
-    {
-        for(int x = 0; x < image.width(); ++x) 
-        {
-            const QRgb color = image.pixel(x, y);
-            const auto pixel = static_cast<unsigned char*>(imageData->GetScalarPointer(x, y, 0));
-            pixel[0] = static_cast<unsigned char>(qRed(color));
-            pixel[1] = static_cast<unsigned char>(qGreen(color));
-            pixel[2] = static_cast<unsigned char>(qBlue(color));
-        }
-    }
-
-    return imageData;
+    return texture;
 }
 
-inline vtkActorPointer CreateTextureFromQWidget(QWidget* source)
+inline vtkSmartPointer<vtkTexturedActor2D> CreateTexturedActorFromQWidget(QWidget* target)
 {
-    const auto widgetTexture = HandleQWidgetToVtkImageData(source);
+    const auto texture = CreateTextureFromQWidget(target);
 
-    const auto texture = vtkSmartPointer<vtkTexture>::New();
+    auto actor2d = vtkSmartPointer<vtkTexturedActor2D>::New();
+    const auto mapper = vtkSmartPointer<vtkPolyDataMapper2D>::New();
 
-    texture->SetInputData(widgetTexture);
+    const vtkNew<vtkFloatArray> tcoords;
+    tcoords->SetNumberOfComponents(2);
+    tcoords->InsertNextTuple2(0.f, 0.0f);
+    tcoords->InsertNextTuple2(0.0f, 1.0f);
+    tcoords->InsertNextTuple2(1.0f, 1.0f);
+    tcoords->InsertNextTuple2(1.0f, 0.0f);
 
-    const auto plane = vtkSmartPointer<vtkPlaneSource>::New();
-    plane->Update();
+    const vtkNew<vtkPolyData> bgData;
+    const vtkNew<vtkPoints> points;
+    const vtkNew<vtkCellArray> cells;
+    vtkIdType pts[4];
+    pts[0] = points->InsertNextPoint(0, 0, 0);
+    pts[1] = points->InsertNextPoint(0, target->height(), 0);
+    pts[2] = points->InsertNextPoint(target->width(), target->height(), 0);
+    pts[3] = points->InsertNextPoint(target->width(), 0, 0);
+    bgData->SetPoints(points);
+    cells->InsertNextCell(4, pts);
+    bgData->SetPolys(cells);
+    bgData->GetPointData()->SetTCoords(tcoords);
+    mapper->SetInputData(bgData);
+    actor2d->SetMapper(mapper);
+    actor2d->SetTexture(texture);
 
-    const auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
-    mapper->SetInputConnection(plane->GetOutputPort());
-
-    auto actor = vtkSmartPointer<vtkActor>::New();
-    actor->SetMapper(mapper);
-    actor->SetTexture(texture);
-
-    return actor;
+    return actor2d;
 }
 
 // Kinda shader config

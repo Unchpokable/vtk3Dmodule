@@ -34,22 +34,22 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     // -------------------------
 
-    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+    //ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    ProbeToolAssembly manualTool;
-    manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
+    //ProbeToolAssembly manualTool;
+    //manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
 
-    const auto manualToolModel = manualTool.Weld();
+    //const auto manualToolModel = manualTool.Weld();
 
-    SetActorLightingPlastic(manualToolModel);
+    //SetActorLightingPlastic(manualToolModel);
 
-    /*_renderer->AddActor(manualToolModel);*/
+    ///*_renderer->AddActor(manualToolModel);*/
 
-    _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
-    _machineHead->AddStylus(manualTool);
+    //_machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
+    //_machineHead->AddStylus(manualTool);
 
-    _machineHead->RotateRZ(-90, { 1, 0, 0 });
-    const auto actors = _machineHead->Actors();
+    //_machineHead->RotateRZ(-90, { 1, 0, 0 });
+    //const auto actors = _machineHead->Actors();
 
     //AddActorsToRenderer(_renderer, actors);
 
@@ -81,17 +81,41 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
             table->setItem(i, j, new QTableWidgetItem(QString("Data %1-%2").arg(i + 1).arg(j + 1)));
         }
 
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    /*const auto tableAsActor = CreateTextureFromQWidget(&table);
+    table->resize(256, 128);
 
-    _renderer->AddViewProp(tableAsActor);*/
+   // _renderer->AddViewProp(tableAsActor);
 
-    auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
-    widgetRepresentation->SetWidget(table);
 
-    _renderer->AddViewProp(widgetRepresentation);
+    /*for (int i{}; i < 1000; i++)
+    {
+        _renderer->AddViewProp(CreateTexturedActorFromQWidget(table));
+    }*/
+
+    auto actor = CreateTexturedActorFromQWidget(table);
+
+    _renderer->AddViewProp(actor);
+
+    connect(table, &QTableWidget::cellChanged, this, [&, this]
+    {
+        actor->SetTexture(CreateTextureFromQWidget(table));
+    });
+
+    const auto timer = new QTimer();
+    timer->setInterval(3000);
+
+    
+    table->setItem(1, 1, new QTableWidgetItem(QString("Data %1-%2")));
+    
+
+    timer->start();
+
+    /*auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
+    widgetRepresentation->SetWidget(table);*/
+
+    //_renderer->AddViewProp(widgetRepresentation);
 
     _renderer->ResetCamera();
     showGizmo();

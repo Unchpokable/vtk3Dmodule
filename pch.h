@@ -12,6 +12,7 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QVTKRenderWidget.h>
+#include <QStyleFactory>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>
@@ -58,6 +59,10 @@
 #include <vtkQWidgetRepresentation.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkCaptionRepresentation.h>
+#include <vtkOpenGLTexture.h>
+#include <vtkTexturedActor2D.h>
+#include <vtkPolyDataMapper2D.h>
+#include <vtkFloatArray.h>
 
 #include <Eigen/Core>
 #include <Eigen/Dense>
