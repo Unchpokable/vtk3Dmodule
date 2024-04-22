@@ -122,6 +122,7 @@
     <ClCompile Include="captionwidget.cpp" />
     <ClCompile Include="CreateLineDialog.cpp" />
     <ClCompile Include="CreateSphereDialog.cpp" />
+    <ClCompile Include="infowidgetitemdelegate.cpp" />
     <ClCompile Include="MachineHeadAssembly.cpp" />
     <ClCompile Include="OpenGLInfoWidgetRenderer.cpp" />
     <ClCompile Include="ParallelCameraSettings.cpp" />
@@ -129,6 +130,7 @@
     <ClCompile Include="scenewidget.cpp" />
     <ClCompile Include="ViewCapture.cpp" />
     <QtMoc Include="captionwidget.h" />
+    <QtMoc Include="infowidgetitemdelegate.h" />
     <ClInclude Include="MachineHead.hpp" />
     <ClInclude Include="OpenGLInfoWidgetRenderer.h" />
     <ClInclude Include="ParallelCameraSettings.h" />

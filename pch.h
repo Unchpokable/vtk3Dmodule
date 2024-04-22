@@ -14,6 +14,9 @@
 #include <QVTKRenderWidget.h>
 #include <QStyleFactory>
 #include <QElapsedTimer>
+#include <QOpenGLTexture>
+#include <QAbstractTableModel>
+#include <QStandardItemModel>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>

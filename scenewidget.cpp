@@ -1,6 +1,8 @@
 #include "pch.h"
 
 #include "scenewidget.h"
+
+#include "infowidgetitemdelegate.h"
 #include "ViewCapture.h"
 #include "MachineHead.hpp"
 #include "vtkUtils.hpp"
@@ -70,52 +72,27 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     //actors[2]->SetUserTransform(headATransform);
 
-    auto table = new QTableWidget(3, 3);
-    table->setWindowTitle("VTK-Qt Texture Example");
-    const QStringList labels { "Column 1", "Column 2", "Column 3" };
-    table->setHorizontalHeaderLabels(labels);
+    const auto captionWidget = new CaptionWidget();
 
-    for(int i = 0; i < 3; ++i) 
-        for(int j = 0; j < 3; ++j) 
-        {
-            table->setItem(i, j, new QTableWidgetItem(QString("Data %1-%2").arg(i + 1).arg(j + 1)));
-        }
+    captionWidget->SetLabel("Woow, this is a widget!!!!");
 
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    const auto model = new QStandardItemModel(3, 3);
+    captionWidget->SetModel(model);
 
-    table->resize(256, 128);
+    captionWidget->resize(450, 250);
 
-   // _renderer->AddViewProp(tableAsActor);
-
-
-    /*for (int i{}; i < 1000; i++)
+    for(int row = 0; row < 3; ++row) 
     {
-        _renderer->AddViewProp(CreateTexturedActorFromQWidget(table));
-    }*/
+        for(int column = 0; column < 3; ++column)
+        {
+            const auto item = new QStandardItem(QString("Row %1, Column %2").arg(row).arg(column));
+            model->setItem(row, column, item);
+        }
+    }
 
-    auto actor = CreateTexturedActorFromQWidget(table);
+    const auto actor = CreateTexturedActorFromQWidget(captionWidget);
 
     _renderer->AddViewProp(actor);
-
-    connect(table, &QTableWidget::cellChanged, this, [&, this]
-    {
-        QElapsedTimer elapsedTimer;
-        elapsedTimer.start();
-
-        actor->SetTexture(CreateTextureFromQWidget(table));
-
-        qDebug() << "Texture:" << elapsedTimer.nsecsElapsed() / 1000000.0 << "ms";
-    });
-
-    const auto timer = new QTimer();
-    timer->setInterval(3000);
-
-    
-    table->setItem(1, 1, new QTableWidgetItem(QString("Data %1-%2")));
-    
-
-    timer->start();
 
     /*auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
     widgetRepresentation->SetWidget(table);*/
@@ -139,7 +116,7 @@ std::string SceneWidget::demoScreenshot()
 
     const auto oldRots = _machineHead->Rotations();
 
-    const auto path = cap.TakeScreenshot(s, "AwesomeScreenshot4.png", [this](const vtkRenderer*) {
+    auto path = cap.TakeScreenshot(s, "AwesomeScreenshot4.png", [this](const vtkRenderer*) {
         _machineHead->SetZero();
         _machineHead->RotatePart(RotAddress::A, 100);
         _machineHead->RotatePart(RotAddress::B, 100);

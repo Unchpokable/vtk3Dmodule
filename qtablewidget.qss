@@ -1,15 +1,46 @@
-QTableWidget {
-    background-color: lightgray; /* светло-серый фон для всего виджета */
-    border: 2px solid gray; /* серая обводка вокруг виджета */
-    color: black; /* черный цвет шрифта для текста в таблице */
-}
-
-QTableWidget::item {
-    border: none; /* убираем видимость границ ячеек */
+QTableView {
+    background-color: #f0f0f0; /* Светло-серый фон */
+    color: black; /* Черный текст */
+    gridline-color: #d0d0d0; /* Светло-серый цвет сетки */
+    border: 1px solid #d0d0d0; /* Рамка вокруг таблицы */
+    selection-background-color: #a0a0a0; /* Цвет фона для выделенных элементов */
+    selection-color: white; /* Цвет текста для выделенных элементов */
 }
 
 QHeaderView::section {
-    background-color: lightgray; /* цвет фона заголовков идентичен общему фону */
-    border: none; /* без обводки */
-    color: black; /* черный цвет текста заголовков */
+    background-color: #e0e0e0; /* Светло-серый фон для заголовков столбцов и строк */
+    color: black; /* Черный текст */
+    padding: 4px; /* Отступы вокруг текста */
+    border: 1px solid #d0d0d0; /* Рамка для заголовков */
+}
+
+QTableView::item {
+    padding: 4px; /* Отступы для каждого элемента */
+    border-bottom: 1px solid #d0d0d0; /* Горизонтальная граница между элементами */
+}
+
+QTableView::item:focus {
+    border: 1px dashed #606060; /* Пунктирная рамка вокруг фокусированного элемента */
+}
+
+QScrollBar:vertical {
+    border: 1px solid #d0d0d0;
+    background: #f0f0f0;
+    width: 10px; /* Ширина вертикального ползунка */
+    margin: 22px 0 22px 0;
+}
+
+QScrollBar::handle:vertical {
+    background: #c0c0c0; /* Цвет ручки ползунка */
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: #e0e0e0;
+    height: 20px;
+    subcontrol-position: bottom;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
 }

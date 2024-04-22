@@ -1,0 +1,5 @@
+QLabel {
+    color: black; /* Черный текст */
+    background-color: transparent; /* Прозрачный фон */
+    padding: 4px; /* Отступы вокруг текста для лучшего читаемости */
+}
