@@ -47,7 +47,7 @@ int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index)
 	return 0;
 }
 
-void CaptionWidget::LoadTableStyles()
+void CaptionWidget::LoadTableStyles() const
 {
 	QFile file("qtablewidget.qss");
 	if(file.open(QFile::ReadOnly)) {
@@ -69,7 +69,7 @@ void CaptionWidget::LoadGlobalStyles()
 	}
 }
 
-void CaptionWidget::LoadLabelStyles()
+void CaptionWidget::LoadLabelStyles() const
 {
 	QFile file("qlabel.qss");
 	if(file.open(QFile::ReadOnly)) {

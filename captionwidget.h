@@ -38,7 +38,7 @@ private:
 	QLabel* _captionLabel = nullptr;
 	Ui::CaptionWidgetClass *ui;
 
-	void LoadTableStyles();
+	void LoadTableStyles() const;
 	void LoadGlobalStyles();
-	void LoadLabelStyles();
+	void LoadLabelStyles() const;
 };
