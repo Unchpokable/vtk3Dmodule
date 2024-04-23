@@ -24,7 +24,7 @@ void InfoWidgetItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     QStyledItemDelegate::paint(painter, modifiedOption, index);
 }
 
-void InfoWidgetItemDelegate::SetOutputDataValidator(const Validator& validator)
+void InfoWidgetItemDelegate::SetOutputDataValidator(const QVariantComparer& validator)
 {
     if(validator == nullptr)
         throw std::invalid_argument("Given function pointer should not be a nullptr");

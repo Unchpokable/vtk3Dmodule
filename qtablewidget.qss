@@ -13,12 +13,12 @@ QHeaderView::section {
     padding: 1px; 
     border: 1px solid #d0d0d0;
 }
-/*
+
 QTableView::item {
     padding: 0px; 
-    border: 0px solid #d0d0d0;
-    border-bottom: 1px solid #d0d0d0; 
-} */
+    border: 1px solid #d0d0d0;
+    border-bottom: 0px solid #d0d0d0; 
+} 
 
 QTableView::item:focus {
     border: 0px dashed #606060; 

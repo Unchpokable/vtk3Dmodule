@@ -35,8 +35,13 @@ CaptionWidget::~CaptionWidget()
 	delete _ui;
 }
 
-int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index)
+int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index) const
 {
+	if (_externalFilter != nullptr)
+	{
+		return _externalFilter(data, index);
+	}
+
 	if(index.row() == 1)
 		return -1;
 

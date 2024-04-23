@@ -7,6 +7,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class CaptionWidgetClass; };
 QT_END_NAMESPACE
 
+using QVariantComparer = std::function<int(const QVariant&, const QModelIndex&)>;
+
 class CaptionWidget : public QWidget
 {
 	Q_OBJECT
@@ -30,7 +32,7 @@ public:
 		_table->setItemDelegate(delegate);
 	}
 
-	int FilterData(const QVariant& data, const QModelIndex& index);
+	int FilterData(const QVariant& data, const QModelIndex& index) const;
 
 	QAbstractItemModel* GetModel() const noexcept
 	{
@@ -43,10 +45,18 @@ public:
 		_table->resizeRowsToContents();
 	}
 
+	void SetExternalFilter(const QVariantComparer& func)
+	{
+		if (func != nullptr)
+			_externalFilter = func;
+	}
+
 private:
 	QTableView* _table = nullptr;
 	QLabel* _captionLabel = nullptr;
 	Ui::CaptionWidgetClass *_ui;
+	QVariantComparer _externalFilter;
+
 
 	void LoadTableStyles() const;
 	void LoadGlobalStyles();
