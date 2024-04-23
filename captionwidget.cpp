@@ -1,19 +1,18 @@
 #include "pch.h"
 #include "captionwidget.h"
-
 #include "infowidgetitemdelegate.h"
 
 CaptionWidget::CaptionWidget(QWidget *parent)
 	: QWidget(parent)
-	, ui(new Ui::CaptionWidgetClass())
+	, _ui(new Ui::CaptionWidgetClass())
 {
-	ui->setupUi(this);
-	_table = ui->tableView;
+	_ui->setupUi(this);
+	_table = _ui->tableView;
 
 	_table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-	_captionLabel = ui->label;
+	_captionLabel = _ui->label;
 
 	const auto itemDelegate = new InfoWidgetItemDelegate(this);
 
@@ -33,7 +32,7 @@ CaptionWidget::CaptionWidget(QWidget *parent)
 
 CaptionWidget::~CaptionWidget()
 {
-	delete ui;
+	delete _ui;
 }
 
 int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index)

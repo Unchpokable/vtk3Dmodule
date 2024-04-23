@@ -1,4 +1,4 @@
 QWidget {
-    background-color: #f0f0f0; /* Светло-серый фон, аналогично QTableView */
+    background-color: #ffffff; /* Светло-серый фон, аналогично QTableView */
     color: black; /* Черный текст */
 }

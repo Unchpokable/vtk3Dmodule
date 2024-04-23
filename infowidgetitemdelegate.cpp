@@ -1,15 +1,8 @@
 #include "pch.h"
 #include "infowidgetitemdelegate.h"
 
-#include "captionwidget.h"
-
 InfoWidgetItemDelegate::InfoWidgetItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
-{
-    
-}
-
-InfoWidgetItemDelegate::~InfoWidgetItemDelegate()
 {
     
 }
@@ -31,7 +24,7 @@ void InfoWidgetItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     QStyledItemDelegate::paint(painter, modifiedOption, index);
 }
 
-void InfoWidgetItemDelegate::SetOutputDataValidator(const Validator & validator)
+void InfoWidgetItemDelegate::SetOutputDataValidator(const Validator& validator)
 {
     if(validator == nullptr)
         throw std::invalid_argument("Given function pointer should not be a nullptr");

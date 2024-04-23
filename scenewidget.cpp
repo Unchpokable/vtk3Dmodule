@@ -79,7 +79,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     const auto model = new QStandardItemModel(3, 3);
     captionWidget->SetModel(model);
 
-    captionWidget->resize(450, 250);
+    captionWidget->resize(450, 180);
 
     for(int row = 0; row < 3; ++row) 
     {
@@ -90,6 +90,8 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
         }
     }
 
+    captionWidget->Fit();
+
     const auto actor = CreateTexturedActorFromQWidget(captionWidget);
 
     _renderer->AddViewProp(actor);
@@ -98,6 +100,17 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
     widgetRepresentation->SetWidget(table);*/
 
     //_renderer->AddViewProp(widgetRepresentation);
+
+    auto table = new QTableView(this);
+    table->setModel(model);
+
+    QFile file("qtablewidget.qss");
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QLatin1String(file.readAll());
+
+        table->setStyleSheet(styleSheet);
+        file.close();
+    }
 
     _renderer->ResetCamera();
     showGizmo();

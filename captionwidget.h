@@ -15,7 +15,6 @@ public:
 	explicit CaptionWidget(QWidget *parent = nullptr);
 	~CaptionWidget() override;
 
-
 	void SetLabel(const QString& text) const
 	{
 		_captionLabel->setText(text);
@@ -33,10 +32,21 @@ public:
 
 	int FilterData(const QVariant& data, const QModelIndex& index);
 
+	QAbstractItemModel* GetModel() const noexcept
+	{
+		return _table->model();
+	}
+
+	void Fit() const noexcept
+	{
+		_table->resizeColumnsToContents();
+		_table->resizeRowsToContents();
+	}
+
 private:
 	QTableView* _table = nullptr;
 	QLabel* _captionLabel = nullptr;
-	Ui::CaptionWidgetClass *ui;
+	Ui::CaptionWidgetClass *_ui;
 
 	void LoadTableStyles() const;
 	void LoadGlobalStyles();
