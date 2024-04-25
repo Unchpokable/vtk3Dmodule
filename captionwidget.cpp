@@ -44,6 +44,7 @@ int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index) co
 		return _externalFilter(data, index);
 	}
 
+	// ToDo
 	if(index.row() == 1)
 		return -1;
 

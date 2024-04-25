@@ -76,14 +76,14 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     captionWidget->SetLabel("Woow, this is a widget!!!!");
 
-    const auto model = new QStandardItemModel(6, 6);
+    const auto model = new QStandardItemModel(10, 10);
     captionWidget->SetModel(model);
 
     //captionWidget->resize(450, 180);
 
-    for(int row = 0; row < 6; ++row) 
+    for(int row = 0; row < 10; ++row) 
     {
-        for(int column = 0; column < 6; ++column)
+        for(int column = 0; column < 10; ++column)
         {
             const auto item = new QStandardItem(QString("%1, %2").arg(row).arg(column));
             model->setItem(row, column, item);
@@ -96,21 +96,39 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     _renderer->AddViewProp(actor);
 
+
+    const auto smallCaptionWidget = new CaptionWidget();
+    smallCaptionWidget->SetLabel("WOW");
+
+    const auto smallModel = new QStandardItemModel(2, 1);
+    smallCaptionWidget->SetModel(smallModel);
+
+    smallModel->setItem(0, 0, new QStandardItem("1"));
+    smallModel->setItem(1, 0, new QStandardItem("2"));
+
+    smallCaptionWidget->Fit();
+
+    const auto actor2 = CreateTexturedActorFromQWidget(smallCaptionWidget);
+
+    actor2->SetPosition(430, 430);
+
+    _renderer->AddViewProp(actor2);
+
     /*auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
     widgetRepresentation->SetWidget(table);*/
 
     //_renderer->AddViewProp(widgetRepresentation);
 
-    auto table = new QTableView(this);
-    table->setModel(model);
+    //auto table = new QTableView(this);
+    //table->setModel(model);
 
-    QFile file("qtablewidget.qss");
-    if (file.open(QFile::ReadOnly)) {
-        QString styleSheet = QLatin1String(file.readAll());
+    //QFile file("qtablewidget.qss");
+    //if (file.open(QFile::ReadOnly)) {
+    //    QString styleSheet = QLatin1String(file.readAll());
 
-        table->setStyleSheet(styleSheet);
-        file.close();
-    }
+    //    table->setStyleSheet(styleSheet);
+    //    file.close();
+    //}
 
     _renderer->ResetCamera();
     showGizmo();

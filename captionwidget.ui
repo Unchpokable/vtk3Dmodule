@@ -38,7 +38,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="lineWidth">
-      <number>3</number>
+      <number>2</number>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="leftMargin">
@@ -97,6 +97,12 @@
         <property name="cornerButtonEnabled">
          <bool>true</bool>
         </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>27</number>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>50</number>
+        </attribute>
        </widget>
       </item>
      </layout>

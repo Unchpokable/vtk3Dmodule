@@ -21,6 +21,8 @@ void InfoWidgetItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     else if(validatorResult > 0)
         modifiedOption.palette.setColor(QPalette::Text, Qt::red);
 
+    modifiedOption.displayAlignment = Qt::AlignCenter;
+
     QStyledItemDelegate::paint(painter, modifiedOption, index);
 }
 
