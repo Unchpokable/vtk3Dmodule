@@ -24,20 +24,32 @@ public:
 
 	void SetModel(QAbstractItemModel* model) const
     {
-		_table->setModel(model);
+		if (model)
+		    _table->setModel(model);
 	}
 
 	void SetItemDelegate(QAbstractItemDelegate* delegate) const
     {
-		_table->setItemDelegate(delegate);
+		if (delegate)
+		    _table->setItemDelegate(delegate);
 	}
 
+    const QLabel* GetLabel() const noexcept
+	{
+		return _captionLabel;
+	}
 
-    /**
-     * \brief Gets a current widget's table data model
-     * \return Table data model
-     */
-    QAbstractItemModel* GetModel() const noexcept
+    QLabel* GetLabel() noexcept
+	{
+		return _captionLabel;
+	}
+
+    const QAbstractItemModel* GetModel() const noexcept
+	{
+		return _table->model();
+	}
+
+	QAbstractItemModel* GetModel() noexcept
 	{
 		return _table->model();
 	}
@@ -61,6 +73,16 @@ public:
 	{
 		if (func != nullptr)
 			_externalFilter = func;
+	}
+
+	void SetHorizontalLabels(const QStringList& labels) const noexcept
+	{
+		dynamic_cast<QStandardItemModel*>(const_cast<CaptionWidget*>(this)->GetModel())->setHorizontalHeaderLabels(labels);
+	}
+
+	void SetVerticalLabels(const QStringList& labels) const noexcept
+	{
+		dynamic_cast<QStandardItemModel*>(const_cast<CaptionWidget*>(this)->GetModel())->setVerticalHeaderLabels(labels);
 	}
 
 private:
