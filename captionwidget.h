@@ -32,18 +32,30 @@ public:
 		_table->setItemDelegate(delegate);
 	}
 
-	int FilterData(const QVariant& data, const QModelIndex& index) const;
 
-	QAbstractItemModel* GetModel() const noexcept
+    /**
+     * \brief Gets a current widget's table data model
+     * \return Table data model
+     */
+    QAbstractItemModel* GetModel() const noexcept
 	{
 		return _table->model();
 	}
 
-	void Fit() const noexcept
+    /**
+     * \brief Sets a new external data filter for widget's table ItemDelegate. 
+     * \param filter \c std::function that takes \c QVariant for current obtained table cell data and \c QModelIndex given by Qt's Model of table. Return int data check code. 
+     */
+    void SetExternalDataFilter(const QVariantComparer& filter)
 	{
-		_table->resizeColumnsToContents();
-		_table->resizeRowsToContents();
+		if(filter)
+			_externalFilter = filter;
 	}
+
+    /**
+     * \brief Fits widget to its minimal size that can handle all widget visual contents without scrollbars and clipping
+     */
+    void Fit() noexcept;
 
 	void SetExternalFilter(const QVariantComparer& func)
 	{
@@ -57,6 +69,7 @@ private:
 	Ui::CaptionWidgetClass *_ui;
 	QVariantComparer _externalFilter;
 
+	int FilterData(const QVariant& data, const QModelIndex& index) const;
 
 	void LoadTableStyles() const;
 	void LoadGlobalStyles();

@@ -76,16 +76,16 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     captionWidget->SetLabel("Woow, this is a widget!!!!");
 
-    const auto model = new QStandardItemModel(3, 3);
+    const auto model = new QStandardItemModel(6, 6);
     captionWidget->SetModel(model);
 
-    captionWidget->resize(450, 180);
+    //captionWidget->resize(450, 180);
 
-    for(int row = 0; row < 3; ++row) 
+    for(int row = 0; row < 6; ++row) 
     {
-        for(int column = 0; column < 3; ++column)
+        for(int column = 0; column < 6; ++column)
         {
-            const auto item = new QStandardItem(QString("Row %1, Column %2").arg(row).arg(column));
+            const auto item = new QStandardItem(QString("%1, %2").arg(row).arg(column));
             model->setItem(row, column, item);
         }
     }

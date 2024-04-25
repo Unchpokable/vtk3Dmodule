@@ -17,6 +17,7 @@
 #include <QOpenGLTexture>
 #include <QAbstractTableModel>
 #include <QStandardItemModel>
+#include <QScrollBar>
 
 #include <vtkCamera.h>
 #include <vtkRenderWindow.h>

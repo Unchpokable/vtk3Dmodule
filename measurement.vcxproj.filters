@@ -34,6 +34,12 @@
     <ClCompile Include="OpenGLInfoWidgetRenderer.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="captionwidget.cpp">
+      <Filter>Sources\infoWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="infowidgetitemdelegate.cpp">
+      <Filter>Sources\infoWidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EigenUtils.hpp">
@@ -127,6 +133,12 @@
     <QtMoc Include="xmltools.hpp">
       <Filter>Headers</Filter>
     </QtMoc>
+    <QtMoc Include="captionwidget.h">
+      <Filter>Headers\infoWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="infowidgetitemdelegate.h">
+      <Filter>Headers\infoWidgets</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="CreateLineDialog.ui">
@@ -139,6 +151,9 @@
       <Filter>Headers\Widgets</Filter>
     </QtUic>
     <QtUic Include="RotateTestDialog.ui">
+      <Filter>Headers\Widgets</Filter>
+    </QtUic>
+    <QtUic Include="captionwidget.ui">
       <Filter>Headers\Widgets</Filter>
     </QtUic>
   </ItemGroup>
@@ -154,6 +169,12 @@
     </Filter>
     <Filter Include="Headers\Widgets">
       <UniqueIdentifier>{068d761e-6c26-4e5d-8278-789b95f40a2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\infoWidgets">
+      <UniqueIdentifier>{1c35d0bf-830a-49f0-9f96-095a52c7e7d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\infoWidgets">
+      <UniqueIdentifier>{a53d9c4a-2cf6-449e-9cd7-b4ee1242bbee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

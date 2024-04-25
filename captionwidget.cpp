@@ -2,6 +2,8 @@
 #include "captionwidget.h"
 #include "infowidgetitemdelegate.h"
 
+constexpr int TableAdditionalHeight = 10;
+
 CaptionWidget::CaptionWidget(QWidget *parent)
 	: QWidget(parent)
 	, _ui(new Ui::CaptionWidgetClass())
@@ -49,6 +51,36 @@ int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index) co
 		return 1;
 
 	return 0;
+}
+
+void CaptionWidget::Fit() noexcept
+{
+	if(!_table || !_captionLabel)
+		return;
+
+	_table->resizeColumnsToContents();
+	_table->resizeRowsToContents();
+
+	int tableWidth{};
+	int tableHeight{};
+
+	for(int column{}; column < _table->model()->columnCount(); ++column) {
+		tableWidth += _table->columnWidth(column);
+	}
+
+	for(int row{}; row < _table->model()->rowCount(); ++row) {
+		tableHeight += _table->rowHeight(row);
+	}
+
+	tableWidth += _table->verticalScrollBar()->width();
+	tableHeight += _table->horizontalScrollBar()->height() + TableAdditionalHeight;
+
+	_table->resize(tableWidth, tableHeight);
+
+	const auto totalHeight = _captionLabel->height() + tableHeight;
+	const auto totalWidth = std::max(_captionLabel->width(), tableWidth);
+
+	resize(totalWidth, totalHeight);
 }
 
 void CaptionWidget::LoadTableStyles() const
