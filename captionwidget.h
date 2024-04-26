@@ -77,12 +77,12 @@ public:
 
 	void SetHorizontalLabels(const QStringList& labels) const noexcept
 	{
-		dynamic_cast<QStandardItemModel*>(const_cast<CaptionWidget*>(this)->GetModel())->setHorizontalHeaderLabels(labels);
+		dynamic_cast<QStandardItemModel*>(_table->model())->setHorizontalHeaderLabels(labels);
 	}
 
 	void SetVerticalLabels(const QStringList& labels) const noexcept
 	{
-		dynamic_cast<QStandardItemModel*>(const_cast<CaptionWidget*>(this)->GetModel())->setVerticalHeaderLabels(labels);
+		dynamic_cast<QStandardItemModel*>(_table->model())->setVerticalHeaderLabels(labels);
 	}
 
 private:
