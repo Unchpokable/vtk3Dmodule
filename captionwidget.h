@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include "ui_captionwidget.h"
+#include "pch.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CaptionWidgetClass; };
@@ -17,39 +18,39 @@ public:
 	explicit CaptionWidget(QWidget *parent = nullptr);
 	~CaptionWidget() override;
 
-	void SetLabel(const QString& text) const
+	void setLabel(const QString& text) const
 	{
 		_captionLabel->setText(text);
 	}
 
-	void SetModel(QAbstractItemModel* model) const
+	void setModel(QAbstractItemModel* model) const
     {
 		if (model)
 		    _table->setModel(model);
 	}
 
-	void SetItemDelegate(QAbstractItemDelegate* delegate) const
+	void setItemDelegate(QAbstractItemDelegate* delegate) const
     {
 		if (delegate)
 		    _table->setItemDelegate(delegate);
 	}
 
-    const QLabel* GetLabel() const noexcept
+    const QLabel* getLabel() const noexcept
 	{
 		return _captionLabel;
 	}
 
-    QLabel* GetLabel() noexcept
+    QLabel* getLabel() noexcept
 	{
 		return _captionLabel;
 	}
 
-    const QAbstractItemModel* GetModel() const noexcept
+    const QAbstractItemModel* getModel() const noexcept
 	{
 		return _table->model();
 	}
 
-	QAbstractItemModel* GetModel() noexcept
+	QAbstractItemModel* getModel() noexcept
 	{
 		return _table->model();
 	}
@@ -58,7 +59,7 @@ public:
      * \brief Sets a new external data filter for widget's table ItemDelegate. 
      * \param filter \c std::function that takes \c QVariant for current obtained table cell data and \c QModelIndex given by Qt's Model of table. Return int data check code. 
      */
-    void SetExternalDataFilter(const QVariantComparer& filter)
+    void setExternalDataFilter(const QVariantComparer& filter)
 	{
 		if(filter)
 			_externalFilter = filter;
@@ -67,20 +68,20 @@ public:
     /**
      * \brief Fits widget to its minimal size that can handle all widget visual contents without scrollbars and clipping
      */
-    void Fit() noexcept;
+    void fit() noexcept;
 
-	void SetExternalFilter(const QVariantComparer& func)
+	void setExternalFilter(const QVariantComparer& func)
 	{
 		if (func != nullptr)
 			_externalFilter = func;
 	}
 
-	void SetHorizontalLabels(const QStringList& labels) const noexcept
+	void setHorizontalLabels(const QStringList& labels) const noexcept
 	{
 		dynamic_cast<QStandardItemModel*>(_table->model())->setHorizontalHeaderLabels(labels);
 	}
 
-	void SetVerticalLabels(const QStringList& labels) const noexcept
+	void setVerticalLabels(const QStringList& labels) const noexcept
 	{
 		dynamic_cast<QStandardItemModel*>(_table->model())->setVerticalHeaderLabels(labels);
 	}
@@ -91,9 +92,9 @@ private:
 	Ui::CaptionWidgetClass *_ui;
 	QVariantComparer _externalFilter;
 
-	int FilterData(const QVariant& data, const QModelIndex& index) const;
+	int filterData(const QVariant& data, const QModelIndex& index) const;
 
-	void LoadTableStyles() const;
-	void LoadGlobalStyles();
-	void LoadLabelStyles() const;
+	void loadTableStyles() const;
+	void loadGlobalStyles();
+	void loadLabelStyles() const;
 };

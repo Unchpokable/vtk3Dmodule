@@ -74,10 +74,10 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     const auto captionWidget = new CaptionWidget();
 
-    captionWidget->SetLabel("Woow, this is a widget!!!!");
+    captionWidget->setLabel("Woow, this is a widget!!!!");
 
     const auto model = new QStandardItemModel(10, 10);
-    captionWidget->SetModel(model);
+    captionWidget->setModel(model);
 
     //captionWidget->resize(450, 180);
 
@@ -90,7 +90,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
         }
     }
 
-    captionWidget->Fit();
+    captionWidget->fit();
 
     const auto actor = CreateTexturedActorFromQWidget(captionWidget);
 
@@ -98,15 +98,15 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
 
     const auto smallCaptionWidget = new CaptionWidget();
-    smallCaptionWidget->SetLabel("WOW");
+    smallCaptionWidget->setLabel("WOW");
 
-    const auto smallModel = new QStandardItemModel(2, 1);
-    smallCaptionWidget->SetModel(smallModel);
+    const auto smallModel = new QStandardItemModel(1, 2);
+    smallCaptionWidget->setModel(smallModel);
 
     smallModel->setItem(0, 0, new QStandardItem("1"));
-    smallModel->setItem(1, 0, new QStandardItem("2"));
+    smallModel->setItem(0, 1, new QStandardItem("2"));
 
-    smallCaptionWidget->Fit();
+    smallCaptionWidget->fit();
 
     const auto actor2 = CreateTexturedActorFromQWidget(smallCaptionWidget);
 
