@@ -16,7 +16,7 @@ CaptionWidget::CaptionWidget(QWidget *parent)
 
 	_captionLabel = _ui->label;
 
-	const auto itemDelegate = new InfoWidgetItemDelegate(this);
+	/*const auto itemDelegate = new InfoWidgetItemDelegate(this);
 
     const std::function<int(const QVariant&, const QModelIndex&)> validator = [this](auto&& data, auto&& index)
     {
@@ -25,7 +25,7 @@ CaptionWidget::CaptionWidget(QWidget *parent)
 
 	itemDelegate->SetOutputDataValidator(validator);
 
-	_table->setItemDelegate(itemDelegate);
+	_table->setItemDelegate(itemDelegate);*/
 
 	LoadTableStyles();
 	LoadGlobalStyles();

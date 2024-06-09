@@ -36,24 +36,24 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     // -------------------------
 
-    //ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
+    ProbePartCatalog catalog("p/ProbePartCatalogue.xml");
 
-    //ProbeToolAssembly manualTool;
-    //manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
+    ProbeToolAssembly manualTool;
+    manualTool.Build(catalog, {"TP20_EM2", "M2x90_CF", "M2_20x1_TC"});
 
-    //const auto manualToolModel = manualTool.Weld();
+    const auto manualToolModel = manualTool.Weld();
 
-    //SetActorLightingPlastic(manualToolModel);
+    SetActorLightingPlastic(manualToolModel);
 
-    ///*_renderer->AddActor(manualToolModel);*/
+    /*_renderer->AddActor(manualToolModel);*/
 
-    //_machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
-    //_machineHead->AddStylus(manualTool);
+    _machineHead = new MachineHead(ProbeHeadLoader::FromMtd("ph/PH10M/PH10M.xml"));
+    _machineHead->AddStylus(manualTool);
 
-    //_machineHead->RotateRZ(-90, { 1, 0, 0 });
-    //const auto actors = _machineHead->Actors();
+    _machineHead->RotateRZ(-90, { 1, 0, 0 });
+    const auto actors = _machineHead->Actors();
 
-    //AddActorsToRenderer(_renderer, actors);
+    AddActorsToRenderer(_renderer, actors);
 
     //auto mountTransform = vtkSmartPointer<vtkTransform>::New(); // rz
     //mountTransform->RotateX(30);
@@ -74,30 +74,30 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     const auto captionWidget = new CaptionWidget();
 
-    captionWidget->SetLabel("Woow, this is a widget!!!!");
+    captionWidget->SetLabel("part fit. 12.2(1)");
 
-    const auto model = new QStandardItemModel(10, 10);
+    const auto model = new QStandardItemModel();
     captionWidget->SetModel(model);
+
 
     //captionWidget->resize(450, 180);
 
-    for(int row = 0; row < 10; ++row) 
-    {
-        for(int column = 0; column < 10; ++column)
-        {
-            const auto item = new QStandardItem(QString("%1, %2").arg(row).arg(column));
-            model->setItem(row, column, item);
-        }
-    }
+    model->appendRow({ new QStandardItem("-0.05"), new QStandardItem("0.20"), new QStandardItem("12.22"), new QStandardItem("12.37"), new QStandardItem("0.15") });
+    model->appendRow({ new QStandardItem("-0.20"), new QStandardItem("0.20"), new QStandardItem("-53.83"), new QStandardItem("-53.86"), new QStandardItem("-0.03") });
+    model->appendRow({ new QStandardItem("-0.20"), new QStandardItem("0.20"), new QStandardItem("-28.83"), new QStandardItem("-28.27"), new QStandardItem("0.56") });
+
 
     captionWidget->Fit();
+
+    model->setHorizontalHeaderLabels({ "Low tol.", "Hi tol", "Nom:", "Act:", "Dev:" });
+    model->setVerticalHeaderLabels({ "Dia", "X", "Y" });
 
     const auto actor = CreateTexturedActorFromQWidget(captionWidget);
 
     _renderer->AddViewProp(actor);
 
 
-    const auto smallCaptionWidget = new CaptionWidget();
+    /*const auto smallCaptionWidget = new CaptionWidget();
     smallCaptionWidget->SetLabel("WOW");
 
     const auto smallModel = new QStandardItemModel(2, 1);
@@ -112,7 +112,7 @@ SceneWidget::SceneWidget(QWidget *parent, Qt::WindowFlags flags) : QVTKOpenGLNat
 
     actor2->SetPosition(430, 430);
 
-    _renderer->AddViewProp(actor2);
+    _renderer->AddViewProp(actor2);*/
 
     /*auto widgetRepresentation = vtkSmartPointer<vtkQWidgetRepresentation>::New();
     widgetRepresentation->SetWidget(table);*/
