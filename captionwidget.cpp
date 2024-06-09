@@ -20,16 +20,16 @@ CaptionWidget::CaptionWidget(QWidget *parent)
 
     const std::function<int(const QVariant&, const QModelIndex&)> validator = [this](auto&& data, auto&& index)
     {
-        return this->FilterData(std::forward<decltype(data)>(data), std::forward<decltype(index)>(index));
+        return this->filterData(std::forward<decltype(data)>(data), std::forward<decltype(index)>(index));
     };
 
 	itemDelegate->SetOutputDataValidator(validator);
 
 	_table->setItemDelegate(itemDelegate);*/
 
-	LoadTableStyles();
-	LoadGlobalStyles();
-	LoadLabelStyles();
+	loadTableStyles();
+	loadGlobalStyles();
+	loadLabelStyles();
 }
 
 CaptionWidget::~CaptionWidget()
@@ -37,7 +37,7 @@ CaptionWidget::~CaptionWidget()
 	delete _ui;
 }
 
-int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index) const
+int CaptionWidget::filterData(const QVariant& data, const QModelIndex& index) const
 {
 	if (_externalFilter != nullptr)
 	{
@@ -54,7 +54,7 @@ int CaptionWidget::FilterData(const QVariant& data, const QModelIndex& index) co
 	return 0;
 }
 
-void CaptionWidget::Fit() noexcept
+void CaptionWidget::fit() noexcept
 {
 	if(!_table || !_captionLabel)
 		return;
@@ -84,7 +84,7 @@ void CaptionWidget::Fit() noexcept
 	resize(totalWidth, totalHeight);
 }
 
-void CaptionWidget::LoadTableStyles() const
+void CaptionWidget::loadTableStyles() const
 {
 	QFile file("qtablewidget.qss");
 	if(file.open(QFile::ReadOnly)) {
@@ -95,7 +95,7 @@ void CaptionWidget::LoadTableStyles() const
 	}
 }
 
-void CaptionWidget::LoadGlobalStyles()
+void CaptionWidget::loadGlobalStyles()
 {
 	QFile file("qwidget.qss");
 	if(file.open(QFile::ReadOnly)) {
@@ -106,7 +106,7 @@ void CaptionWidget::LoadGlobalStyles()
 	}
 }
 
-void CaptionWidget::LoadLabelStyles() const
+void CaptionWidget::loadLabelStyles() const
 {
 	QFile file("qlabel.qss");
 	if(file.open(QFile::ReadOnly)) {
